@@ -1,0 +1,11 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  /* global font settings */
+  font-family: "Poppins", "Inter", Arial, sans-serif;
+}
+
+a {
+  text-decoration: none;
+}
