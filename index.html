@@ -12,16 +12,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>IMDB Movie Search</title>
     <link rel="icon" href="assets/favicon.png" type="image/x-icon" />
+    <script src="./index.js" defer></script>
   </head>
 
   <body>
     <header>
       <nav class="nav">
-        <div class="nav-items-container">
-          <a href="#" class="nav-txt-item">Home</a>
+        <div class="nav__items-container">
+          <a href="#" class="nav__txt-link">Home</a>
           <input
             id="nav-search-bar"
-            class="nav-search-bar"
+            class="nav__search-bar"
             type="search"
             placeholder="Search Here"
           />
@@ -30,18 +31,57 @@
     </header>
     <main>
       <section class="card-group">
-        <article class="card">
-          <div class="cart__title-container">
-            <h2 class="card__title">Card 1</h2>
+        <article class="card" type="button">
+          <div class="card__title-container">
+            <h2 class="card__title">Oppenheimer</h2>
           </div>
           <div class="card__thumb-container">
-            <img src="#" alt="movie thumbnail" class="card__thumb" />
+            <img
+              src="./assets/thumbnail.jpg"
+              alt="movie thumbnail"
+              class="card__thumb"
+              width="100px"
+            />
           </div>
-          <p class="card__description">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis
-            corrupti et molestiae ex nostrum maiores inventore, voluptatem
-            ratione eveniet a aliquam nam, in omnis modi accusantium asperiores
-            expedita eum sint.
+          <p class="card__description description-cut-off">
+            The story of American scientist J. Robert Oppenheimer and his role
+            in the development of the atomic bomb.
+          </p>
+        </article>
+
+        <article class="card" type="button">
+          <div class="card__title-container">
+            <h2 class="card__title">Oppenheimer</h2>
+          </div>
+          <div class="card__thumb-container">
+            <img
+              src="./assets/thumbnail.jpg"
+              alt="movie thumbnail"
+              class="card__thumb"
+              width="100px"
+            />
+          </div>
+          <p class="card__description description-cut-off">
+            The story of American scientist J. Robert Oppenheimer and his role
+            in the development of the atomic bomb.
+          </p>
+        </article>
+
+        <article class="card" type="button">
+          <div class="card__title-container">
+            <h2 class="card__title">Oppenheimer</h2>
+          </div>
+          <div class="card__thumb-container">
+            <img
+              src="./assets/thumbnail.jpg"
+              alt="movie thumbnail"
+              class="card__thumb"
+              width="100px"
+            />
+          </div>
+          <p class="card__description description-cut-off">
+            The story of American scientist J. Robert Oppenheimer and his role
+            in the development of the atomic bomb.
           </p>
         </article>
       </section>
