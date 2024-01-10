@@ -8,7 +8,7 @@
 
   /* Component dimension variables */
   --navbarheight: 3.75rem;
-  --card-max-width: 400px;
+  --card-max-width: 650px;
   --card-thumb-height: 170px;
   --card-gap-row: 0.25em;
   --card-gap-column: 1em;
@@ -82,7 +82,8 @@ body {
 }
 
 main {
-  border: 2px solid red;
+  display: grid;
+  align-content: center;
   top: 0;
   flex-grow: 1;
 }
@@ -213,7 +214,7 @@ main {
     background-color: var(--card-bg-color);
     padding: 1em;
     border-radius: 0.5rem;
-    min-width: 400px;
+    max-width: var(--card-max-width);
     max-height: calc(var(--card-thumb-height) + 2em + var(--card-gap-row));
 
     display: grid;
@@ -226,11 +227,17 @@ main {
     &__title-container {
       grid-area: 1 / 2 / 2 / 3;
 
+      overflow: hidden;
+
       .card__title {
         font-weight: var(--card-title-font-weight);
         font-size: var(--card-title-font-size);
         color: var(--card-title-color);
         text-align: left;
+
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
     }
 
