@@ -240,6 +240,7 @@ main {
       overflow: clip;
 
       .card__thumb {
+        transform: scale(1.01); // to fix
         width: 100%;
         transition: 0.3s all ease-out;
       }

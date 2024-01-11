@@ -220,6 +220,7 @@ main {
   overflow: clip;
 }
 .card-group .card__thumb-container .card__thumb {
+  transform: scale(1.01);
   width: 100%;
   transition: 0.3s all ease-out;
 }
