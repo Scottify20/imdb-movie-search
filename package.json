@@ -1,0 +1,19 @@
+{
+  "name": "imdb-movie-search",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "parcel index.html",
+    "build": "parcel build index.html"
+  },
+  "keywords": [],
+  "author": "Scott Ivan Fulguirinas",
+  "license": "GPL-3.0",
+  "devDependencies": {
+    "@parcel/transformer-sass": "^2.11.0",
+    "parcel": "^2.11.0",
+    "sass": "^1.69.7",
+    "typescript": "^5.3.3"
+  }
+}
