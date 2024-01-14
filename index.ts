@@ -1,10 +1,31 @@
-import { GeneralTitleSearch } from './src/model/GeneraTitleSearch';
+import {
+  GeneralTitleSearch,
+  movieOrSeriesOrEpisode,
+  SearchParamsObj,
+} from './src/model/GeneraTitleSearch';
 
-const s1 = new GeneralTitleSearch('Game');
-s1.setParamFilter('type', 'series');
-// console.log('totalResults', s1.totalResults);
-// s1.setParamFilter('y', '2023');
+let GeneralSearchParamObj: SearchParamsObj = {
+  s: 'Oppenheimer',
+  page: '1',
+  type: 'movie',
+  y: '2023',
+};
 
-setTimeout(() => {
-  console.log('Results', s1.searchResults);
-}, 1000);
+// const GeneralSearch = async () => {
+//   try {
+//     const search1 = new GeneralTitleSearch();
+//     const result = await search1.search(GeneralSearchParamObj);
+//     return result;
+//   } catch {
+//     console.log('General Search Result Error');
+//   }
+// };
+
+// GeneralSearch()
+//   .then((result) => {
+//     console.log(result);
+//   })
+//   .catch((err) => {
+//     console.log('General Result Error');
+//     console.log(err);
+//   });

@@ -30,21 +30,20 @@
       </nav>
     </header>
     <main id="main">
-      <section class="card-group">
+      <section class="card-group" id="card-group">
         <article class="card">
           <div class="card__thumb-and-links-container cursor--pointer">
+            <input
+              id=""
+              type="checkbox"
+              name="links-toggle"
+              class="toggle-links-for-no-hover"
+            />
             <div class="card__link-buttons-container">
-              <button id="view-content-btn" class="cursor--pointer">
+              <button id="" class="view-content-btn cursor--pointer">
                 View Details
               </button>
-              <button
-                id="visit-imdb-btn"
-                onclick="window.open(
-                  'https://imdb.com/title/tt15398776/',
-                  '_blank'
-                );"
-                class="cursor--pointer"
-              >
+              <button id="" class="visit-imdb-btn cursor--pointer">
                 Go to
                 <img
                   src="./assets/images/imdb-logo.svg"
@@ -64,17 +63,18 @@
 
           <div class="card__details-container">
             <h2 class="card__title">
-              <span class="medium-text cursor--pointer hover--underline"
-                >Oppenheimer Lorem, ipsum dolor</span
+              <span
+                class="card__title-text medium-text cursor--pointer hover--underline"
+                >Film Title</span
               >
             </h2>
 
             <div class="card__tags-container">
               <div class="card__tag-year card__tag cursor--pointer">
-                <p class="card__tag-text">2023</p>
+                <p class="card__tag-text card__tag-year">Year</p>
               </div>
               <div class="card__tag-media-type card__tag cursor--pointer">
-                <p class="card__tag-text">Movie</p>
+                <p class="card__tag-text card--tag-type">Type</p>
               </div>
             </div>
           </div>
