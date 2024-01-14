@@ -1,8 +1,7 @@
 # temp files
 assets/temp
 assets/IMDB movie search UI.ai
-
-
+src/model/RESULTS-SAMPLE.ts
 
 # Logs
 logs
