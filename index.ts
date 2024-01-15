@@ -1,31 +1,88 @@
+import { animateSearchBtn } from './src/model/view/animations/animations';
+
 import {
   GeneralTitleSearch,
-  movieOrSeriesOrEpisode,
   SearchParamsObj,
+  GeneralResultParsedTypes,
 } from './src/model/GeneraTitleSearch';
+import { ViewGeneralResults } from './src/model/view/ViewGeneralResults';
+
+const cardGroupElementParent = document.querySelector('#card-group');
 
 let GeneralSearchParamObj: SearchParamsObj = {
-  s: 'Oppenheimer',
-  page: '1',
-  type: 'movie',
-  y: '2023',
+  s: '',
+  page: '',
+  type: '',
+  y: '',
 };
 
-// const GeneralSearch = async () => {
-//   try {
-//     const search1 = new GeneralTitleSearch();
-//     const result = await search1.search(GeneralSearchParamObj);
-//     return result;
-//   } catch {
-//     console.log('General Search Result Error');
-//   }
-// };
+let previousGeneralSearchParamObj: SearchParamsObj = {
+  s: 'none',
+  page: 'none',
+  type: '',
+  y: 'none',
+};
+//---------------------------------------------------
 
-// GeneralSearch()
-//   .then((result) => {
-//     console.log(result);
-//   })
-//   .catch((err) => {
-//     console.log('General Result Error');
-//     console.log(err);
-//   });
+function checkSameObjectValues(object1: Object, object2: Object): boolean {
+  const obj1Vals = Object.values(object1);
+  const obj2Vals = Object.values(object2);
+  if (obj1Vals.join('') === obj2Vals.join('')) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+let resultCopy: GeneralResultParsedTypes;
+
+function searchAndRenderGeneral(): void {
+  if (
+    checkSameObjectValues(previousGeneralSearchParamObj, GeneralSearchParamObj)
+  ) {
+    if (cardGroupElementParent) {
+      console.log('Reloading previous query');
+      const view = new ViewGeneralResults(cardGroupElementParent, resultCopy);
+      view.renderResult();
+    }
+  } else {
+    previousGeneralSearchParamObj = { ...GeneralSearchParamObj };
+    GeneralTitleSearch.search(GeneralSearchParamObj)
+      .then((result) => {
+        console.log(result);
+        resultCopy = JSON.parse(JSON.stringify(result));
+        if (cardGroupElementParent) {
+          const view = new ViewGeneralResults(cardGroupElementParent, result);
+          view.renderResult();
+        } else {
+          console.log('Selected card parent does not exist');
+        }
+      })
+      .catch(() => {
+        console.log('Error on search');
+      });
+  }
+}
+
+// ----------------Search Bar----------------
+const searchBarForm = document.querySelector(
+  '.nav__search-bar-container'
+) as HTMLFormElement;
+
+const searchBar = document.querySelector('#nav-search-bar') as HTMLInputElement;
+
+const searchButton = document.querySelector(
+  '#nav__search-bar-search-icon'
+) as HTMLInputElement;
+
+searchBarForm.addEventListener('submit', (event) => {
+  event.preventDefault();
+  if (searchBar.value.length >= 3) {
+    GeneralSearchParamObj.s = searchBar.value;
+    searchAndRenderGeneral();
+  } else {
+    console.log('Search query must be at least 3 characters');
+  }
+});
+
+animateSearchBtn();

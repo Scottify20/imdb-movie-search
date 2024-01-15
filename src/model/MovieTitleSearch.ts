@@ -1,4 +1,4 @@
-import { TitleProps } from './TitleProps';
+import { TitleProps } from './CompleteTitleProps';
 
 interface MovieTitleProps extends TitleProps {
   DVD: '30 Nov 2016';

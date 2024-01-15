@@ -37,7 +37,7 @@
 
   /* Component dimension variables */
   --navbar-height: 3.5rem;
-  --navbar-gap: 1em;
+  --navbar-gap: 0.5em;
   --navbar-width: calc((4 * var(--card-width)) + (3 * var(--card-group-gap)));
 
   --card-group-gap: 3rem;
@@ -60,14 +60,18 @@
   --footer-bg-color: #2a2a2a;
 
   --card-outline-color: transparent;
-  --dark-text-color: #000000;
+  --dark-text-color: #151515;
   --header-bg-color: #efcd78e8;
-  --search-box-bg-color: #ffffffda;
+  --search-box-bg-color: #ffffffbc;
   --light-text-color: #ffffff;
 
-  --nav-item-hover-background-color: #000000c2;
-  --nav-item-hover-background-color-inverted: #eed2ddc2;
-  --nav-search-bar-focus-bg-color: #38360fd8;
+  // --nav-item-hover-background-color-inverted: #eed2ddc2;
+  --nav-search-bar-hover-color: #ffffff;
+  --nav-search-bar-focus-bg-color: #ffffff;
+  --nav-search-bar-submit-btn-color: #413b17;
+  --nav-text-item-hover-background-color: var(
+    --nav-search-bar-submit-btn-color
+  );
 
   //visibility
   --card__link-buttons-visibilty: hidden;
@@ -158,54 +162,106 @@ main {
     align-items: center;
     gap: var(--navbar-gap);
 
-    .nav__search-bar {
+    .nav__search-bar-container {
+      border-radius: 999px;
+      position: relative;
+      min-width: 70px;
       width: 100%;
       height: 100%;
-      user-select: none;
-      background-color: var(--search-box-bg-color);
-      padding: 0 1em;
-      font-size: 1rem;
-      font-weight: 600;
-      border-radius: 0.5rem;
-      border: none;
+      transition: all ease-in-out 0.2s;
 
       &:hover {
-        background-color: var(--nav-item-hover-background-color);
-        color: var(--light-text-color);
-        -webkit-transition: all 0.15s;
-        -moz-transition: all 0.15s;
-        transition: all 0.175s;
+        filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.288));
       }
 
-      &::placeholder {
-        font-weight: 400;
+      &:hover .nav__search-bar-submit-btn {
+        filter: brightness(120%);
       }
 
-      &:hover::placeholder,
-      &:focus::placeholder {
-        color: var(--light-text-color);
+      .nav__search-button-container {
+        position: absolute;
+        height: 100%;
+        right: 0;
+
+        .nav__search-bar-search-icon {
+          position: absolute;
+          fill: rgba(255, 255, 255, 0.903);
+          height: 100%;
+          right: 0.75em;
+          aspect-ratio: 1 / 1;
+          border: none;
+          pointer-events: none;
+          --webkit-user-drag: none;
+        }
+
+        .Search-button-clicked {
+          animation: Search-button-clicked 0.2s ease-in-out;
+        }
+
+        @keyframes Search-button-clicked {
+          50% {
+            transform: scale(0.7);
+          }
+        }
+
+        .nav__search-bar-submit-btn {
+          position: absolute;
+          right: 0;
+          height: 100%;
+          aspect-ratio: 1 / 1;
+          border: none;
+          background-color: var(--nav-search-bar-submit-btn-color);
+          border-radius: 0 999px 999px 0;
+
+          // &:active {
+          //   filter: brightness(180%);
+          // }
+        }
       }
 
-      &:focus {
-        background-color: var(--nav-search-bar-focus-bg-color);
-        color: var(--light-text-color);
-        border: none;
-        outline: none;
+      .nav__search-bar {
+        transition: all ease-in-out 0.2s;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        user-select: none;
+        background-color: var(--search-box-bg-color);
+        padding: 0 1em;
+        font-size: 1rem;
+        font-weight: 600;
+        color: var(--nav-search-bar-submit-btn-color);
+        border-radius: 5em;
+        border: var(--nav-search-bar-cont-outline-if-search-bar-focused);
+        transition: all ease-in-out 0.2s;
+
+        &:hover {
+          background-color: var(--nav-search-bar-hover-color);
+        }
+        &:focus {
+          background-color: var(--nav-search-bar-focus-bg-color);
+          border: none;
+          outline: none;
+        }
+
+        &::placeholder {
+          font-weight: 400;
+        }
       }
     }
 
     .nav__txt-link {
+      // height: 100%;
       font-size: 1.3rem;
       color: var(--dark-text-color);
       user-select: none;
       font-size: 1.25rem;
       font-weight: 700;
-      padding: 0.25em 0.6em;
+      padding: 0.3em 0.6em;
       transition: all ease-in-out 0.15s;
       border-radius: 2em;
 
       &:hover {
-        background-color: var(--nav-item-hover-background-color);
+        background-color: var(--nav-text-item-hover-background-color);
         color: var(--light-text-color);
       }
 
@@ -321,7 +377,7 @@ main {
 
       .card__thumb {
         // transform: scale(1); // to fix
-        // aspect-ratio: 23 / 34;
+        aspect-ratio: 23 / 34;
         width: 100%;
         transition: 0.3s all ease-out;
         object-fit: cover;
@@ -358,8 +414,12 @@ main {
 
         .card__tag {
           border: 1px solid transparent;
-          user-select: none;
+
           transition: all ease-in-out 0.2s;
+
+          & p {
+            user-select: none;
+          }
 
           &:hover {
             background-color: rgba(77, 77, 77, 0.3);
@@ -372,33 +432,29 @@ main {
           }
         }
 
-        .card__tag-year {
+        .card__tag {
           display: grid;
           place-content: center;
           border-radius: 100px;
           padding: 0.4em 0.7em;
-          background-color: rgba(255, 255, 255, 0.1);
-          // p.card__tag-text {
-          // }
-        }
-
-        .card__tag-media-type {
-          display: grid;
-          place-content: center;
-          padding: 0.4em 0.7em;
-          border-radius: 100px;
           background-color: rgba(255, 255, 255, 0.1);
         }
       }
     }
   }
 }
-/* -----media query for breakpoints ------ */
+
+//-----------Variable change based on element states for any @media property
+
+//-----------------------------------------------------
+
+/* -----media query for device width breakpoints ------ */
 @media only screen and (max-width: 2560px) {
 }
 
 @media only screen and (max-width: 1280px) {
   :root {
+    --card-group-gap: 2.5rem;
     --navbar-width: calc((3 * var(--card-width)) + (2 * var(--card-group-gap)));
   }
   .card-group {
@@ -406,10 +462,10 @@ main {
   }
 }
 
-@media only screen and (max-width: 850px) {
+@media only screen and (max-width: 768px) {
   :root {
     --navbar-width: calc((2 * var(--card-width)) + (1 * var(--card-group-gap)));
-    --card-group-gap: 2rem;
+    --card-group-gap: 1.75rem;
   }
   .card-group {
     grid-template-columns: repeat(2, 1fr);
@@ -418,11 +474,10 @@ main {
 
 @media only screen and (max-width: 500px) {
   :root {
-    --navbar-width: calc((2 * var(--card-width)) + (1 * var(--card-group-gap)));
-    --navbar-height: 3.25rem;
-    --card-group-gap: 2rem;
     --card-width: 190px;
-    --card-group-gap: 2em;
+    --navbar-height: 3.25rem;
+    --card-group-gap: 1.5rem;
+    --navbar-width: calc((2 * var(--card-width)) + (1 * var(--card-group-gap)));
     --card-title-font-size: 1rem;
   }
   .card-group {
@@ -430,7 +485,19 @@ main {
   }
 }
 
-@media only screen and (max-width: 480px) {
+@media only screen and (max-width: 475px) {
+  :root {
+    --card-group-gap: 2em;
+    --navbar-width: calc(100% - 2em);
+    --card-width: 220px;
+  }
+
+  .card-group {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+@media only screen and (max-width: 320px) {
   :root {
     --navbar-width: calc(100% - 2em);
     --card-width: 220px;
@@ -438,6 +505,11 @@ main {
 
   .card-group {
     grid-template-columns: repeat(1, 1fr);
+  }
+
+  .card__thumb {
+    // transform: scale(1); // to fix
+    aspect-ratio: 23 / 25;
   }
 }
 
@@ -494,7 +566,7 @@ main {
       appearance: none;
       transition: all ease-in-out 0.2s;
 
-      opacity: 85%;
+      opacity: 90%;
       &:checked {
         opacity: 100%;
       }
@@ -519,8 +591,8 @@ main {
         position: absolute;
         content: url('../images/dot-options.svg');
         border-radius: 1000px;
-        top: 36%;
-        right: -32%;
+        top: 35%;
+        right: -34%;
         width: 100%;
         height: 67%;
       }
@@ -557,7 +629,7 @@ main {
       }
 
       &:checked + .card__link-buttons-container {
-        background-color: #00000091;
+        background-color: #000000ad;
         z-index: 2;
         pointer-events: none;
       }
@@ -579,9 +651,9 @@ main {
   //   transition: all 0.175s;
   // }
 
-  // .card:active .card__thumb {
-  //   overflow: hidden;
-  //   transform: scale(1.05);
-  //   filter: contrast(100%);
-  // }
+  .card:active .card__thumb {
+    overflow: hidden;
+    transform: scale(1.05);
+    filter: contrast(100%);
+  }
 }
