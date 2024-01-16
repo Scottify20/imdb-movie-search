@@ -32,7 +32,8 @@ A simple web app to browse information about Movies, TV Series, and more in the 
 * Fetch API
 * Sass
 * Parcel v2
-* NPM
+* Visual Studio Code
+* npm (Node Package Manager)
 * Adobe Illustrator (For UI prototyping and creating custom icons. I should probably start using Figma/Adobe XD)
 * Font Awesome Icons (for some of the UI icons)
 
