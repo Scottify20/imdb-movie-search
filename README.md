@@ -23,7 +23,7 @@ A simple web app to browse information about Movies, TV Series, and more in the 
 * Built with Angular and Sass
 * See popular and your recently viewed titles on the homepage
 * Add titles to your Watchlist
-* Create your custom lists
+* Create custom lists
 * Track your progress on the episodes you have watched.
 
 ## Tools and Resources Used
