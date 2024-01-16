@@ -31,7 +31,7 @@ A web app to browse information about titles included in the IMDB dataset. Title
 * Adobe Illustrator (For UI prototyping and creating custom icons. I should probably start using Figma/Adobe XD)
 * Font Awesome Icons (for some of the UI icons)
 
-## How to run locally
+## How to run locally (with VSCode)
 ### Requirements
 * [Visual Studio Code](https://code.visualstudio.com/ "VS Code's Homepage")
 * [Git](https://git-scm.com/downloads "Git Downloads Section")
