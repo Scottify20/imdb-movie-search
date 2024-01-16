@@ -332,7 +332,8 @@ main {
         gap: 1.75em;
 
         &:hover {
-          background-color: #00000091;
+          background-color: #000000a1;
+          // backdrop-filter: blur(20px);
         }
 
         &:hover button {
