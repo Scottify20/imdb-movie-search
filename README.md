@@ -8,6 +8,7 @@ A simple web app to browse information about Movies, TV Series, and more in the 
 
 ## Screenshots
 (will add more device form factors later)
+
 ![screenshot preview](/assets/screenshots/temp-screenshot.jpg "screenshot preview")
 
 ## Features
