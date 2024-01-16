@@ -1,11 +1,11 @@
-import { animateSearchBtn } from './src/model/view/animations/animations';
+import { animateSearchBtn } from './src/view/animations/animations';
 
 import {
   GeneralTitleSearch,
   SearchParamsObj,
   GeneralResultParsedTypes,
 } from './src/model/GeneraTitleSearch';
-import { ViewGeneralResults } from './src/model/view/ViewGeneralResults';
+import { ViewGeneralResults } from './src/view/ViewGeneralResults';
 
 const cardGroupElementParent = document.querySelector('#card-group');
 
