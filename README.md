@@ -13,7 +13,7 @@ A web app to browse information about titles included in the IMDB dataset. Title
 #### In Development
 * Built with Typescript and Sass
 * Search and filter through IMDB titles
-* View titles in detail or visit their page on the IMDB website
+* View titles in detail
 
 #### Planned
 * Built with Angular and Sass
