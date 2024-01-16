@@ -16,7 +16,7 @@ A web app to browse information about titles included in the IMDB dataset. Title
 
 #### Planned
 * Built with Angular and Sass
-* See your recently searched view on the homepage
+* See your recently viewed titles on the homepage
 * Add IMDB titles to your Watchlist
 * Create your custom lists
 * Track your progress on the episodes you have watched.
@@ -36,5 +36,14 @@ A web app to browse information about titles included in the IMDB dataset. Title
 * Git
 ### Instructions
 1. Clone the repository to your machine
+   ```
+   git clone https://github.com/Scottify20/imdb-titles-search.git
+   ```
 2. Install the dependencies
-3. Host the website locally
+   ```
+   npm install
+   ```
+4. Host the website locally
+   ```
+   npm start
+   ```
