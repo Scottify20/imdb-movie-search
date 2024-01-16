@@ -17,7 +17,7 @@ A web app to browse information about titles included in the IMDB dataset. Title
 
 #### Planned
 * Built with Angular and Sass
-* See your recently viewed titles on the homepage
+* See popular and your recently viewed titles on the homepage
 * Add IMDB titles to your Watchlist
 * Create your custom lists
 * Track your progress on the episodes you have watched.
