@@ -3,7 +3,7 @@ A web app to browse information about titles included in the IMDB dataset. Title
 
 ### Notes:
 * For demo purposes. The OMDB API key for this project is exposed. Please do not use the API key for any purposes other than running this web app.
-* Due to the limitations of the OMDB API, I will replace it with TMDB API and secure the API key in future versions of this app.
+* Due to the limitations of the OMDB API, I will replace it with TMDB API and secure the new API key in future versions of this app.
 
 ## Screenshots 
 (no screenshots yet)
