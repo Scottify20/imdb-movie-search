@@ -17,6 +17,7 @@ export class GeneralTitleSearch extends OmdbSearch<GeneralSearchResult> {
   async processSearch(params: SearchParamsObj) {
     this.searchQuery = params.s;
     const requestUrl = this.requestUrl(params);
+    console.log(requestUrl);
     const fetchData = await this.fetchOmdb(requestUrl);
     const parsedData = await this.parseData(fetchData);
     //add search query to parsed data;
@@ -31,11 +32,14 @@ export class GeneralTitleSearch extends OmdbSearch<GeneralSearchResult> {
     const paramKeys = Object.keys(params);
     for (const paramKey of paramKeys) {
       if (params[paramKey] !== '') {
-        fullUrl = fullUrl.concat(`&${paramKey}=${params[paramKey]}`);
+        let paramVal = params[paramKey];
+        if (paramVal) {
+          paramVal = paramVal.replace(/^\s+|\s+$/g, '');
+          paramVal = paramVal.replace(/\s+/g, '+');
+        }
+        fullUrl = fullUrl.concat(`&${paramKey}=${paramVal}`);
       }
     }
-    // fullUrl
-    fullUrl = fullUrl.replace(/ /g, '+');
     console.log('requesting data with url:', fullUrl);
     return fullUrl;
   }
@@ -165,19 +169,3 @@ type GeneralFilmProps = {
 export type GeneralResultParsedTypes = GeneralSearchResultParsed | undefined;
 
 export type GeneralResultTypes = GeneralSearchResult | undefined;
-
-// constructor(
-//   public searchQuery: string,
-//   public pageNumberQuery: string = '',
-//   public typeQuery: movieOrSeriesOrEpisode = '',
-//   public yearQuery = ''
-// ) {
-//   super();
-// }
-
-// public params: { [key: string]: string } = {
-//   s: `${this.searchQuery}`,
-//   page: `${this.pageNumberQuery}`,
-//   type: `${this.typeQuery}`,
-//   y: `${this.yearQuery}`,
-// };

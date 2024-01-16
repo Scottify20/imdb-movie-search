@@ -1,4 +1,4 @@
-import { GeneralResultParsedTypes } from '../GeneraTitleSearch';
+import { GeneralResultParsedTypes } from '../model/GeneraTitleSearch';
 
 export class ViewGeneralResults {
   constructor(
@@ -6,15 +6,27 @@ export class ViewGeneralResults {
     public generalResult: GeneralResultParsedTypes
   ) {}
 
-  //return a fragment
+  static renderResult(
+    parentElement: Element,
+    result: GeneralResultParsedTypes
+  ) {
+    return new ViewGeneralResults(parentElement, result).processRender();
+  }
+
+  processRender(): void {
+    this.parentElement.innerHTML = '';
+    this.parentElement.append(this.bindResults().content);
+  }
+
+  yearArraytoString(yearArray: number[]): string {
+    let yearString = yearArray.join(' - ');
+    return yearString;
+  }
+
   bindResults(): HTMLTemplateElement {
     let templateElement = document.createElement('template');
-    //if this.generalResult is not undefined
     if (this.generalResult) {
-      if (
-        this.generalResult.Error &&
-        this.generalResult.Error === 'Movie not found!'
-      ) {
+      if (this.generalResult.Error === 'Movie not found!') {
         templateElement.innerHTML = this.templateNoResults;
       }
       if (this.generalResult.Search) {
@@ -33,12 +45,13 @@ export class ViewGeneralResults {
   bindTemplateCardResultsSuccess(
     templateElement: HTMLTemplateElement
   ): HTMLTemplateElement {
-    const cardGroupTemplateElement = templateElement;
+    const cardTemplateElement = templateElement;
 
     this.generalResult?.Search?.forEach((film) => {
       const cardTemplate = document.createElement('template');
       cardTemplate.innerHTML = this.templateCardResultsSuccess;
 
+      const filmCardParent = cardTemplate.content.querySelector('article.card');
       const filmTitle = cardTemplate.content.querySelector('.card__title-text');
       const filmYear = cardTemplate.content.querySelector(
         '.card__tag-year-text'
@@ -48,40 +61,41 @@ export class ViewGeneralResults {
       );
       const filmPoster = cardTemplate.content.querySelector('.card__thumb');
       const openImdbBtn = cardTemplate.content.querySelector('.visit-imdb-btn');
+      const linksMenuCBToggle = cardTemplate.content.querySelector(
+        '.toggle-links-for-no-hover'
+      );
 
-      if (filmTitle) {
+      if (filmCardParent && filmTitle && filmYear && filmType) {
+        filmCardParent.setAttribute('id', `card-${film.imdbID}`);
         filmTitle.textContent = film.Title;
-      }
-
-      if (filmYear) {
         filmYear.textContent = this.yearArraytoString(film.Year);
-      }
-
-      if (filmType) {
         filmType.textContent = film.Type;
       }
-      filmPoster?.setAttribute('src', film.Poster);
+
+      if (film.Poster) {
+        filmPoster?.setAttribute(
+          'onerror',
+          `this.onerror=null; this.src='https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg'`
+        );
+
+        filmPoster?.setAttribute('src', film.Poster);
+      }
 
       openImdbBtn?.setAttribute(
         'onclick',
         `window.open(
-        'https://imdb.com/title/${film.imdbID}/',
-        '_blank'
-        );`
+          'https://imdb.com/title/${film.imdbID}/',
+          '_blank'
+          );`
       );
-      cardGroupTemplateElement.content.append(cardTemplate.content);
+
+      if (linksMenuCBToggle) {
+        linksMenuCBToggle.setAttribute('id', `cb-menu-toggle-${film.imdbID}`);
+      }
+
+      cardTemplateElement.content.append(cardTemplate.content);
     });
-    return cardGroupTemplateElement;
-  }
-
-  renderResult(): void {
-    this.parentElement.innerHTML = '';
-    this.parentElement.append(this.bindResults().content);
-  }
-
-  yearArraytoString(yearArray: number[]): string {
-    let yearString = yearArray.join(' - ');
-    return yearString;
+    return cardTemplateElement;
   }
 
   templateFallbacktoServerMessageError: string = `
@@ -98,12 +112,11 @@ export class ViewGeneralResults {
   <p class="no-results-found-general">No results found for: ${this.generalResult?.searchQuery}</p>`;
 
   templateCardResultsSuccess: string = `
-  <article class="card">
+  <article class="card" tabindex="0">
   <div class="card__thumb-and-links-container cursor--pointer">
     <input
-      id=""
-      type="checkbox"
-      name="links-toggle"
+      type="radio"
+      name="card-links-toggle"
       class="toggle-links-for-no-hover"
     />
     <div class="card__link-buttons-container">

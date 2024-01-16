@@ -61,7 +61,7 @@
 
   --card-outline-color: transparent;
   --dark-text-color: #151515;
-  --header-bg-color: #efcd78e8;
+  --header-bg-color: #efcd78;
   --search-box-bg-color: #ffffffbc;
   --light-text-color: #ffffff;
 
@@ -109,6 +109,22 @@ body {
   display: flex;
   flex-flow: column nowrap;
   background-color: var(--bg-color);
+
+  // Nav bvar show and hide on scroll
+  &.scroll-up header {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.332);
+  }
+  &.scroll-down header {
+    transform: translateY(-100%);
+  }
+}
+
+header {
+  width: 100%;
+  z-index: 999;
+  position: fixed;
+  top: 0;
+  transition: all ease-out 0.2s;
 }
 
 main {
@@ -139,14 +155,8 @@ main {
 }
 
 .nav {
-  z-index: 1;
-  position: fixed;
-  top: 0;
-  background-color: var(--header-bg-color);
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.332);
-
-  width: 100%;
   height: var(--navbar-height);
+  background-color: var(--header-bg-color);
 
   display: flex;
   flex-flow: row nowrap;
@@ -213,9 +223,9 @@ main {
           background-color: var(--nav-search-bar-submit-btn-color);
           border-radius: 0 999px 999px 0;
 
-          // &:active {
-          //   filter: brightness(180%);
-          // }
+          &:active {
+            filter: brightness(180%);
+          }
         }
       }
 
@@ -267,7 +277,6 @@ main {
 
       &:focus {
         border: none;
-        outline: none;
       }
     }
   }
@@ -332,8 +341,8 @@ main {
         gap: 1.75em;
 
         &:hover {
-          background-color: #000000cb;
-          // backdrop-filter: blur(20px);
+          background-color: #000000a4;
+          backdrop-filter: blur(5px);
         }
 
         &:hover button {
@@ -360,7 +369,7 @@ main {
           }
 
           &:hover {
-            filter: brightness(150%);
+            filter: brightness(160%);
           }
 
           &.visit-imdb-btn {
@@ -516,10 +525,6 @@ main {
 
 /* ---media query for devices that can hover */
 @media (hover: hover) {
-  .card__thumb {
-    filter: contrast(80%);
-  }
-
   .card:hover {
     background-color: var(--card-highlight-bg-color);
     color: var(--dark-text-color);
@@ -531,8 +536,7 @@ main {
 
   .card:hover .card__thumb {
     overflow: hidden;
-    transform: scale(1.1);
-    filter: contrast(100%);
+    // transform: scale(1.1);
   }
 }
 
@@ -622,7 +626,9 @@ main {
 
       & + .card__link-buttons-container {
         &:hover {
+          backdrop-filter: blur(0px);
           background-color: transparent;
+          transition: backgroud-color ease-in-out 0.2s;
           & button {
             opacity: 0%;
           }
@@ -631,6 +637,7 @@ main {
 
       &:checked + .card__link-buttons-container {
         background-color: #000000ad;
+        backdrop-filter: blur(5px);
         z-index: 2;
         pointer-events: none;
       }
@@ -642,19 +649,20 @@ main {
     }
   }
 
-  .card__thumb {
-    filter: contrast(100%);
-  }
+  // .card__thumb {
+  //   &:active {
+  //     overflow: hidden;
+  //   }
+  // }
+
+  // .card:active .card__thumb {
+  //   overflow: hidden;
+  //   transform: scale(1.05);
+  // }
 
   // .card:active {
   //   background-color: var(--card-highlight-bg-color);
   //   color: var(--dark-text-color);
   //   transition: all 0.175s;
   // }
-
-  .card:active .card__thumb {
-    overflow: hidden;
-    transform: scale(1.05);
-    filter: contrast(100%);
-  }
 }
