@@ -6,8 +6,8 @@ A simple web app to browse information about Movies, TV Series, and more in the 
  key for this project is exposed. Please do not use the API key for any purposes other than running this web app.
 * Due to the limitations of the OMDB API, I will replace it with [TMDB API](https://developer.themoviedb.org/docs/getting-started "TMDB API Section") and secure the new API key in future versions of this app.
 
-## Screenshots 
-(no screenshots yet)
+## Screenshots (Will add more device form factors later)
+![screenshot preview](assets\screenshots\temp-screenshot.jpg "screenshot preview")
 
 ## Features
 #### In Development
