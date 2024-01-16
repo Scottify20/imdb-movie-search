@@ -1,5 +1,5 @@
-# IMDB Titles Search
-A web app to browse information about titles included in the IMDB dataset. Titles include Movies, TV Series, and more.
+# OMDB Titles Browser
+A simple web app to browse information about Movies, TV Series, and more in the [OMDB API](https://www.omdbapi.com/ "OMDB API's Website")'s Dataset.
 
 ### Notes:
 * For demo purposes. The [OMDB API](https://www.omdbapi.com/ "OMDB API's Website")
@@ -12,13 +12,13 @@ A web app to browse information about titles included in the IMDB dataset. Title
 ## Features
 #### In Development
 * Built with Typescript and Sass
-* Search and filter through IMDB titles
+* Search and filter through OMDB titles
 * View titles in detail
 
 #### Planned
 * Built with Angular and Sass
 * See popular and your recently viewed titles on the homepage
-* Add IMDB titles to your Watchlist
+* Add titles to your Watchlist
 * Create your custom lists
 * Track your progress on the episodes you have watched.
 
