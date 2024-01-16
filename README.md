@@ -24,8 +24,9 @@ A simple web app to browse information about Movies, TV Series, and more in the 
 
 ## Tools and Resources Used
 * [OMDB API](https://www.omdbapi.com/ "OMDB API's Website")
-* Sass
 * Typescript
+* Fetch API
+* Sass
 * Parcel Bundler V2
 * NPM
 * Adobe Illustrator (For UI prototyping and creating custom icons. I should probably start using Figma/Adobe XD)
