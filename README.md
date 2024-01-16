@@ -11,6 +11,8 @@ A simple web app to browse information about Movies, TV Series, and more in the 
 
 ![screenshot preview](/assets/screenshots/temp-screenshot.jpg "screenshot preview")
 
+## Live Preview
+* will add link when deployed
 ## Features
 #### In Development
 * Built with Typescript and Sass
