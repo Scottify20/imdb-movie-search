@@ -28,9 +28,10 @@ A simple web app to browse information about Movies, TV Series, and more in the 
 
 ## Tools and Resources Used
 * [OMDB API](https://www.omdbapi.com/ "OMDB API's Website")
+* HTML
+* Sass
 * Typescript
 * Fetch API
-* Sass
 * Parcel v2
 * Visual Studio Code
 * npm (Node Package Manager)
