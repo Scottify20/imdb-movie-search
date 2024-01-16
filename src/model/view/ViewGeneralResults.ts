@@ -36,7 +36,6 @@ export class ViewGeneralResults {
     const cardGroupTemplateElement = templateElement;
 
     this.generalResult?.Search?.forEach((film) => {
-      console.log(film.Type);
       const cardTemplate = document.createElement('template');
       cardTemplate.innerHTML = this.templateCardResultsSuccess;
 
@@ -77,7 +76,6 @@ export class ViewGeneralResults {
 
   renderResult(): void {
     this.parentElement.innerHTML = '';
-    console.log(this.bindResults().content);
     this.parentElement.append(this.bindResults().content);
   }
 
