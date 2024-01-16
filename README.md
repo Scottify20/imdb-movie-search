@@ -44,7 +44,7 @@ A web app to browse information about titles included in the IMDB dataset. Title
    ```
    npm install
    ```
-3. Host the website locally
+3. Serve the website locally
    ```
    npm start
    ```
