@@ -2,8 +2,9 @@
 A web app to browse information about titles included in the IMDB dataset. Titles include Movies, TV Series, and more.
 
 ### Notes:
-* For demo purposes. The OMDB API key for this project is exposed. Please do not use the API key for any purposes other than running this web app.
-* Due to the limitations of the OMDB API, I will replace it with TMDB API and secure the new API key in future versions of this app.
+* For demo purposes. The [OMDB API](https://www.omdbapi.com/ "OMDB API's Website")
+ key for this project is exposed. Please do not use the API key for any purposes other than running this web app.
+* Due to the limitations of the OMDB API, I will replace it with [TMDB API](https://developer.themoviedb.org/docs/getting-started "TMDB API Section") and secure the new API key in future versions of this app.
 
 ## Screenshots 
 (no screenshots yet)
@@ -22,7 +23,7 @@ A web app to browse information about titles included in the IMDB dataset. Title
 * Track your progress on the episodes you have watched.
 
 ## Tools and Resources Used
-* Omdb API
+* [OMDB API](https://www.omdbapi.com/ "OMDB API's Website")
 * Sass
 * Typescript
 * Parcel Bundler V2
@@ -32,8 +33,8 @@ A web app to browse information about titles included in the IMDB dataset. Title
 
 ## How to run locally
 ### Requirements
-* Visual Studio Code
-* Git
+* [Visual Studio Code](https://code.visualstudio.com/ "VS Code's Homepage")
+* [Git](https://git-scm.com/downloads "Git Downloads Section")
 ### Instructions
 1. Clone the repository to your machine
    ```
