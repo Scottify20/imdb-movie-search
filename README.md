@@ -4,7 +4,7 @@ A simple web app to browse information about Movies, TV Series, and more in the 
 ### Notes:
 * For demo purposes. The [OMDB API](https://www.omdbapi.com/ "OMDB API's Website")
  key for this project is exposed. Please do not use the API key for any purposes other than running this web app.
-* Due to the limitations of the OMDB API, I will replace it with [TMDB API](https://developer.themoviedb.org/docs/getting-started "TMDB API Section") and secure the new API key in future versions of this app.
+* Due to the limitations of the OMDB API, I will be replacing it with [TMDB API](https://developer.themoviedb.org/docs/getting-started "TMDB API Section") and secure the new API key in future versions of this app.
 
 ## Screenshots
 * This is just a preview since the app is still in development. I will also add screenshots for other device form factors later
@@ -16,11 +16,11 @@ A simple web app to browse information about Movies, TV Series, and more in the 
 ## Features
 #### In Development
 * Built with Typescript and Sass
-* Search and filter through OMDB titles
+* Search and filter through titles in the OMDB Database
 * View titles in detail
 
 #### Planned
-* Built with Angular and Sass
+* Rebuilt with Angular and Sass
 * See popular and your recently viewed titles on the homepage
 * Add titles to your Watchlist
 * Create custom lists
