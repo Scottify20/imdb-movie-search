@@ -22,9 +22,9 @@ A simple web app to browse information about Movies, TV Series, and more in the 
 #### Planned
 * Rebuilt with Angular and Sass
 * See popular and your recently viewed titles on the homepage
-* Add titles to your Watchlist
+* Add titles to your watchlist
 * Create custom lists
-* Track your progress on the episodes you have watched.
+* Keep track on the movies, series, and episodes you have watched.
 
 ## Tools and Resources Used
 * [OMDB API](https://www.omdbapi.com/ "OMDB API's Website")
