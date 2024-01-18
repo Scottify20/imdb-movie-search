@@ -34,7 +34,7 @@ A simple web app to browse information about Movies, TV Series, and more in the 
 * Fetch API
 * Parcel v2
 * Visual Studio Code
-* NodesJS and npm
+* Nodes.js and npm
 * Adobe Illustrator (For UI prototyping and creating custom icons. I should probably start using Figma/Adobe XD)
 * Font Awesome Icons (for some of the UI icons)
 
@@ -42,7 +42,7 @@ A simple web app to browse information about Movies, TV Series, and more in the 
 ### Requirements
 * [Visual Studio Code](https://code.visualstudio.com/ "VS Code's Homepage")
 * [Git](https://git-scm.com/downloads "Git Downloads Section")
-* NodeJS and npm
+* Node.js and npm
 ### Instructions
 1. Clone the repository to your machine
    ```
