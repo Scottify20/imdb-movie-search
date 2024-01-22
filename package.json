@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "parcel serve index.js",
-    "build": "parcel build index.js"
+    "start": "parcel serve index.html",
+    "build": "parcel build index.ts"
   },
   "keywords": [],
   "author": "Scott Ivan Fulguirinas",

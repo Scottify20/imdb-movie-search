@@ -2,6 +2,9 @@
 src/assets/temp
 assets/IMDB movie search UI.ai
 src/omdb/model/RESULTS-SAMPLE.ts
+dist
+index.js
+index.js.map
 
 # Logs
 logs
