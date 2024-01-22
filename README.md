@@ -54,7 +54,7 @@ A simple web app to browse information about Movies, TV Series, and more in the 
    ```
 3. Serve the website locally
    ```
-   npm start
+   npm run start
    ```
 4. Open this URL on a browser
    ```
