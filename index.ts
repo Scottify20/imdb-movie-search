@@ -139,7 +139,7 @@ const footerObserver = new IntersectionObserver(
       console.log('no');
     }
   },
-  { rootMargin: '500px' }
+  { rootMargin: '700px' }
 );
 //--------Intersection Observer for infinite scrolling of cards--------
 

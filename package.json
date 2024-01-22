@@ -2,18 +2,25 @@
   "name": "imdb-movie-search",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "source": "index.html",
   "scripts": {
-    "start": "parcel serve index.html",
-    "build": "parcel build index.ts"
+    "start": "del-cli dist && parcel --no-source-maps",
+    "build": "del-cli dist && parcel build --no-source-maps",
+    "deploy": "npm run build && vercel --prod"
   },
   "keywords": [],
   "author": "Scott Ivan Fulguirinas",
   "license": "GPL-3.0",
   "devDependencies": {
     "@parcel/transformer-sass": "^2.11.0",
+    "del-cli": "^5.1.0",
     "parcel": "^2.11.0",
     "sass": "^1.69.7",
     "typescript": "^5.3.3"
+  },
+  "targets": {
+    "default": {
+      "distDir": "dist"
+    }
   }
 }
