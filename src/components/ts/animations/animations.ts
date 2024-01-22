@@ -14,5 +14,3 @@ export function animateSearchBtn() {
     }
   });
 }
-
-animateSearchBtn();
