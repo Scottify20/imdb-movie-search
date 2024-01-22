@@ -12,7 +12,7 @@ A simple web app to browse information about Movies, TV Series, and more in the 
 ![screenshot preview](src/assets/screenshots/temp-screenshot.jpg "screenshot preview")
 
 ## Live Preview
-* https://omdb-browser-theta.vercel.app/
+ [OMDB Titles Search](https://omdb-titles-browser.vercel.app/ "OMDB Titles Search: Live Preview")
 ## Features
 #### In Development
 * Built with Typescript and Sass
