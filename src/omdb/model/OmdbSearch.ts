@@ -5,7 +5,7 @@ export interface OmdbResponse {
 
 export abstract class OmdbSearch<T extends OmdbResponse> {
   private _apiKey = 'cbb2cfa7';
-  protected baseUrl = `http://www.omdbapi.com/?apikey=${this._apiKey}`;
+  protected baseUrl = `https://www.omdbapi.com/?apikey=${this._apiKey}`;
 
   async fetchOmdb(requestUrl: string): Promise<T | undefined> {
     try {
