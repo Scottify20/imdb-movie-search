@@ -2,10 +2,10 @@
   "name": "imdb-movie-search",
   "version": "1.0.0",
   "description": "",
-  "main": "index.html",
+  "main": "index.js",
   "scripts": {
-    "start": "parcel serve index.html",
-    "build": "parcel build index.html"
+    "start": "parcel serve index.js",
+    "build": "parcel build index.js"
   },
   "keywords": [],
   "author": "Scott Ivan Fulguirinas",
