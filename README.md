@@ -9,7 +9,7 @@ A simple web app to browse information about Movies, TV Series, and more in the 
 ## Screenshots
 * This is just a preview since the app is still in development. I will also add screenshots for other device form factors later
   
-![screenshot preview](/assets/screenshots/temp-screenshot.jpg "screenshot preview")
+![screenshot preview](src/assets/screenshots/temp-screenshot.jpg "screenshot preview")
 
 ## Live Preview
 * will add link when deployed

@@ -1,4 +1,4 @@
-import { TitleProps } from './CompleteTitleProps';
+import { TitleProps } from './BaseSingleTitleProps';
 
 interface SeriesTitleProps extends TitleProps {
   totalSeasons: string;

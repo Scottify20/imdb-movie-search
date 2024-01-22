@@ -1,11 +1,7 @@
 import { OmdbSearch, OmdbResponse } from './OmdbSearch';
 
 export class GeneralTitleSearch extends OmdbSearch<GeneralSearchResult> {
-  public searchQuery: string = '';
-
-  static async search(
-    params: SearchParamsObj
-  ): Promise<GeneralResultParsedTypes> {
+  static async search(params: SearchParamsObj): Promise<GeneralResultParsedTypes> {
     try {
       const searchResult = await new GeneralTitleSearch().processSearch(params);
       return searchResult;
@@ -15,15 +11,19 @@ export class GeneralTitleSearch extends OmdbSearch<GeneralSearchResult> {
   }
 
   async processSearch(params: SearchParamsObj) {
-    this.searchQuery = params.s;
+    const searchQuery = params.s;
+    const pageNumberString = params.page;
+
     const requestUrl = this.requestUrl(params);
     console.log(requestUrl);
     const fetchData = await this.fetchOmdb(requestUrl);
-    const parsedData = await this.parseData(fetchData);
-    //add search query to parsed data;
+    const parsedData = await this.parseSearchResults(fetchData);
+    //add search query and page number and showed results to parsed data;
     if (parsedData) {
-      parsedData.searchQuery = this.searchQuery;
+      parsedData.searchQuery = searchQuery;
+      parsedData.pageNumber = parseInt(pageNumberString);
     }
+    console.log(parsedData);
     return parsedData;
   }
 
@@ -34,8 +34,7 @@ export class GeneralTitleSearch extends OmdbSearch<GeneralSearchResult> {
       if (params[paramKey] !== '') {
         let paramVal = params[paramKey];
         if (paramVal) {
-          paramVal = paramVal.replace(/^\s+|\s+$/g, '');
-          paramVal = paramVal.replace(/\s+/g, '+');
+          paramVal = paramVal.replace(/^\s+|\s+$/g, '').replace(/\s+/g, '+');
         }
         fullUrl = fullUrl.concat(`&${paramKey}=${paramVal}`);
       }
@@ -44,11 +43,11 @@ export class GeneralTitleSearch extends OmdbSearch<GeneralSearchResult> {
     return fullUrl;
   }
 
-  async parseData(
+  async parseSearchResults(
     dataFromFetch: GeneralSearchResult | undefined
   ): Promise<GeneralResultParsedTypes> {
     if (dataFromFetch) {
-      let parsedData: GeneralSearchResultParsed = {
+      let parsedResult: GeneralSearchResultParsed = {
         Search: [],
         Response: '',
         totalResults: 0,
@@ -56,57 +55,53 @@ export class GeneralTitleSearch extends OmdbSearch<GeneralSearchResult> {
         Error: 'No Error',
       };
       if (dataFromFetch.Response === 'True') {
-        // parse the properties of films inside Search:[]
-        const parsedFilms = this.parseSucessFilms(dataFromFetch);
-        parsedData.Search = [...parsedFilms];
+        // parse the properties of films inside Search:{}[]
+        const parsedFilms = this.parseSearchedFilms(dataFromFetch);
+        parsedResult.Search = [...parsedFilms];
         // get parsedresponseString
-        parsedData.Response = dataFromFetch.Response;
+        parsedResult.Response = dataFromFetch.Response;
         // get total results number
         if (dataFromFetch.totalResults) {
-          parsedData.totalResults = parseInt(dataFromFetch.totalResults);
+          parsedResult.totalResults = parseInt(dataFromFetch.totalResults);
         }
       } else if (dataFromFetch.Response === 'False') {
-        parsedData.Response = dataFromFetch.Response;
-        parsedData.Error = dataFromFetch.Error;
+        parsedResult.Response = dataFromFetch.Response;
+        parsedResult.Error = dataFromFetch.Error;
       }
-      return parsedData;
+      return parsedResult;
     } else {
       console.log('fetch Error on method fetchData');
       return undefined;
     }
   }
 
-  parseSucessFilms(fetchedData: GeneralSearchResult): ParsedFilm[] {
-    let parsedFilms: ParsedFilm[] = [];
+  parseSearchedFilms(fetchedData: GeneralSearchResult): GeneralParsedFilm[] {
+    let parsedFilms: GeneralParsedFilm[] = [];
     if (fetchedData.Search) {
       const films = fetchedData.Search;
 
       films.forEach((film) => {
-        let parsedFilm: ParsedFilm = {
+        let parsedFilm: GeneralParsedFilm = {
           Title: '',
           Year: [],
           imdbID: '',
           Type: 'movie',
           Poster: '',
         };
-
         for (const filmProp in film) {
           if (filmProp === 'Year') {
             const splitYear = film.Year.split('–');
-
             if (splitYear[1] === '' || splitYear.length === 1) {
               parsedFilm.Year.push(parseInt(splitYear[0]));
-            } else if (splitYear.length === 2 && splitYear[1] !== '') {
-              splitYear.forEach((numstring) =>
-                parsedFilm.Year.push(parseInt(numstring))
-              );
+            } else if (splitYear.length === 2) {
+              splitYear.forEach((numstring) => parsedFilm.Year.push(parseInt(numstring)));
             } else {
               parsedFilm.Year = [0];
             }
           } else if (filmProp === 'Type') {
             const [firstLetter, ...restOfLettters] = film.Type;
-            const upperfirstLetter = firstLetter.toUpperCase();
-            const joinedType = [upperfirstLetter, ...restOfLettters].join('');
+            const joinedType = [firstLetter.toUpperCase(), ...restOfLettters].join('');
+
             parsedFilm.Type = joinedType;
           } else {
             parsedFilm[filmProp] = film[filmProp];
@@ -130,15 +125,25 @@ export type SearchParamsObj = {
   [key: string]: string | undefined;
 };
 
+export type GeneralResultParsedTypes = GeneralSearchResultParsed | undefined;
+export type GeneralResultTypes = GeneralSearchResult | undefined;
+
 type GeneralSearchResultParsed = {
-  Search?: ParsedFilm[];
+  Search?: GeneralParsedFilm[];
   Response: string;
   totalResults?: number;
   Error?: string;
-  searchQuery: string;
+  searchQuery?: string;
+  pageNumber?: number;
 };
 
-type ParsedFilm = {
+interface GeneralSearchResult extends OmdbResponse {
+  Search?: GeneralFilmProps[];
+  totalResults?: string;
+  searchQuery: string;
+}
+
+type GeneralParsedFilm = {
   Title: string;
   Year: number[];
   imdbID: string;
@@ -146,16 +151,6 @@ type ParsedFilm = {
   Poster: string;
   [key: string]: string | yearOrYearRange;
 };
-
-type yearOrYearRange = number | number[];
-
-interface GeneralSearchResult extends OmdbResponse {
-  Response: string;
-  Search?: GeneralFilmProps[];
-  totalResults?: string;
-  Error?: string;
-  searchQuery: string;
-}
 
 type GeneralFilmProps = {
   Title: string;
@@ -166,6 +161,4 @@ type GeneralFilmProps = {
   [key: string]: string;
 };
 
-export type GeneralResultParsedTypes = GeneralSearchResultParsed | undefined;
-
-export type GeneralResultTypes = GeneralSearchResult | undefined;
+type yearOrYearRange = number | number[];

@@ -40,6 +40,8 @@
   --navbar-gap: 0.5em;
   --navbar-width: calc((4 * var(--card-width)) + (3 * var(--card-group-gap)));
 
+  --no-of-cards-in-a-row: 0;
+
   --card-group-gap: 3rem;
   --card-width: 200px;
   --card-thumb-height: 170px;
@@ -69,9 +71,7 @@
   --nav-search-bar-hover-color: #ffffff;
   --nav-search-bar-focus-bg-color: #ffffff;
   --nav-search-bar-submit-btn-color: #413b17;
-  --nav-text-item-hover-background-color: var(
-    --nav-search-bar-submit-btn-color
-  );
+  --nav-text-item-hover-background-color: var(--nav-search-bar-submit-btn-color);
 
   //visibility
   --card__link-buttons-visibilty: hidden;
@@ -131,6 +131,9 @@ main {
   margin: 0 auto;
   margin-top: var(--navbar-height);
   flex-grow: 1;
+  display: flex;
+  flex-flow: column nowrap;
+  // place-content: center;
 }
 
 .footer {
@@ -307,6 +310,7 @@ main {
   display: grid;
   gap: var(--card-group-gap);
   grid-template-columns: repeat(4, 1fr);
+  --no-of-cards-in-a-row: 4;
   place-content: center;
 
   .card {
@@ -431,15 +435,15 @@ main {
             user-select: none;
           }
 
-          &:hover {
-            background-color: rgba(77, 77, 77, 0.3);
-            border: 1px solid rgba(0, 0, 0, 0.3);
-          }
+          // &:hover {
+          //   background-color: rgba(77, 77, 77, 0.3);
+          //   border: 1px solid rgba(0, 0, 0, 0.3);
+          // }
 
-          &:active {
-            filter: brightness(200%);
-            transform: scale(0.85);
-          }
+          // &:active {
+          //   filter: brightness(200%);
+          //   transform: scale(0.85);
+          // }
         }
 
         .card__tag {
@@ -447,7 +451,7 @@ main {
           place-content: center;
           border-radius: 100px;
           padding: 0.4em 0.7em;
-          background-color: rgba(255, 255, 255, 0.1);
+          background-color: rgba(255, 255, 255, 0.067);
         }
       }
     }
@@ -469,6 +473,7 @@ main {
   }
   .card-group {
     grid-template-columns: repeat(3, 1fr);
+    --no-of-cards-in-a-row: 3;
   }
 }
 
@@ -479,6 +484,7 @@ main {
   }
   .card-group {
     grid-template-columns: repeat(2, 1fr);
+    --no-of-cards-in-a-row: 2;
   }
 }
 
@@ -492,6 +498,7 @@ main {
   }
   .card-group {
     grid-template-columns: repeat(2, 1fr);
+    --no-of-cards-in-a-row: 2;
   }
 }
 
@@ -504,6 +511,7 @@ main {
 
   .card-group {
     grid-template-columns: repeat(1, 1fr);
+    --no-of-cards-in-a-row: 1;
   }
 }
 
@@ -515,6 +523,7 @@ main {
 
   .card-group {
     grid-template-columns: repeat(1, 1fr);
+    --no-of-cards-in-a-row: 1;
   }
 
   .card__thumb {
@@ -594,7 +603,7 @@ main {
 
       &::after {
         position: absolute;
-        content: url('../images/dot-options.svg');
+        content: url('./src/assets/images/dot-options.svg');
         border-radius: 1000px;
         top: 35%;
         right: -34%;
@@ -604,7 +613,7 @@ main {
 
       &:checked::after {
         position: absolute;
-        content: url('../images/x-btn.svg');
+        content: url('./src/assets/images/x-btn.svg');
         border-radius: 1000px;
         top: 32%;
         right: 27%;
@@ -665,4 +674,67 @@ main {
   //   color: var(--dark-text-color);
   //   transition: all 0.175s;
   // }
+}
+
+// For search result error Messages
+div.search-error-container {
+  grid-column: 1 / span var(--no-of-cards-in-a-row);
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  gap: 1rem;
+  height: calc(100vh - (var(--navbar-height) * 4));
+
+  .search-error-title,
+  .search-error-desc {
+    color: rgba(255, 255, 255, 0.868);
+    text-align: center;
+  }
+
+  .search-error-desc {
+    font-size: 1.25rem;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  div.search-error-container {
+    .search-error-title {
+      font-size: 1rem;
+    }
+    .search-error-desc {
+      font-size: 1rem;
+    }
+  }
+}
+
+div.search-error-container.no-more-results {
+  gap: 0.5em;
+  height: auto;
+}
+
+div.loading-container {
+  display: none;
+}
+
+div.loading-container.visible {
+  display: grid;
+  place-content: center;
+  place-self: center;
+  border-radius: 50%;
+  padding: 2rem;
+  aspect-ratio: 1 / 1;
+  background-color: white;
+  animation: Loading 1s ease-in-out infinite;
+  margin: calc(var(--card-group-gap) + 1rem);
+}
+
+@keyframes Loading {
+  0%,
+  100% {
+    opacity: 20%;
+  }
+  50% {
+    transform: scale(1.35);
+    opacity: 100%;
+  }
 }

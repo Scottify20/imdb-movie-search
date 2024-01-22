@@ -1,37 +1,46 @@
 import { GeneralResultParsedTypes } from '../model/GeneraTitleSearch';
 
 export class ViewGeneralResults {
-  constructor(
-    public parentElement: Element,
-    public generalResult: GeneralResultParsedTypes
-  ) {}
+  constructor(public parentElement: Element, public generalResult: GeneralResultParsedTypes) {}
 
-  static renderResult(
-    parentElement: Element,
-    result: GeneralResultParsedTypes
-  ) {
+  static renderResults(parentElement: Element, result: GeneralResultParsedTypes) {
     return new ViewGeneralResults(parentElement, result).processRender();
   }
 
   processRender(): void {
-    this.parentElement.innerHTML = '';
-    this.parentElement.append(this.bindResults().content);
-  }
+    if (this.generalResult?.pageNumber) {
+      const parent = this.parentElement;
+      const page = this.generalResult?.pageNumber as number;
 
-  yearArraytoString(yearArray: number[]): string {
-    let yearString = yearArray.join(' - ');
-    return yearString;
+      if (page <= 1) {
+        parent.innerHTML = '';
+      }
+      parent.append(this.bindResults().content);
+    }
   }
 
   bindResults(): HTMLTemplateElement {
+    const result = this.generalResult;
+
     let templateElement = document.createElement('template');
-    if (this.generalResult) {
-      if (this.generalResult.Error === 'Movie not found!') {
+    if (result) {
+      // No more results
+      // No results found
+      if (result.Error === 'No more results found!') {
+        templateElement.innerHTML = this.templateLastPageWarning;
+      } else if (result.Error === 'Movie not found!') {
         templateElement.innerHTML = this.templateNoResults;
       }
-      if (this.generalResult.Search) {
+      // If too many results found
+      else if (result.Error === 'Too many results.') {
+        templateElement.innerHTML = this.templateTooManyResultsError;
+      }
+      // If results found
+      else if (result.Search && result.Search[0] != undefined) {
         templateElement = this.bindTemplateCardResultsSuccess(templateElement);
-      } else if (this.generalResult.Error !== 'No Error') {
+      }
+      // If there are other errors sent by Omdb API //Fallback
+      else if (result.Error !== 'No Error') {
         templateElement.innerHTML = this.templateFallbacktoServerMessageError;
       }
     } else {
@@ -42,9 +51,12 @@ export class ViewGeneralResults {
     return templateElement;
   }
 
-  bindTemplateCardResultsSuccess(
-    templateElement: HTMLTemplateElement
-  ): HTMLTemplateElement {
+  yearArraytoString(yearArray: number[]): string {
+    let yearString = yearArray.join(' - ');
+    return yearString;
+  }
+
+  bindTemplateCardResultsSuccess(templateElement: HTMLTemplateElement): HTMLTemplateElement {
     const cardTemplateElement = templateElement;
 
     this.generalResult?.Search?.forEach((film) => {
@@ -53,17 +65,11 @@ export class ViewGeneralResults {
 
       const filmCardParent = cardTemplate.content.querySelector('article.card');
       const filmTitle = cardTemplate.content.querySelector('.card__title-text');
-      const filmYear = cardTemplate.content.querySelector(
-        '.card__tag-year-text'
-      );
-      const filmType = cardTemplate.content.querySelector(
-        '.card__tag-media-type-text'
-      );
+      const filmYear = cardTemplate.content.querySelector('.card__tag-year-text');
+      const filmType = cardTemplate.content.querySelector('.card__tag-media-type-text');
       const filmPoster = cardTemplate.content.querySelector('.card__thumb');
       const openImdbBtn = cardTemplate.content.querySelector('.visit-imdb-btn');
-      const linksMenuCBToggle = cardTemplate.content.querySelector(
-        '.toggle-links-for-no-hover'
-      );
+      const linksMenuCBToggle = cardTemplate.content.querySelector('.toggle-links-for-no-hover');
 
       if (filmCardParent && filmTitle && filmYear && filmType) {
         filmCardParent.setAttribute('id', `card-${film.imdbID}`);
@@ -77,7 +83,6 @@ export class ViewGeneralResults {
           'onerror',
           `this.onerror=null; this.src='https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg'`
         );
-
         filmPoster?.setAttribute('src', film.Poster);
       }
 
@@ -98,24 +103,42 @@ export class ViewGeneralResults {
     return cardTemplateElement;
   }
 
+  templateLastPageWarning: string = `
+  <div class="no-more-results search-error-container error-fetching-general-results">
+  <h2 class="search-error-title">That's all for:</h2>
+  <p class="search-error-desc"> ${this.generalResult?.searchQuery}<p>
+  </div>
+  `;
+
   templateFallbacktoServerMessageError: string = `
-  <div class="error-fetching-general-results">
-  <h2>Error Fetching Data from OMDB Api</h2>
-  <p>Error Message from the Server: ${this.generalResult!.Error}<p>
-  <div>`;
+  <div class="search-error-container error-fetching-general-results">
+  <h2 class="search-error-title">Failed to fetch data</h2>
+  <p class="search-error-desc"> ${this.generalResult!.Error}<p>
+  </div>`;
+
+  templateTooManyResultsError: string = `
+  <div class="search-error-container error-too-many-results">
+  <h2 class="search-error-title">Too many results.</h2>
+  <p class="search-error-desc">Please be more specific.<p>
+  </div>`;
 
   templateFetchCodeError: string = `
-  <h1>A Fetch API error has occurred</h1>
-  <p>Please notify the author: 'Scottify20'about this error</p>`;
+  <div class="search-error-container error-fetch-code-error">
+  <h2 class="search-error-title">A Fetch API error has occurred.</h2>
+  <p class="search-error-desc">Please notify: 'Scottify20'about this error.</p>
+  </div>`;
 
   templateNoResults: string = `
-  <p class="no-results-found-general">No results found for: ${this.generalResult?.searchQuery}</p>`;
+  <div class="search-error-container error-no-results">
+  <h2 class="search-error-title">No results found for:</h2>
+  <p class="search-error-desc">${this.generalResult?.searchQuery}</p>
+  </div>`;
 
   templateCardResultsSuccess: string = `
-  <article class="card" tabindex="0">
+  <article class="card search-result-card" tabindex="0">
   <div class="card__thumb-and-links-container cursor--pointer">
     <input
-      type="radio"
+      type="checkbox"
       name="card-links-toggle"
       class="toggle-links-for-no-hover"
     />
@@ -149,10 +172,10 @@ export class ViewGeneralResults {
     </h2>
 
     <div class="card__tags-container">
-      <div class="card__tag-year card__tag cursor--pointer">
+      <div class="card__tag-year card__tag">
         <p class="card__tag-text card__tag-year-text">Year</p>
       </div>
-      <div class="card__tag-media-type card__tag cursor--pointer">
+      <div class="card__tag-media-type card__tag">
         <p class="card__tag-text card__tag-media-type-text">Type</p>
       </div>
     </div>
