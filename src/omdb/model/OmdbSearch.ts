@@ -12,6 +12,7 @@ export abstract class OmdbSearch<T extends OmdbResponse> {
       const res = await fetch(requestUrl);
       const data: T = await res.json();
       if (data.Response === 'True') {
+        // console.log('ok')
       } else if (data.Response === 'False' && data.Error === 'Movie not found!') {
         console.log('500 Server Error or Error 404 Not Found');
       }

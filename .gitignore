@@ -6,7 +6,7 @@ assets/IMDB movie search UI.ai
 src/omdb/model/RESULTS-SAMPLE.ts
 index.js
 index.js.map
-private
+src/private
 
 
 # Logs

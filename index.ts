@@ -4,7 +4,12 @@ import {
   SearchParamsObj,
   GeneralResultParsedTypes,
 } from './src/omdb/model/GeneraTitleSearch';
+
 import { ViewGeneralResults } from './src/omdb/view/ViewGeneralResults';
+
+import { TmdbHomePagePopular } from './src/tmdb/model/TmdbHomepagePopular';
+
+TmdbHomePagePopular.fetch();
 
 // search button animation
 animateSearchBtn();
