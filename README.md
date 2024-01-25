@@ -6,13 +6,14 @@ A simple web app to browse information about Movies, TV Series, and more in the 
  key for this project is exposed. Please do not use the API key for any purposes other than running this web app.
 * Due to the limitations of the OMDB API, I will be replacing it with [TMDB API](https://developer.themoviedb.org/docs/getting-started "TMDB API Section") and secure the new API key in future versions of this app.
 
-## Screenshots
-* This is just a preview since the app is still in development. I will also add screenshots for other device form factors later
-  
-![screenshot preview](src/assets/screenshots/temp-screenshot.jpg "screenshot preview")
-
 ## Live Preview
  [OMDB Titles Search](https://omdb-titles-browser.vercel.app/ "OMDB Titles Search: Live Preview")
+ 
+## Screenshots
+* This is just a preview since the app is still in development. I will also add screenshots for other device form factors later
+
+![screenshot preview](src/assets/screenshots/temp-screenshot.jpg "screenshot preview")
+
 ## Features
 #### In Development
 * Built with Typescript and Sass
