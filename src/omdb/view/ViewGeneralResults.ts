@@ -147,7 +147,7 @@ export class ViewGeneralResults {
         View Details
       </button>
       <button id="" class="visit-imdb-btn cursor--pointer">
-        Go to
+        View in
         <img
           src="https://upload.wikimedia.org/wikipedia/commons/6/69/IMDB_Logo_2016.svg"
           alt="imdb-logo"
