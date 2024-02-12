@@ -2,7 +2,7 @@
 A simple web app to browse information about Movies, TV Series, and more in the [OMDB API](https://www.omdbapi.com/ "OMDB API's Website")'s Dataset.
 
 ### Notes:
-* For demo purposes. The [OMDB API](https://www.omdbapi.com/ "OMDB API's Website")
+* For demo purposes, the [OMDB API](https://www.omdbapi.com/ "OMDB API's Website")
  key for this project is exposed. Please do not use the API key for any purposes other than running this web app.
 * Due to the limitations of the OMDB API, I will be replacing it with [TMDB API](https://developer.themoviedb.org/docs/getting-started "TMDB API Section") and secure the new API key in future versions of this app.
 
