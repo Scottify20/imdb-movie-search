@@ -4,8 +4,9 @@
   "description": "",
   "source": "index.html",
   "scripts": {
-    "start": "del-cli dist && parcel --no-source-maps",
+    "dev": "del-cli dist && parcel --no-source-maps",
     "build": "del-cli dist && parcel build --no-source-maps",
+    "serve": "del-cli dist && parcel build --no-source-maps && serve dist",
     "deploy": "npm run build && vercel --prod"
   },
   "keywords": [],
@@ -16,7 +17,8 @@
     "del-cli": "^5.1.0",
     "parcel": "^2.11.0",
     "sass": "^1.69.7",
-    "typescript": "^5.3.3"
+    "typescript": "^5.3.3",
+    "serve": "14.2.1"
   },
   "targets": {
     "default": {

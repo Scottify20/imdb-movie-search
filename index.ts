@@ -9,6 +9,44 @@ import { ViewGeneralResults } from './src/omdb/view/ViewGeneralResults';
 // search button animation
 animateSearchBtn();
 
+// mobile sidebar menu toggle
+const mobileMenuToggle = document.querySelector(
+  '#nav__mobile-menu-sidebar-cb-toggle'
+) as HTMLInputElement;
+
+const mobileMenu = document.querySelector('#nav__mobile-menu');
+const mobileMenuContainer = document.querySelector('#nav__mobile-menu-container');
+
+mobileMenuToggle?.addEventListener('change', (event) => {
+  const toggle = event.target as HTMLInputElement;
+  if (toggle.checked) {
+    mobileMenuContainer?.classList.add('shown');
+  } else {
+    mobileMenuContainer?.classList.remove('shown');
+  }
+});
+
+// click outside of mobile menu bar toggle
+
+document.addEventListener('click', (event) => {
+  const target = event.target as HTMLElement;
+
+  if (!mobileMenu?.contains(target) && target.id !== 'nav__mobile-menu-sidebar-cb-toggle') {
+    mobileMenuToggle.checked = false;
+    mobileMenuContainer?.classList.remove('shown');
+  }
+});
+
+// click mobile menu close button
+
+document.addEventListener('click', (event) => {
+  const target = event.target as HTMLElement;
+  if (target.id == 'nav__mobile-menu-close-button') {
+    mobileMenuToggle.checked = false;
+    mobileMenuContainer?.classList.remove('shown');
+  }
+});
+
 //---fetching and rendering omdb search results----
 const cardGroupElementParent = document.querySelector('#card-group');
 
