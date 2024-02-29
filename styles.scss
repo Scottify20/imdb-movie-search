@@ -181,6 +181,28 @@ main {
   justify-content: center;
   align-items: center;
 
+  .nav__txt-link-btn {
+    // height: 100%;
+    font-size: 1.3rem;
+    color: var(--nav-items-color);
+    user-select: none;
+    font-size: 1.25rem;
+    font-weight: 700;
+    padding: 0.3em 0.6em;
+    margin: 0 1em;
+    transition: all ease-in-out 0.15s;
+    border-radius: 2em;
+
+    &:hover {
+      background-color: var(--nav-items-color);
+      color: var(--light-text-color);
+    }
+
+    &:focus {
+      border: none;
+    }
+  }
+
   .nav__left-items-container {
     flex-grow: 1;
     display: flex;
@@ -197,8 +219,8 @@ main {
     align-items: center;
 
     .github-src-btn {
+      margin: 0 1em;
       margin-bottom: -1.75%;
-      padding: 0 1em;
       & svg path {
         fill: var(--nav-items-color);
       }
@@ -299,27 +321,6 @@ main {
         &::placeholder {
           font-weight: 400;
         }
-      }
-    }
-
-    .nav__txt-link {
-      // height: 100%;
-      font-size: 1.3rem;
-      color: var(--dark-text-color);
-      user-select: none;
-      font-size: 1.25rem;
-      font-weight: 700;
-      padding: 0.3em 0.6em;
-      transition: all ease-in-out 0.15s;
-      border-radius: 2em;
-
-      &:hover {
-        background-color: var(--nav-text-item-hover-background-color);
-        color: var(--light-text-color);
-      }
-
-      &:focus {
-        border: none;
       }
     }
   }
