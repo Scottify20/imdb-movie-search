@@ -4,6 +4,10 @@
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 :root {
   // global cursor classes
   *:hover.cursor--pointer {
@@ -70,8 +74,9 @@
   // --nav-item-hover-background-color-inverted: #eed2ddc2;
   --nav-search-bar-hover-color: #ffffff;
   --nav-search-bar-focus-bg-color: #ffffff;
-  --nav-search-bar-submit-btn-color: #413b17;
-  --nav-text-item-hover-background-color: var(--nav-search-bar-submit-btn-color);
+  --nav-items-color: #413b17;
+  --nav-items-hover-color: #73682c;
+  --nav-text-item-hover-background-color: var(--nav-items-color);
 
   //visibility
   --card__link-buttons-visibilty: hidden;
@@ -144,8 +149,18 @@ main {
   flex-flow: row nowrap;
   align-items: center;
   justify-content: center;
+  align-content: center;
+  gap: 0.5rem;
 
   // z-index: 1;
+  a {
+    text-decoration: none;
+    color: white;
+
+    &:hover {
+      color: #848484;
+    }
+  }
 
   background-color: var(--footer-bg-color);
   color: var(--light-text-color);
@@ -166,7 +181,35 @@ main {
   justify-content: center;
   align-items: center;
 
-  .nav__items-container {
+  .nav__left-items-container {
+    flex-grow: 1;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-items: center;
+  }
+
+  .nav__right-items-container {
+    flex-grow: 1;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-end;
+    align-items: center;
+
+    .github-src-btn {
+      margin-bottom: -1.75%;
+      padding: 0 1em;
+      & svg path {
+        fill: var(--nav-items-color);
+      }
+
+      &:hover svg path {
+        fill: var(--nav-items-hover-color);
+      }
+    }
+  }
+
+  .nav__center-items-container {
     height: 70%;
     width: var(--navbar-width);
     display: flex;
@@ -184,11 +227,7 @@ main {
       transition: all ease-in-out 0.2s;
 
       &:hover {
-        filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.288));
-      }
-
-      &:hover .nav__search-bar-submit-btn {
-        filter: brightness(120%);
+        filter: drop-shadow(0 0 3px rgba(0, 0, 0, 0.288));
       }
 
       .nav__search-button-container {
@@ -224,11 +263,11 @@ main {
           height: 100%;
           aspect-ratio: 1 / 1;
           border: none;
-          background-color: var(--nav-search-bar-submit-btn-color);
+          background-color: var(--nav-items-color);
           border-radius: 0 999px 999px 0;
 
           &:active {
-            filter: brightness(180%);
+            background-color: var(--nav-items-hover-color);
           }
         }
       }
@@ -243,7 +282,7 @@ main {
         padding: 0 1em;
         font-size: 1rem;
         font-weight: 600;
-        color: var(--nav-search-bar-submit-btn-color);
+        color: var(--nav-items-color);
         border-radius: 5em;
         border: var(--nav-search-bar-cont-outline-if-search-bar-focused);
         transition: all ease-in-out 0.2s;
