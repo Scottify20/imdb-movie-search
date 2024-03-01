@@ -93,6 +93,12 @@ main {
   // place-content: center;
 }
 
+@media (hover: none) {
+  :root {
+    --card__link-buttons-visibilty: visible;
+  }
+}
+
 @media only screen and (max-width: 1280px) {
   :root {
     --card-group-gap: 2.5rem;

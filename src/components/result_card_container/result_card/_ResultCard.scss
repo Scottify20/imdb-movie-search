@@ -173,9 +173,6 @@
 (primarily touch devices)----- */
 
 @media (hover: none) {
-  :root {
-    --card__link-buttons-visibilty: visible;
-  }
   .card__thumb-and-links-container {
     position: relative;
     input.toggle-links-for-no-hover {
