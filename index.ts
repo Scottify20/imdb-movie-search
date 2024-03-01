@@ -4,10 +4,12 @@ import { OmdbSearchLogic } from './src/components/header/search_bar/OmdbSearchLo
 import { navBarAutoHide } from './src/components/header/Header';
 import { mobileSidebarLogic } from './src/components/mobile_sidebar_menu/MobileSidebarMenu';
 import { inject } from '@vercel/analytics';
+import { resultCardLogic } from './src/components/result_card_container/result_card/ResultCard';
 
-inject(); // vercel analytics
+inject(); // enable vercel analytics
 OmdbSearchLogic(true); //enables the search feature
 mobileSidebarLogic(true); // sidebar javascript logic for interactivity
 navBarAutoHide(true); // auto hiding and showing of navigation bar (header)
 ButtonsDisabler(true); // Disable the Buttons that are listed on the ButtonsDisabler class
+resultCardLogic(true); // checkbox menu toggling on other cards
 animateSearchBtn(); // search button animation

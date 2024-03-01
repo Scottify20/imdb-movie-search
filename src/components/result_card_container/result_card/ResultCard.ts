@@ -1,5 +1,5 @@
 // Unchecking checkbox linkstoggle on other cards when a checkbox linkstoggle is checked
-export function ResultCard(isOn: boolean) {
+export function resultCardLogic(isOn: boolean) {
   const cardGroupElementParent = document.querySelector('#card-group');
 
   (function checkBoxLinksToggled() {
