@@ -17,12 +17,15 @@
     "del-cli": "^5.1.0",
     "parcel": "^2.11.0",
     "sass": "^1.69.7",
-    "typescript": "^5.3.3",
-    "serve": "14.2.1"
+    "serve": "14.2.1",
+    "typescript": "^5.3.3"
   },
   "targets": {
     "default": {
       "distDir": "dist"
     }
+  },
+  "dependencies": {
+    "@vercel/analytics": "^1.2.2"
   }
 }
