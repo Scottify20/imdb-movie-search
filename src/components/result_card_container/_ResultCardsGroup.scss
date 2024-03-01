@@ -1,0 +1,114 @@
+.card-group {
+  top: 0;
+  margin: 0 auto;
+  padding: var(--card-group-gap);
+
+  // max-width: var(--card-group-max-width);
+
+  display: grid;
+  gap: var(--card-group-gap);
+  grid-template-columns: repeat(4, 1fr);
+  --no-of-cards-in-a-row: 4;
+  place-content: center;
+}
+
+// Animations for loading search results
+@keyframes Loading {
+  0%,
+  100% {
+    opacity: 20%;
+  }
+  50% {
+    transform: scale(1.35);
+    opacity: 100%;
+  }
+}
+
+//--------------------------
+
+@media only screen and (max-width: 1280px) {
+  .card-group {
+    grid-template-columns: repeat(3, 1fr);
+    --no-of-cards-in-a-row: 3;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .card-group {
+    grid-template-columns: repeat(2, 1fr);
+    --no-of-cards-in-a-row: 2;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .card-group {
+    grid-template-columns: repeat(2, 1fr);
+    --no-of-cards-in-a-row: 2;
+  }
+}
+
+@media only screen and (max-width: 475px) {
+  .card-group {
+    grid-template-columns: repeat(1, 1fr);
+    --no-of-cards-in-a-row: 1;
+  }
+}
+
+@media only screen and (max-width: 320px) {
+  .card-group {
+    grid-template-columns: repeat(1, 1fr);
+    --no-of-cards-in-a-row: 1;
+  }
+}
+
+//------------For search result error Messages
+div.search-error-container {
+  grid-column: 1 / span var(--no-of-cards-in-a-row);
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  gap: 1rem;
+  height: calc(100vh - (var(--navbar-height) * 4));
+
+  .search-error-title,
+  .search-error-desc {
+    color: rgba(255, 255, 255, 0.868);
+    text-align: center;
+  }
+
+  .search-error-desc {
+    font-size: 1.25rem;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  div.search-error-container {
+    .search-error-title {
+      font-size: 1rem;
+    }
+    .search-error-desc {
+      font-size: 1rem;
+    }
+  }
+}
+
+div.search-error-container.no-more-results {
+  gap: 0.5em;
+  height: auto;
+}
+
+div.loading-container {
+  display: none;
+}
+
+div.loading-container.visible {
+  display: grid;
+  place-content: center;
+  place-self: center;
+  border-radius: 50%;
+  padding: 2rem;
+  aspect-ratio: 1 / 1;
+  background-color: white;
+  animation: Loading 1s ease-in-out infinite;
+  margin: calc(var(--card-group-gap) + 1rem);
+}

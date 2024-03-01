@@ -1,6 +1,6 @@
-import { OmdbSearch, OmdbResponse } from './OmdbSearch';
+import { OmdbResponse, OmdbFetch } from './OmdbFetch';
 
-export class GeneralTitleSearch extends OmdbSearch<GeneralSearchResult> {
+export class GeneralTitleSearch extends OmdbFetch<GeneralSearchResult> {
   static async search(params: SearchParamsObj): Promise<GeneralResultParsedTypes> {
     try {
       const searchResult = await new GeneralTitleSearch().processSearch(params);

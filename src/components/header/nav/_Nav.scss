@@ -1,0 +1,130 @@
+.nav:has(.nav-search-bar:focus) {
+  opacity: 98%;
+}
+
+.nav {
+  position: relative;
+  height: var(--navbar-height);
+  background-color: var(--header-bg-color);
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+
+  .nav__txt-link-btn {
+    font-size: 1.3rem;
+    color: var(--nav-items-color);
+    user-select: none;
+    font-size: 1.25rem;
+    font-weight: 700;
+    // padding: 0.3em 0.6em;
+    margin: 0 1em;
+    transition: all ease-in-out 0.15s;
+    border-radius: 2em;
+
+    &:hover {
+      background-color: var(--nav-items-color);
+      color: var(--light-text-color);
+    }
+
+    &:focus {
+      border: none;
+    }
+  }
+
+  .nav__left-items-container {
+    left: 0;
+    z-index: 2;
+    position: absolute;
+    flex-grow: 1;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-items: center;
+  }
+
+  .nav__right-items-container {
+    right: 0;
+    z-index: 1;
+    position: absolute;
+    flex-grow: 1;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-end;
+    align-items: center;
+
+    .github-src-btn {
+      margin: 0 1em;
+      margin-bottom: -1.75%;
+      & svg path {
+        fill: var(--nav-items-color);
+      }
+
+      &:hover svg path {
+        fill: var(--nav-items-hover-color);
+      }
+    }
+  }
+
+  .nav__center-items-container {
+    height: 70%;
+    width: var(--navbar-width);
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    gap: var(--navbar-gap);
+
+    .nav__mobile-menu-hamburger-menu-container {
+      display: none;
+      position: relative;
+      height: 1.75em;
+      width: 2em;
+      margin-right: -0.25em;
+      // background-color: var(--nav-items-color);
+      transition: transform ease-out 0.15s;
+
+      &:hover + svg.hamburger-icon path {
+        fill: var(--nav-items-hover-color);
+      }
+
+      &:active {
+        transform: scale(0.7);
+      }
+
+      svg.hamburger-icon {
+        left: 50%;
+        top: 50%;
+        margin-left: -15px;
+        margin-top: -8px;
+        width: 24px;
+        position: absolute;
+        pointer-events: none;
+
+        path {
+          fill: var(--nav-items-color);
+        }
+      }
+
+      input.nav__mobile-menu-cb-toggle {
+        cursor: pointer;
+        width: 100%;
+        height: 100%;
+        appearance: none;
+        // opacity: 20%;
+      }
+    }
+  }
+}
+
+// device width lower than 1024
+@media only screen and (max-width: 1023px) {
+  .nav__mobile-menu-hamburger-menu-container.spec-up-1 {
+    display: block !important;
+  }
+
+  .nav__left-items-container.spec-up-1,
+  .nav__right-items-container.spec-up-1 {
+    display: none;
+  }
+}

@@ -1,3 +1,12 @@
+@import 'src/components/header/Header';
+@import 'src/components/mobile_sidebar_menu/MobileSidebarMenu';
+@import 'src/components/header/search_bar/SearchBar';
+@import 'src/components/header/nav/Nav';
+@import 'src/components/result_card_container/ResultCardsGroup';
+@import 'src/components/result_card_container/result_card/ResultCard';
+@import 'src/components/footer/Footer';
+@import 'src/utils/Utils';
+
 * {
   margin: 0;
   padding: 0;
@@ -9,31 +18,10 @@ html {
 }
 
 :root {
-  // global cursor classes
-  *:hover.cursor--pointer {
-    cursor: pointer;
-  }
-
-  // global font-weight classes
-  .medium-text {
-    font-weight: 500;
-  }
-
-  .semibold-text {
-    font-weight: 600;
-  }
-  .bold-text {
-    font-weight: 700;
-  }
-
-  // global hover highlight class
-  // *:hover.hover--highlight {
-  //   filter: invert(0.7);
-  // }
-
-  *:hover.hover--underline {
-    // text-decoration: underline;
-    filter: invert(0.3);
+  /* ---remove touch highlight indicator for touchscreens--- */
+  * {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-tap-highlight-color: transparent;
   }
 
   /* global font family */
@@ -83,26 +71,6 @@ html {
   --toggle-card-links-display-prop: none;
 }
 
-/* removes (x) Clear button when typing at search bar */
-/* removes ‘X’ button from Internet Explorer */
-input[type='search']::-ms-clear {
-  display: none;
-  width: 0;
-  height: 0;
-}
-input[type='search']::-ms-reveal {
-  display: none;
-  width: 0;
-  height: 0;
-}
-/* removes ‘X’ button from Webkit */
-input[type='search']::-webkit-search-decoration,
-input[type='search']::-webkit-search-cancel-button,
-input[type='search']::-webkit-search-results-button,
-input[type='search']::-webkit-search-results-decoration {
-  display: none;
-}
-
 a {
   text-decoration: none;
 }
@@ -126,7 +94,7 @@ body {
 
 header {
   width: 100%;
-  z-index: 1000;
+  z-index: 999;
   position: fixed;
   top: 0;
   transition: all ease-out 0.2s;
@@ -169,7 +137,7 @@ main {
 /* -------------------------------------------------- */
 .nav__mobile-menu-container {
   position: fixed;
-  z-index: 1001;
+  z-index: 1000;
   left: -100%;
   top: 0;
   transition: all ease-in-out 0.25s;
@@ -185,10 +153,12 @@ main {
     width: 280px;
     height: 100vh;
     position: absolute;
+    z-index: 5;
     display: flex;
     flex-flow: column nowrap;
     gap: 1em;
     background-color: var(--bg-color);
+    // box-shadow: 5px 0 5px -2px #00000027;
     border-radius: 0 1em 1em 0;
     padding: 1em;
 
@@ -349,8 +319,8 @@ main {
         left: 50%;
         top: 50%;
         margin-left: -15px;
-        margin-top: -8px;
-        width: 24px;
+        margin-top: -9px;
+        width: 25px;
         position: absolute;
         pointer-events: none;
 
@@ -359,7 +329,7 @@ main {
         }
       }
 
-      input.nav__mobile-menu-cb-toggle {
+      input.nav__mobile-menu-sidebar-cb-toggle {
         cursor: pointer;
         width: 100%;
         height: 100%;
@@ -627,304 +597,34 @@ main {
   }
 }
 
-//-----------Variable change based on element states for any @media property
-
-//-----------------------------------------------------
-
-/* -----media query for device width breakpoints ------ */
-@media only screen and (max-width: 2560px) {
-}
-
+// --------------nav bar
 @media only screen and (max-width: 1280px) {
   :root {
-    --card-group-gap: 2.5rem;
     --navbar-width: calc((3 * var(--card-width)) + (2 * var(--card-group-gap)));
-  }
-  .card-group {
-    grid-template-columns: repeat(3, 1fr);
-    --no-of-cards-in-a-row: 3;
-  }
-}
-
-// device width lower than 1024
-@media only screen and (max-width: 1023px) {
-  .nav__mobile-menu-container.shown {
-    left: 0;
-  }
-
-  .nav__mobile-menu-container.shown .nav__mobile-menu-backdrop {
-    background-color: rgba(0, 0, 0, 0.622);
-    transition: background-color ease-out 0.25s 0.25s;
-  }
-
-  .nav__mobile-menu-hamburger-menu-container.spec-up-1 {
-    display: block !important;
-  }
-
-  .nav__left-items-container.spec-up-1,
-  .nav__right-items-container.spec-up-1 {
-    display: none;
   }
 }
 
 @media only screen and (max-width: 768px) {
   :root {
     --navbar-width: calc((2 * var(--card-width)) + (1 * var(--card-group-gap)));
-    --card-group-gap: 1.75rem;
-  }
-  .card-group {
-    grid-template-columns: repeat(2, 1fr);
-    --no-of-cards-in-a-row: 2;
   }
 }
 
 @media only screen and (max-width: 500px) {
   :root {
-    --card-width: 190px;
     --navbar-height: 3.25rem;
-    --card-group-gap: 1.5rem;
     --navbar-width: calc((2 * var(--card-width)) + (1 * var(--card-group-gap)));
-    --card-title-font-size: 1rem;
-  }
-  .card-group {
-    grid-template-columns: repeat(2, 1fr);
-    --no-of-cards-in-a-row: 2;
   }
 }
 
 @media only screen and (max-width: 475px) {
   :root {
-    --card-group-gap: 2em;
     --navbar-width: calc(100% - 2em);
-    --card-width: 220px;
-  }
-
-  .card-group {
-    grid-template-columns: repeat(1, 1fr);
-    --no-of-cards-in-a-row: 1;
   }
 }
 
 @media only screen and (max-width: 320px) {
   :root {
     --navbar-width: calc(100% - 2em);
-    --card-width: 220px;
-  }
-
-  .card-group {
-    grid-template-columns: repeat(1, 1fr);
-    --no-of-cards-in-a-row: 1;
-  }
-
-  .card__thumb {
-    // transform: scale(1); // to fix
-    aspect-ratio: 23 / 25;
-  }
-}
-
-/* ---media query for devices that can hover */
-@media (hover: hover) {
-  .card:hover {
-    background-color: var(--card-highlight-bg-color);
-    color: var(--dark-text-color);
-
-    -webkit-transition: all 0.175s;
-    -moz-transition: all 0.175s;
-    transition: all 0.175s;
-  }
-
-  .card:hover .card__thumb {
-    overflow: hidden;
-    // transform: scale(1.1);
-  }
-}
-
-/* -----media query and other properties for phones and tablets
-(primarily touch devices)----- */
-
-/* ---remove touch highlight indicator for touchscreens--- */
-* {
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-  -webkit-tap-highlight-color: transparent;
-  /* -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none; */
-}
-
-@media (hover: none) {
-  :root {
-    --card__link-buttons-visibilty: visible;
-  }
-  .card__thumb-and-links-container {
-    position: relative;
-    input.toggle-links-for-no-hover {
-      --toggle-card-links-display-prop: inline-block;
-      z-index: 3;
-      top: 0%;
-      right: 4%;
-      width: 15%;
-      height: 15%;
-      position: absolute;
-      appearance: none;
-      transition: all ease-in-out 0.2s;
-
-      opacity: 90%;
-      &:checked {
-        opacity: 100%;
-      }
-
-      &:active {
-        filter: brightness(200%);
-        transform: scale(0.9);
-      }
-
-      &::before {
-        position: absolute;
-        filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.442));
-        content: '';
-        background: #787a88;
-        border-radius: 1000px;
-        top: 17%;
-        width: 100%;
-        height: 67%;
-      }
-
-      &::after {
-        position: absolute;
-        content: url('./src/assets/images/dot-options.svg');
-        border-radius: 1000px;
-        top: 35%;
-        right: -34%;
-        width: 100%;
-        height: 67%;
-      }
-
-      &:checked::after {
-        position: absolute;
-        content: url('./src/assets/images/x-btn.svg');
-        border-radius: 1000px;
-        top: 32%;
-        right: 27%;
-        width: 45%;
-      }
-
-      &:checked::before {
-        background: #626262;
-      }
-
-      &:checked {
-        --card__link-buttons-visibilty: visible;
-      }
-
-      & + .card__link-buttons-container button {
-        // opacity: 100%;
-        pointer-events: none;
-      }
-
-      & + .card__link-buttons-container {
-        &:hover {
-          backdrop-filter: blur(0px);
-          background-color: transparent;
-          transition: backgroud-color ease-in-out 0.2s;
-          & button {
-            opacity: 0%;
-          }
-        }
-      }
-
-      &:checked + .card__link-buttons-container {
-        background-color: #000000ad;
-        backdrop-filter: blur(5px);
-        z-index: 2;
-        pointer-events: none;
-      }
-
-      &:checked + .card__link-buttons-container button {
-        opacity: 100%;
-        pointer-events: visible;
-      }
-    }
-  }
-
-  // .card__thumb {
-  //   &:active {
-  //     overflow: hidden;
-  //   }
-  // }
-
-  // .card:active .card__thumb {
-  //   overflow: hidden;
-  //   transform: scale(1.05);
-  // }
-
-  // .card:active {
-  //   background-color: var(--card-highlight-bg-color);
-  //   color: var(--dark-text-color);
-  //   transition: all 0.175s;
-  // }
-}
-
-// For search result error Messages
-div.search-error-container {
-  grid-column: 1 / span var(--no-of-cards-in-a-row);
-  display: flex;
-  flex-flow: column nowrap;
-  justify-content: center;
-  gap: 1rem;
-  height: calc(100vh - (var(--navbar-height) * 4));
-
-  .search-error-title,
-  .search-error-desc {
-    color: rgba(255, 255, 255, 0.868);
-    text-align: center;
-  }
-
-  .search-error-desc {
-    font-size: 1.25rem;
-  }
-}
-
-@media only screen and (max-width: 480px) {
-  div.search-error-container {
-    .search-error-title {
-      font-size: 1rem;
-    }
-    .search-error-desc {
-      font-size: 1rem;
-    }
-  }
-}
-
-div.search-error-container.no-more-results {
-  gap: 0.5em;
-  height: auto;
-}
-
-div.loading-container {
-  display: none;
-}
-
-div.loading-container.visible {
-  display: grid;
-  place-content: center;
-  place-self: center;
-  border-radius: 50%;
-  padding: 2rem;
-  aspect-ratio: 1 / 1;
-  background-color: white;
-  animation: Loading 1s ease-in-out infinite;
-  margin: calc(var(--card-group-gap) + 1rem);
-}
-
-@keyframes Loading {
-  0%,
-  100% {
-    opacity: 20%;
-  }
-  50% {
-    transform: scale(1.35);
-    opacity: 100%;
   }
 }

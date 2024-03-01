@@ -143,7 +143,7 @@ export class ViewGeneralResults {
       class="toggle-links-for-no-hover"
     />
     <div class="card__link-buttons-container">
-      <button id="" class="view-content-btn cursor--pointer">
+      <button id="" class="view-details-btn cursor--pointer">
         View Details
       </button>
       <button id="" class="visit-imdb-btn cursor--pointer">
