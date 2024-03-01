@@ -46,9 +46,7 @@ export function mobileSidebarLogic(isOn: boolean) {
     function toggleBodyScrolling() {
       if (mobileMenuToggle.checked) {
         document.body.classList.add('scroll-disabled');
-        console.log('added');
       } else {
-        console.log('removed');
         document.body.classList.remove('scroll-disabled');
       }
     }

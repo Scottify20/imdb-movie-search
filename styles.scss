@@ -88,6 +88,10 @@ body.scroll-disabled {
   overflow: hidden;
 }
 
+.scroll-disabled {
+  overflow: hidden;
+}
+
 main {
   margin: 0 auto;
   margin-top: var(--navbar-height);

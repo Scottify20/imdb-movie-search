@@ -13,6 +13,7 @@
   }
 
   .nav__mobile-menu {
+    overflow-y: scroll;
     width: 280px;
     height: 100vh;
     position: absolute;
@@ -24,9 +25,11 @@
     padding: 1em;
 
     .nav__mobile-menu-close-button {
+      position: fixed;
       z-index: 6;
-      width: 2.5em;
-      height: 2.5em;
+      min-width: 2.5em;
+      max-width: 2.5em;
+      aspect-ratio: 1 / 1;
       display: grid;
       place-content: center;
       border: none;
@@ -53,6 +56,7 @@
       display: grid;
       grid-template-columns: 1fr;
       margin-left: -0.5em;
+      margin-top: 3em;
 
       .links {
         color: white;
