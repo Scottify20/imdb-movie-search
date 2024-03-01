@@ -9,36 +9,35 @@ import { ViewGeneralResults } from './src/omdb/view/ViewGeneralResults';
 // search button animation
 animateSearchBtn();
 
-// mobile sidebar menu toggle
-const mobileMenuToggle = document.querySelector(
-  '#nav__mobile-menu-sidebar-cb-toggle'
-) as HTMLInputElement;
+// mobile menu toggle with hamburger menu icon
+const mobileMenuToggle = document.querySelector('#nav__mobile-menu-cb-toggle') as HTMLInputElement;
 
 const mobileMenu = document.querySelector('#nav__mobile-menu');
 const mobileMenuContainer = document.querySelector('#nav__mobile-menu-container');
+const mobileMenuBackdrop = document.querySelector('#nav__mobile-menu-backdrop');
 
 mobileMenuToggle?.addEventListener('change', (event) => {
-  const toggle = event.target as HTMLInputElement;
-  if (toggle.checked) {
+  const target = event.target as HTMLElement;
+  if (target === mobileMenuToggle && mobileMenuToggle.checked) {
     mobileMenuContainer?.classList.add('shown');
   } else {
     mobileMenuContainer?.classList.remove('shown');
   }
 });
 
-// click outside of mobile menu bar toggle
-
+// clicked mobile menu backdrop
 document.addEventListener('click', (event) => {
   const target = event.target as HTMLElement;
 
-  if (!mobileMenu?.contains(target) && target.id !== 'nav__mobile-menu-sidebar-cb-toggle') {
+  // check if the element that was clicked is the mobile menu backdrop
+  // if it is, the mobile menu will be closed
+  if (target === mobileMenuBackdrop) {
     mobileMenuToggle.checked = false;
     mobileMenuContainer?.classList.remove('shown');
   }
 });
 
 // click mobile menu close button
-
 document.addEventListener('click', (event) => {
   const target = event.target as HTMLElement;
   if (target.id == 'nav__mobile-menu-close-button') {
