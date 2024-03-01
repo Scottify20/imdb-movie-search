@@ -1,0 +1,103 @@
+.nav__search-bar-container {
+  border-radius: 999px;
+  position: relative;
+  min-width: 70px;
+  width: 100%;
+  height: 100%;
+  transition: all ease-in-out 0.2s;
+
+  &:hover {
+    filter: drop-shadow(0 0 3px rgba(0, 0, 0, 0.288));
+  }
+
+  .nav__search-button-container {
+    position: absolute;
+    height: 100%;
+    right: 0;
+
+    .nav__search-bar-search-icon {
+      position: absolute;
+      fill: rgba(255, 255, 255, 0.903);
+      height: 100%;
+      right: 0.85em;
+      aspect-ratio: 1 / 1;
+      border: none;
+      pointer-events: none;
+      --webkit-user-drag: none;
+    }
+
+    .Search-button-clicked {
+      animation: Search-button-clicked 0.2s ease-in-out;
+    }
+
+    @keyframes Search-button-clicked {
+      50% {
+        transform: scale(0.7);
+      }
+    }
+
+    .nav__search-bar-submit-btn {
+      color: transparent;
+      position: absolute;
+      right: 0;
+      height: 100%;
+      aspect-ratio: 1 / 1;
+      border: none;
+      background-color: var(--nav-items-color);
+      border-radius: 0 999px 999px 0;
+
+      &:active {
+        background-color: var(--nav-items-hover-color);
+      }
+    }
+  }
+
+  .nav__search-bar {
+    transition: all ease-in-out 0.2s;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    user-select: none;
+    background-color: var(--search-box-bg-color);
+    padding: 0 1em;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--nav-items-color);
+    border-radius: 5em;
+    border: var(--nav-search-bar-cont-outline-if-search-bar-focused);
+    transition: all ease-in-out 0.2s;
+
+    &:hover {
+      background-color: var(--nav-search-bar-hover-color);
+    }
+    &:focus {
+      background-color: var(--nav-search-bar-focus-bg-color);
+      border: none;
+      outline: none;
+    }
+
+    &::placeholder {
+      font-weight: 400;
+    }
+  }
+}
+
+/* removes (x) Clear button when typing at search bar */
+/* removes ‘X’ button from Internet Explorer */
+input[type='search']::-ms-clear {
+  display: none;
+  width: 0;
+  height: 0;
+}
+input[type='search']::-ms-reveal {
+  display: none;
+  width: 0;
+  height: 0;
+}
+/* removes ‘X’ button from Webkit */
+input[type='search']::-webkit-search-decoration,
+input[type='search']::-webkit-search-cancel-button,
+input[type='search']::-webkit-search-results-button,
+input[type='search']::-webkit-search-results-decoration {
+  display: none;
+}

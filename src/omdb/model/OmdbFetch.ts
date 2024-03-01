@@ -3,7 +3,7 @@ export interface OmdbResponse {
   Error?: string;
 }
 
-export abstract class OmdbSearch<T extends OmdbResponse> {
+export abstract class OmdbFetch<T extends OmdbResponse> {
   private _apiKey = 'cbb2cfa7';
   protected baseUrl = `https://www.omdbapi.com/?apikey=${this._apiKey}`;
 

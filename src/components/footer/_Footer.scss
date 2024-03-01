@@ -1,0 +1,24 @@
+.footer {
+  bottom: 0;
+  min-height: var(--navbar-height);
+  width: 100%;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: center;
+  align-content: center;
+  gap: 0.5rem;
+
+  // z-index: 1;
+  a {
+    text-decoration: none;
+    color: white;
+
+    &:hover {
+      color: #848484;
+    }
+  }
+
+  background-color: var(--footer-bg-color);
+  color: var(--light-text-color);
+}

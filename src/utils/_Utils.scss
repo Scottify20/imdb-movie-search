@@ -1,0 +1,31 @@
+:root {
+  // global cursor classes
+  *:hover.cursor--pointer {
+    cursor: pointer;
+  }
+
+  // global font-weight classes
+  .medium-text {
+    font-weight: 500;
+  }
+
+  // for disabling buttons/ elements
+  .button-disabled {
+    pointer-events: none;
+    cursor: not-allowed;
+    opacity: 40%;
+  }
+
+  .semibold-text {
+    font-weight: 600;
+  }
+  .bold-text {
+    font-weight: 700;
+  }
+
+  /* underline and highlight on hover class */
+  *:hover.hover--underline {
+    text-decoration: underline solid white 1.5px;
+    filter: invert(0.3);
+  }
+}
