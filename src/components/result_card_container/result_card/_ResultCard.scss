@@ -176,7 +176,6 @@
   .card__thumb-and-links-container {
     position: relative;
     input.toggle-links-for-no-hover {
-      --toggle-card-links-display-prop: inline-block;
       z-index: 3;
       top: 0%;
       right: 4%;
@@ -230,9 +229,9 @@
         background: #626262;
       }
 
-      &:checked {
-        --card__link-buttons-visibilty: visible;
-      }
+      // &:checked {
+      //   --card__link-buttons-visibilty: visible;
+      // }
 
       & + .card__link-buttons-container button {
         // opacity: 100%;

@@ -84,6 +84,10 @@ body {
   background-color: var(--bg-color);
 }
 
+body.scroll-disabled {
+  overflow: hidden;
+}
+
 main {
   margin: 0 auto;
   margin-top: var(--navbar-height);
@@ -95,6 +99,8 @@ main {
 
 @media (hover: none) {
   :root {
+    --card__link-buttons-visibilty: visible;
+    --toggle-card-links-display-prop: inline-block;
     --card__link-buttons-visibilty: visible;
   }
 }

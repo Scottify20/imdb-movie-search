@@ -12,8 +12,10 @@ export function mobileSidebarLogic(isOn: boolean) {
       const target = event.target as HTMLElement;
       if (target === mobileMenuToggle && mobileMenuToggle.checked) {
         mobileMenuContainer?.classList.add('shown');
+        toggleBodyScrolling();
       } else {
         mobileMenuContainer?.classList.remove('shown');
+        toggleBodyScrolling();
       }
     });
 
@@ -26,6 +28,7 @@ export function mobileSidebarLogic(isOn: boolean) {
       if (target === mobileMenuBackdrop) {
         mobileMenuToggle.checked = false;
         mobileMenuContainer?.classList.remove('shown');
+        toggleBodyScrolling();
       }
     });
 
@@ -35,7 +38,19 @@ export function mobileSidebarLogic(isOn: boolean) {
       if (target.id == 'nav__mobile-menu-close-button') {
         mobileMenuToggle.checked = false;
         mobileMenuContainer?.classList.remove('shown');
+        toggleBodyScrolling();
       }
     });
+
+    // disable scrolling of content below menu when menu is shown
+    function toggleBodyScrolling() {
+      if (mobileMenuToggle.checked) {
+        document.body.classList.add('scroll-disabled');
+        console.log('added');
+      } else {
+        console.log('removed');
+        document.body.classList.remove('scroll-disabled');
+      }
+    }
   }
 }
