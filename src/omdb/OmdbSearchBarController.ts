@@ -127,11 +127,11 @@ export function OmdbSearchLogic(isOn: boolean) {
       (entries) => {
         const footerEntry = entries[0];
         if (footerEntry.isIntersecting && isSearching) {
-          console.log('yes');
+          // console.log('yes');
           footerObserver.unobserve(footer);
           seeMoreResults();
         } else {
-          console.log('no');
+          // console.log('no');
         }
       },
       { rootMargin: '700px' }

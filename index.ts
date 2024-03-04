@@ -6,6 +6,7 @@ import { mobileSidebarLogic } from './src/components/mobile_sidebar_menu/MobileS
 import { inject } from '@vercel/analytics';
 import { resultCardLogic } from './src/components/result_card_container/result_card/ResultCard';
 import { titleDetails } from './src/components/title_details/TitleDetails';
+import { UnderDevelopmentDialog } from './src/components/under_development_dialog/UnderDevelopmentDialog';
 
 inject(); // enable vercel analytics
 OmdbSearchLogic(true); //enables the search feature
@@ -16,3 +17,5 @@ resultCardLogic(true); // checkbox menu toggling on other cards
 animateSearchBtn(); // search button animation
 
 titleDetails(true); // viewing of title details
+
+new UnderDevelopmentDialog(true);
