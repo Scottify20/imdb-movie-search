@@ -1,33 +1,33 @@
 import { OmdbResponse, OmdbFetch } from './OmdbFetch';
 
-export class GeneralTitleSearch extends OmdbFetch<GeneralSearchResult> {
+export class GeneralTitleSearch extends OmdbFetch {
   static async search(params: SearchParamsObj): Promise<GeneralResultParsedTypes> {
     try {
-      const searchResult = await new GeneralTitleSearch().processSearch(params);
+      const searchResult = await GeneralTitleSearch.processSearch(params);
       return searchResult;
     } catch {
       console.log('General Search Result Error');
     }
   }
 
-  async processSearch(params: SearchParamsObj) {
+  static async processSearch(params: SearchParamsObj) {
     const searchQuery = params.s;
     const pageNumberString = params.page;
 
     const requestUrl = this.requestUrl(params);
-    console.log(requestUrl);
+    // console.log(requestUrl);
     const fetchData = await this.fetchOmdb(requestUrl);
-    const parsedData = await this.parseSearchResults(fetchData);
+    const parsedData = await this.parseSearchResults(fetchData as GeneralSearchResult);
     //add search query and page number and showed results to parsed data;
     if (parsedData) {
       parsedData.searchQuery = searchQuery;
       parsedData.pageNumber = parseInt(pageNumberString);
     }
-    console.log(parsedData);
+    // console.log(parsedData);
     return parsedData;
   }
 
-  requestUrl(params: SearchParamsObj): string {
+  static requestUrl(params: SearchParamsObj): string {
     let fullUrl = this.baseUrl;
     const paramKeys = Object.keys(params);
     for (const paramKey of paramKeys) {
@@ -39,11 +39,11 @@ export class GeneralTitleSearch extends OmdbFetch<GeneralSearchResult> {
         fullUrl = fullUrl.concat(`&${paramKey}=${paramVal}`);
       }
     }
-    console.log('requesting data with url:', fullUrl);
+    // console.log('requesting data with url:', fullUrl);
     return fullUrl;
   }
 
-  async parseSearchResults(
+  static async parseSearchResults(
     dataFromFetch: GeneralSearchResult | undefined
   ): Promise<GeneralResultParsedTypes> {
     if (dataFromFetch) {
@@ -75,7 +75,7 @@ export class GeneralTitleSearch extends OmdbFetch<GeneralSearchResult> {
     }
   }
 
-  parseSearchedFilms(fetchedData: GeneralSearchResult): GeneralParsedFilm[] {
+  static parseSearchedFilms(fetchedData: GeneralSearchResult): GeneralParsedFilm[] {
     let parsedFilms: GeneralParsedFilm[] = [];
     if (fetchedData.Search) {
       const films = fetchedData.Search;

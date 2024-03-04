@@ -1,7 +1,9 @@
-// Unchecking checkbox linkstoggle on other cards when a checkbox linkstoggle is checked
+import { OmdbTitleDetailsFetch } from '../../../omdb/OmdbTitleDetailsFetch';
+
 export function resultCardLogic(isOn: boolean) {
   const cardGroupElementParent = document.querySelector('#card-group');
 
+  // Unchecking checkbox linkstoggle on other cards when a checkbox linkstoggle is checked
   (function checkBoxLinksToggled() {
     cardGroupElementParent?.addEventListener('change', (event) => {
       const clickedELement = event.target as HTMLInputElement;

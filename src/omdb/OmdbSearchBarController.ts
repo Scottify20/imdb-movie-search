@@ -1,10 +1,6 @@
-import {
-  GeneralResultParsedTypes,
-  SearchParamsObj,
-  GeneralTitleSearch,
-} from '../../../omdb/model/GeneraTitleSearch';
+import { GeneralResultParsedTypes, SearchParamsObj, GeneralTitleSearch } from './OmdbGeneralSearch';
 
-import { ViewGeneralResults } from '../../../omdb/view/ViewGeneralResults';
+import { ViewGeneralResults } from '../components/result_card_container/ViewGeneralResults';
 
 export function OmdbSearchLogic(isOn: boolean) {
   if (isOn) {

@@ -6,6 +6,7 @@
 @import 'src/components/result_card_container/result_card/ResultCard';
 @import 'src/components/footer/Footer';
 @import 'src/utils/Utils';
+@import 'src/components/title_details/TilteDetails';
 
 * {
   margin: 0;
@@ -85,10 +86,6 @@ body {
 }
 
 body.scroll-disabled {
-  overflow: hidden;
-}
-
-.scroll-disabled {
   overflow: hidden;
 }
 

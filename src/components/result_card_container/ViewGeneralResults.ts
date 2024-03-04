@@ -1,4 +1,4 @@
-import { GeneralResultParsedTypes } from '../model/GeneraTitleSearch';
+import { GeneralResultParsedTypes } from '../../omdb/OmdbGeneralSearch';
 
 export class ViewGeneralResults {
   constructor(public parentElement: Element, public generalResult: GeneralResultParsedTypes) {}
