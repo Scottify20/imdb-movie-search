@@ -19,14 +19,15 @@ A simple web app to browse information about Movies, TV Series, and more in the 
 * Built with Typescript and Sass
 * Search and filter through titles in the OMDB Database
 * View titles in detail
+* Add titles to your watchlist/Favourites
 
 #### Planned
 * Rebuilt with Angular and Sass
 * See popular and your recently viewed titles on the homepage
-* Add titles to your watchlist
 * Create custom lists
 * Keep track of the movies, series, and episodes you have watched.
-* Visit the [Issues and Milestones]("https://github.com/Scottify20/omdb-titles-browser/issues") section for more
+  
+#### (View the Issues and Milestones section for more)
 
 ## Tools and Resources Used
 * [OMDB API](https://www.omdbapi.com/ "OMDB API's Website")
