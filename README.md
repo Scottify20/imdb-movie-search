@@ -39,4 +39,3 @@ A simple web app to browse information about Movies, TV Series, and more in the 
 * Visual Studio Code
 * Nodes.js and npm
 * Adobe Illustrator (For UI prototyping and creating custom icons. I should probably start using Figma/Adobe XD)
-* Font Awesome Icons (for some of the UI icons)
