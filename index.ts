@@ -23,4 +23,4 @@ new TitleDetailsRenderer(true);
 ViewGeneralResults.addViewTitleButtonListeners();
 ViewGeneralResults.addViewTitleViaTitleClickListener();
 
-// TitleDetailsRenderer.viewTitle('tt4283088');
+TitleDetailsRenderer.viewTitle('tt5108870');

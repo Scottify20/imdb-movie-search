@@ -221,9 +221,10 @@ span.medium {
       flex-flow: row nowrap;
       gap: 0.5em;
 
-      // .title-details__rating-logo {
-      //   max-height: 20px;
-      // }
+      .title-details__rating__logo {
+        height: 20px;
+        // border: 1px solid red;
+      }
 
       .title-details__rating__rating {
       }
