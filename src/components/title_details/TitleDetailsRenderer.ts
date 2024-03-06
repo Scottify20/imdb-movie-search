@@ -473,7 +473,7 @@ export class TitleDetailsRenderer {
   private static templateSubsectionRatingImdb = /*html*/ `
       <div class="title-details__rating-container title-details__rating--imdb">
           ${SvgStrings.imdb}
-          <p class="title-details__rating__rating imdb-score"><span id="title-data--imdb-score" class="medium">Imdb Score</span> / 10</p>
+          <p class="title-details__rating__rating imdb-score"><span id="title-data--imdb-score" class="medium">Imdb Score</span> /10</p>
       </div>
   `;
 
@@ -492,7 +492,7 @@ export class TitleDetailsRenderer {
   private static templateSubsectionRatingRT = /*html*/ `
         <div id="title-details__rating--rotten-tomatoes" class="title-details__rating-container title-details__rating--rotten-tomatoes">
         <!-- place for icon -->
-          <p class="title-details__rating__rating rt-score"><span id="title-data--rt-score" class="medium">RT Score</span> %</p>
+          <p class="title-details__rating__rating rt-score"><span id="title-data--rt-score" class="medium">RT Score</span>%</p>
         </div>`;
   private static templateSubsectionRatingMetacritic = /*html*/ `
       <div class="title-details__rating-container title-details__rating--metacritic">
