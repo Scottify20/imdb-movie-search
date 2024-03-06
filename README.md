@@ -8,11 +8,6 @@ A simple web app to browse information about Movies, TV Series, and more in the 
 
 ## Live Preview
  [OMDB Titles Search](https://omdb-titles-browser.vercel.app/ "OMDB Titles Search: Live Preview")
- 
-## Screenshots
-* This is just a preview since the app is still in development. I will also add screenshots for other device form factors later
-
-![screenshot preview](src/assets/screenshots/temp-screenshot.jpg "screenshot preview")
 
 ## Features
 #### In Development

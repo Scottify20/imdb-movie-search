@@ -1,6 +1,6 @@
 import { GeneralResultParsedTypes, SearchParamsObj, GeneralTitleSearch } from './OmdbGeneralSearch';
 
-import { ViewGeneralResults } from '../components/result_card_container/ViewGeneralResults';
+import { ViewGeneralResults } from '../components/result_card_container/ResultCardGroup';
 
 export function OmdbSearchLogic(isOn: boolean) {
   if (isOn) {

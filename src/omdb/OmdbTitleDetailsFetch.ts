@@ -11,15 +11,17 @@ export class OmdbTitleDetailsFetch extends OmdbFetch {
     episode: '',
   };
 
-  static async search(
+  static async getTitleData(
     imdbID: string,
-    plotLength: omdbTitlePlotLength,
+    plotLength?: omdbTitlePlotLength,
     type?: OmdbTitleType,
     season?: string,
     episode?: string
   ): Promise<TitlePropsParsed | undefined> {
     this.fetchTitleDetailsParamsObj.i = imdbID;
-    this.fetchTitleDetailsParamsObj.plot = plotLength;
+    if (plotLength) {
+      this.fetchTitleDetailsParamsObj.plot = plotLength;
+    }
     if (type) {
       this.fetchTitleDetailsParamsObj.type = type;
     }
@@ -46,8 +48,8 @@ export class OmdbTitleDetailsFetch extends OmdbFetch {
     const requestUrl = this.requestUrl(params);
     // console.log(requestUrl);
     const fetchData = (await this.fetchOmdb(requestUrl)) as TitleProps;
-    console.log('unparsed', fetchData);
-    console.log('parsed', this.parseFetchedData(fetchData));
+    // console.log('unparsed', fetchData);
+    // console.log('parsed', this.parseFetchedData(fetchData));
     return this.parseFetchedData(fetchData);
   }
 
@@ -63,7 +65,7 @@ export class OmdbTitleDetailsFetch extends OmdbFetch {
         fullUrl = fullUrl.concat(`&${paramKey}=${paramVal}`);
       }
     }
-    console.log('requesting data with url:', fullUrl);
+    // console.log('requesting data with url:', fullUrl);
     return fullUrl;
   }
 
@@ -99,7 +101,17 @@ export class OmdbTitleDetailsFetch extends OmdbFetch {
     for (const propKey in titleProps) {
       if (plainStringKeysParsed.includes(propKey)) {
         // the expected parsed property is a string
-        parsedTitle[propKey] = titleProps[propKey];
+        if (propKey === 'Type') {
+          // change all types to have uppercase firstletter
+          // and series to TV Series
+          const type = titleProps[propKey];
+          const typeChanged = type
+            .replace(/^[a-z]/, type[0].toLocaleUpperCase())
+            .replace('Series', 'TV Series');
+          parsedTitle[propKey] = typeChanged as OmdbTitleType;
+        } else {
+          parsedTitle[propKey] = titleProps[propKey];
+        }
       } else if (arrayStringKeysParsed.includes(propKey)) {
         // the unparsed property is a string of items separated by commas
         // the expected parsed property is an array of strings
@@ -157,8 +169,6 @@ const plainStringKeysParsed: string[] = [
   'SeriesID',
   'Released',
   'DVD',
-  'imdbID',
-  'Runtime',
 ];
 
 const plainNumberKeysParsed: string[] = [
@@ -190,12 +200,25 @@ type FetchTitleDetailsParamsObj = {
   [key: string]: string | undefined;
 };
 
-type OmdbTitleType = 'movie' | 'series' | 'episode' | 'game' | '';
-// type OmdbRatingsSourceType = "Internet Movie Database" | "Rotten Tomatoes" | "Metacritic" | '';
+type OmdbTitleType =
+  | 'movie'
+  | 'series'
+  | 'episode'
+  | 'game'
+  | ''
+  | 'Movie'
+  | 'Game'
+  | 'Series'
+  | 'Episode'
+  | 'TV Series';
 
 type TitleProps = MovieProps | SeriesProps | EpisodeProps | GameProps;
 
-type TitlePropsParsed = MoviePropsParsed | SeriesPropsParsed | GamePropsParsed | EpisodePropsParsed;
+export type TitlePropsParsed =
+  | MoviePropsParsed
+  | SeriesPropsParsed
+  | GamePropsParsed
+  | EpisodePropsParsed;
 
 interface MoviePropsParsed extends BaseTitlePropsParsed {
   DVD: string;

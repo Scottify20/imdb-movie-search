@@ -1,6 +1,20 @@
-// All of the buttons/elements that are listed in the buttonList arra will be disabled.
+// All of the buttons/elements that are listed in the buttonList array will be disabled.
 
 // Being disabled means that the elements's pointer-events will be set to none and their opacity will be reduced through a css class to tell the user that the buttons are disabled.
+
+// Disable buttons function
+
+const ButtonsDisabler = (isOn: boolean) => {
+  document.addEventListener;
+  if (isOn) {
+    DisableButtons.disableMutipleButtonsbyIds(
+      'links__preferences',
+      'links__favourites',
+      'links__about'
+    );
+    DisableButtons.disableMultipleButtonByClass('view-details-btn');
+  }
+};
 
 type elementSelectorType = 'id' | 'class';
 
@@ -55,15 +69,5 @@ class DisableButtons {
     this.disableButtons();
   }
 }
-
-// Disable buttons function
-
-const ButtonsDisabler = (isOn: boolean) => {
-  document.addEventListener;
-  if (isOn) {
-    DisableButtons.disableMutipleButtonsbyIds('links__preferences', 'links__favourites');
-    DisableButtons.disableMultipleButtonByClass('view-details-btn');
-  }
-};
 
 export default ButtonsDisabler;
