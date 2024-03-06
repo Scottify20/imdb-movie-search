@@ -1,4 +1,5 @@
 import { GeneralResultParsedTypes } from '../../omdb/OmdbGeneralSearch';
+import { TitleDetailsRenderer } from '../title_details/TitleDetailsRenderer';
 
 export class ViewGeneralResults {
   constructor(public parentElement: Element, public generalResult: GeneralResultParsedTypes) {}
@@ -17,6 +18,26 @@ export class ViewGeneralResults {
       }
       parent.append(this.bindResults().content);
     }
+  }
+
+  static addViewTitleButtonListeners() {
+    document.addEventListener('click', (event) => {
+      const target = event.target as Element;
+
+      if (target.classList.contains('view-details-btn')) {
+        TitleDetailsRenderer.viewTitle(target.id);
+      }
+    });
+  }
+
+  static addViewTitleViaTitleClickListener() {
+    document.addEventListener('click', (event) => {
+      const target = event.target as Element;
+
+      if (target.classList.contains('card__title-text')) {
+        TitleDetailsRenderer.viewTitle(target.id);
+      }
+    });
   }
 
   bindResults(): HTMLTemplateElement {
@@ -69,6 +90,7 @@ export class ViewGeneralResults {
       const filmType = cardTemplate.content.querySelector('.card__tag-media-type-text');
       const filmPoster = cardTemplate.content.querySelector('.card__thumb');
       const openImdbBtn = cardTemplate.content.querySelector('.visit-imdb-btn');
+      const viewTitleButton = cardTemplate.content.querySelector('.view-details-btn');
       const linksMenuCBToggle = cardTemplate.content.querySelector('.toggle-links-for-no-hover');
 
       if (filmCardParent && filmTitle && filmYear && filmType) {
@@ -94,47 +116,53 @@ export class ViewGeneralResults {
           );`
       );
 
+      // set unique ids for checkboxes for toggling links
       if (linksMenuCBToggle) {
         linksMenuCBToggle.setAttribute('id', `cb-menu-toggle-${film.imdbID}`);
       }
+
+      // set id of view title button to imdb id
+      viewTitleButton?.setAttribute('id', film.imdbID);
+      // set id of title to imdb id
+      filmTitle?.setAttribute('id', film.imdbID);
 
       cardTemplateElement.content.append(cardTemplate.content);
     });
     return cardTemplateElement;
   }
 
-  templateLastPageWarning: string = `
+  templateLastPageWarning: string = /*html*/ `
   <div class="no-more-results search-error-container error-fetching-general-results">
-  <h2 class="search-error-title">That's all for:</h2>
-  <p class="search-error-desc"> ${this.generalResult?.searchQuery}<p>
+    <h2 class="search-error-title">That's all for:</h2>
+    <p class="search-error-desc"> ${this.generalResult?.searchQuery}<p>
   </div>
   `;
 
-  templateFallbacktoServerMessageError: string = `
+  templateFallbacktoServerMessageError: string = /*html*/ `
   <div class="search-error-container error-fetching-general-results">
-  <h2 class="search-error-title">Failed to fetch data</h2>
-  <p class="search-error-desc"> ${this.generalResult!.Error}<p>
+    <h2 class="search-error-title">Failed to fetch data</h2>
+    <p class="search-error-desc"> ${this.generalResult!.Error}<p>
   </div>`;
 
-  templateTooManyResultsError: string = `
+  templateTooManyResultsError: string = /*html*/ `
   <div class="search-error-container error-too-many-results">
-  <h2 class="search-error-title">Too many results.</h2>
-  <p class="search-error-desc">Please be more specific.<p>
+    <h2 class="search-error-title">Too many results.</h2>
+    <p class="search-error-desc">Please be more specific.<p>
   </div>`;
 
-  templateFetchCodeError: string = `
+  templateFetchCodeError: string = /*html*/ `
   <div class="search-error-container error-fetch-code-error">
-  <h2 class="search-error-title">A Fetch API error has occurred.</h2>
-  <p class="search-error-desc">Please notify: 'Scottify20'about this error.</p>
+    <h2 class="search-error-title">A Fetch API error has occurred.</h2>
+    <p class="search-error-desc">Please notify: 'Scottify20'about this error.</p>
   </div>`;
 
-  templateNoResults: string = `
+  templateNoResults: string = /*html*/ `
   <div class="search-error-container error-no-results">
-  <h2 class="search-error-title">No results found for:</h2>
-  <p class="search-error-desc">${this.generalResult?.searchQuery}</p>
+    <h2 class="search-error-title">No results found for:</h2>
+    <p class="search-error-desc">${this.generalResult?.searchQuery}</p>
   </div>`;
 
-  templateCardResultsSuccess: string = `
+  templateCardResultsSuccess: string = /*html*/ `
   <article class="card search-result-card" tabindex="0">
   <div class="card__thumb-and-links-container cursor--pointer">
     <input
