@@ -1,6 +1,6 @@
 import { GeneralResultParsedTypes, SearchParamsObj, GeneralTitleSearch } from './OmdbGeneralSearch';
 
-import { ViewGeneralResults } from '../components/result_card_container/ResultCardGroup';
+import { ViewGeneralResults } from '../components/result_card_container/ResultCardsRenderer';
 
 export function OmdbSearchLogic(isOn: boolean) {
   if (isOn) {
@@ -45,6 +45,7 @@ export function OmdbSearchLogic(isOn: boolean) {
         if (cardGroupElementParent) {
           console.log('Reloading previous query');
           ViewGeneralResults.renderResults(cardGroupElementParent, resultCopy);
+          // ViewGeneralResults.handleCardImageError();
           loading?.classList.remove('visible');
         }
       } else {
@@ -73,6 +74,7 @@ export function OmdbSearchLogic(isOn: boolean) {
             };
 
             ViewGeneralResults.renderResults(cardGroupElementParent, noMoreResults);
+            // ViewGeneralResults.handleCardImageError();
             setIsSearching(false);
             loading?.classList.remove('visible');
             return;
@@ -91,6 +93,7 @@ export function OmdbSearchLogic(isOn: boolean) {
                 setIsSearching(false);
               }
               ViewGeneralResults.renderResults(cardGroupElementParent, result);
+              // ViewGeneralResults.handleCardImageError();
               footerObserver.observe(footer);
 
               loading?.classList.remove('visible');

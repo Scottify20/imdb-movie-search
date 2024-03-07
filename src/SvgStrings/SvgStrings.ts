@@ -171,7 +171,7 @@ export class SvgStrings {
   class="title-details__rating__logo ratings-logo--metacritic"
   width="20px"
   xmlns="http://www.w3.org/2000/svg">
-<g transform="scale(0.22)">
+<g transform="scale(0.22) translate(2, 2)">
 <circle fill="#001B36" stroke="#FC0" stroke-width="4.6" cx="44" cy="44" r="41.6"/>
 <path
 transform="translate(-10-961) matrix(1.2756629,-1.3487733,1.3685717,1.2634987,-267.04706,1066.0743)" fill="#FFF"

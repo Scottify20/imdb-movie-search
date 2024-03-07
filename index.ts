@@ -7,7 +7,7 @@ import { inject } from '@vercel/analytics';
 import { resultCardLogic } from './src/components/result_card_container/result_card/ResultCard';
 import { UnderDevelopmentDialog } from './src/components/under_development_dialog/UnderDevelopmentDialog';
 import { TitleDetailsRenderer } from './src/components/title_details/TitleDetailsRenderer';
-import { ViewGeneralResults } from './src/components/result_card_container/ResultCardGroup';
+import { ViewGeneralResults } from './src/components/result_card_container/ResultCardsRenderer';
 
 inject(); // enable vercel analytics
 OmdbSearchLogic(true); //enables the search feature
@@ -23,4 +23,4 @@ new TitleDetailsRenderer(true);
 ViewGeneralResults.addViewTitleButtonListeners();
 ViewGeneralResults.addViewTitleViaTitleClickListener();
 
-TitleDetailsRenderer.viewTitle('tt5108870');
+// TitleDetailsRenderer.viewTitle('tt13966962');

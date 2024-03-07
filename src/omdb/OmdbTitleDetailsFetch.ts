@@ -142,7 +142,9 @@ export class OmdbTitleDetailsFetch extends OmdbFetch {
         splitYearString = titleProps.Year.split(/[^0-9]/);
         // console.log(splitYearString);
         for (const year of splitYearString) {
-          parsedTitle.Year.push(Number(year));
+          if (year.length >= 4) {
+            parsedTitle.Year.push(Number(year));
+          }
         }
       }
     }

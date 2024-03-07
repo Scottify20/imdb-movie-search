@@ -19,13 +19,13 @@ export class TitleDetailsRenderer {
     if (this._IsOn) {
       this._titleData = (await OmdbTitleDetailsFetch.getTitleData(titleId)) as TitlePropsParsed;
 
-      console.log(this._titleData);
+      // console.log(this._titleData);
       // console.log(this._titleData);
 
       this.renderTitleDetailsWindow();
       this.bindData();
       this.showParentElementsAfterDataBinding();
-      this.closeButtonListener();
+      this.closeButtonAndBackdropListener();
     }
   }
 
@@ -55,6 +55,7 @@ export class TitleDetailsRenderer {
     // binding the rating scores and some styling to rating section
     // the property _propRatingDataAndElementIdMap
     if (this.propNotNull('Ratings')) {
+      // for excluding
       for (const keyArrayPair of this._propRatingDataAndElementIdMap) {
         const keySource = Object.keys(keyArrayPair)[0] as
           | 'Internet Movie Database'
@@ -62,7 +63,9 @@ export class TitleDetailsRenderer {
           | 'Metacritic';
 
         const elementIdForScore = keyArrayPair[keySource][0];
+
         const elementIdForStyling = keyArrayPair[keySource][1];
+
         const ratingFound = (): { Source: string; Value: number } => {
           const ratings = this._titleData.Ratings;
           if (ratings.find((rating) => rating.Source === keySource)) {
@@ -74,11 +77,25 @@ export class TitleDetailsRenderer {
             return { Source: keySource, Value: 0 };
           }
         };
+
         const score = ratingFound().Value;
+
         this.bindRatingScoreAndStyling(keySource, score, elementIdForScore, elementIdForStyling);
       }
     }
+
+    // checks if the numbers of child sections inside the other info section container is either odd or even
+    // if odd the class of "odd-section" will be added to the container
+    // "even-section" if it even
+    this.bindEvenOrOddChildrenSectionOfContainerClass('title-details-joined-section-container', [
+      'Language',
+      'Country',
+      'Released',
+      'DVD',
+      'BoxOffice',
+    ]);
   }
+
   // since the title details window and backdrop is hiddent by default (see .hidden scss class)
   private static showParentElementsAfterDataBinding() {
     const titleDetailsContainer = document.getElementById('title-details__container');
@@ -88,9 +105,15 @@ export class TitleDetailsRenderer {
     titleDetailsBackdrop?.classList.remove('hidden');
   }
 
-  private static closeButtonListener() {
+  private static closeButtonAndBackdropListener() {
     const closeButton = document.getElementById('title-details__close-btn');
     closeButton?.addEventListener('click', () => {
+      this.hideDialogAndBackdrop();
+    });
+
+    const backdrop = document.getElementById('title-details__backdrop');
+
+    backdrop?.addEventListener('click', () => {
       this.hideDialogAndBackdrop();
     });
   }
@@ -127,7 +150,6 @@ export class TitleDetailsRenderer {
         return false;
       }
     }
-
     return false;
   }
 
@@ -138,10 +160,56 @@ export class TitleDetailsRenderer {
     document.body.insertAdjacentHTML('afterbegin', this.templateTitleDetailsContainer);
     // insert backdrop to body
     document.body.insertAdjacentHTML('afterbegin', this.templateTitleDetailsBackdrop);
+
     // insert the title details window to the parent container
     insertHTMLInsideElementById(this.templateTitleDetails, 'title-details__container');
     // hero section
     insertHTMLInsideElementById(this.templateHero, 'title-details');
+
+    // metatada subsection
+    if (elementByIdExists('title-details__metadata-container')) {
+      const metadataKeyList = ['Type', 'Year', 'Rated', 'Runtime'];
+
+      const availableKeys = (): string[] => {
+        const availKeys: string[] = [];
+        metadataKeyList.forEach((key) => {
+          if (this.propNotNull(key)) {
+            availKeys.push(key);
+          }
+        });
+        return availKeys;
+      };
+
+      for (let i = 0; i < availableKeys().length; i++) {
+        const metaDataKey = availableKeys()[i];
+
+        if (this.propNotNull(metaDataKey)) {
+          const fulltTemplateName = `templateSubsectionMetadata${metaDataKey}`;
+          insertHTMLInsideElementById(this[fulltTemplateName], 'title-details__metadata-container');
+
+          // for the dot separators
+          if (i !== availableKeys().length - 1) {
+            insertHTMLInsideElementById(
+              this.templateDotSeparatorMetadata,
+              'title-details__metadata-container'
+            );
+          }
+        }
+      }
+    }
+
+    // poster
+    if (this.propNotNull('Poster')) {
+      const referenceElement = document.getElementById('title-details__metadata-container');
+      referenceElement?.insertAdjacentHTML('afterend', this.templateSubsectionPoster);
+    }
+
+    // plot subsection
+    if (this.propNotNull('Plot')) {
+      const referenceElement = document.getElementById('title-data-container--genre');
+      referenceElement?.insertAdjacentHTML('afterend', this.templateSubsectionPlot);
+    }
+
     if (this.propNotNull('Ratings')) {
       // ratings section container
       insertHTMLInsideElementById(this.templateSectionRatings, 'title-details');
@@ -188,9 +256,11 @@ export class TitleDetailsRenderer {
       // Awards
       insertHTMLInsideElementById(this.templateSectionAwards, 'title-details');
     }
+
+    // the other info section (contains the sections 'Language', 'Country', 'Released', 'DVD', 'BoxOffice')
     if (this.propNotNull('Language', 'Country', 'Released', 'DVD', 'BoxOffice')) {
       // at least one of the subsections in the other info section is not null or N/A
-      // Other info
+      // Other info container
       insertHTMLInsideElementById(this.templateSectionOtherInfo, 'title-details');
 
       if (this.propNotNull('Language')) {
@@ -238,6 +308,31 @@ export class TitleDetailsRenderer {
       });
     }
     return false;
+  }
+
+  // checks if the numbers of sections inside a container is either odd or even
+  // if odd the class of "odd-section" will be added to the container
+  // "even-section" if it even
+  private static bindEvenOrOddChildrenSectionOfContainerClass(
+    containerId: string,
+    childElementsPropKeys: string[]
+  ) {
+    let sectionsInside = 0;
+
+    for (const propKey of childElementsPropKeys) {
+      if (this.propNotNull(propKey)) {
+        sectionsInside++;
+      }
+    }
+
+    const evenOrOdd = () => (sectionsInside % 2 === 0 ? 'even' : 'odd');
+    const containerElement = document.getElementById(containerId);
+
+    if (evenOrOdd() === 'even') {
+      containerElement?.classList.add('even-section');
+    } else {
+      containerElement?.classList.add('odd-section');
+    }
   }
 
   private static bindRatingScoreAndStyling(
@@ -355,6 +450,7 @@ export class TitleDetailsRenderer {
     { BoxOffice: ['title-data--box-office', 'textContent'] },
     { Released: ['title-data--release-date', 'textContent'] },
     { DVD: ['title-data--dvd', 'textContent'] },
+    { totalSeasons: ['title-data--no-of-seasons', 'textContent'] },
     { Poster: ['title-data--posterURL', 'imageUrlSrc'] },
     { Poster: ['title-data--posterURL-blurred', 'imageUrlSrc'] },
   ];
@@ -424,7 +520,7 @@ export class TitleDetailsRenderer {
   private static templateTitleDetailsBackdrop = /*html*/ `<div id="title-details__backdrop" class="title-details__backdrop hidden"></div>`;
 
   private static templateHero = /*html*/ `
-  <div class="title-details__hero">
+  <div class="title-details__hero title-details__section-container">
     <div class="title-details__title-and-close-btn-container">
       <h2 id="title-data--title" class="title-details__title">Title</h2>
       <div id="title-details__close-btn" class="title-details__close-btn">
@@ -435,30 +531,39 @@ export class TitleDetailsRenderer {
         </svg>
       </div>
     </div>
-    <div class="title-details__metadata-container">
-      <p id="title-data--type" class="title-data title-data--title-type text-dot-separated">TV Series</p>
-        <p class="dot-separator metadata">•</p>
-      <p id="title-data--year" class="title-data title-data--year text-dot-separated">Year</p>
-        <p class="dot-separator metadata">•</p>
-      <p id="title-data--rating" class="title-data title-data--rating text-dot-separated">Rating</p>
-        <p class="dot-separator metadata">•</p>
-      <p id="title-data--runtime" class="title-data title-data--runtime text-dot-separated">Runtime</p>
+    <div id="title-details__metadata-container" class="title-details__metadata-container">
+    <!-- metadata info here-->
     </div>
-    <div class="title-details__poster-genre-plot-container">
-      <img id="title-data--posterURL" class="title-details__poster" src="https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg" onerror="this.onerror=null; this.style.display='none'; this.src='https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg'" alt="" width="200px">
-      <div id="genre-plot-container" class="genre-plot-container">
-        <div id="title-data-container--genre" class="genre-container">
-        </div>
-        <p id="title-data--plot" class="title-details__plot">Plot</p>
-      </div>
+    <div id="title-data-container--genre" class="genre-container">
     </div>
     <div class="hero-bg-blurred-container">
-      <img id="title-data--posterURL-blurred" class="hero-bg-blurred" src="https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg"
-      
-      onerror="this.onerror=null; this.src='https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg'"
-      >
-    </div>
-  </div>`;
+    <img id="title-data--posterURL-blurred" class="hero-bg-blurred" src="https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg"
+    
+    onerror="this.onerror=null; this.classList.add('title-details__poster--not-available'); this.src='https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg'"
+    >
+</div>
+    </div>`;
+
+  private static templateSubsectionMetadataType = /* html */ `
+  <p id="title-data--type" class="title-data title-data--title-type text-dot-separated">Type</p>
+  `;
+  private static templateSubsectionMetadataYear = /* html */ `
+  <p id="title-data--year" class="title-data title-data--year text-dot-separated">Year</p>
+  `;
+  private static templateSubsectionMetadataRated = /* html */ `
+  <p id="title-data--rating" class="title-data title-data--rating text-dot-separated">Rating</p>
+  `;
+  private static templateSubsectionMetadataRuntime = /* html */ `
+  <p id="title-data--runtime" class="title-data title-data--runtime text-dot-separated">Runtime</p>
+  `;
+
+  private static templateSubsectionPoster = /* html */ `
+  <img id="title-data--posterURL" class="title-details__poster" src="https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg" onerror="this.onerror=null; this.style.display='none'; this.classList.add('title-details__poster--not-available'); this.src='https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg'" alt="">
+  `;
+
+  private static templateSubsectionPlot = /* html */ `
+  <p id="title-data--plot" class="title-details__plot">Plot</p>
+  `;
 
   private static templateSubsectionGenre = /*html*/ `
     <div class="genre title-data--genre">Genre</div>`;
@@ -473,7 +578,7 @@ export class TitleDetailsRenderer {
   private static templateSubsectionRatingImdb = /*html*/ `
       <div class="title-details__rating-container title-details__rating--imdb">
           ${SvgStrings.imdb}
-          <p class="title-details__rating__rating imdb-score"><span id="title-data--imdb-score" class="medium">Imdb Score</span> /10</p>
+          <p class="title-details__rating__rating imdb-score"><span id="title-data--imdb-score" class="medium">Imdb Score</span></p>
       </div>
   `;
 
@@ -510,7 +615,7 @@ export class TitleDetailsRenderer {
                   </svg>
                 </div>
               </div>
-              <p><span id="title-data--no-of-seasons">8</span><span class="season-or-seasons"> Seasons</span></p>
+              <p><span id="title-data--no-of-seasons">8</span><span class="season-or-seasons"> Season/s</span></p>
             </div>`;
 
   private static templateSectionCast = /*html*/ `
@@ -558,7 +663,7 @@ export class TitleDetailsRenderer {
     </div>`;
 
   private static templateSubsectionLanguage = /*html*/ `
-    <div class="title-details__section-container title-details__section--language">
+    <div class="title-details__section-container title-details__section--language title-details__subsection-container">
         <h3 class="title-details__section-title"><span class="language-or-languages">Language</span></h3>
         <div id="title-data-container--language" class="title-details__section--language-container title-details__section-container--dot-separated">
         </div>
@@ -567,7 +672,7 @@ export class TitleDetailsRenderer {
   <p class="title_details__language text-dot-separated title-data--language">language</p>`;
 
   private static templateSubsectionCountry = /*html*/ `
-    <div class="title-details__section-container title-details__section--country">
+    <div class="title-details__section-container title-details__section--country title-details__subsection-container">
       <h3 class="title-details__section-title">
       <span class="country-or-countries">Country</span> of Origin</h3>
       <div
@@ -579,23 +684,23 @@ export class TitleDetailsRenderer {
   private static templateSubSubsectionCountry = /*html*/ `<p class="title_details__country text-dot-separated title-data--country">country</p>`;
 
   private static templateSubsectionReleaseDate = /*html*/ `
-    <div class="title-details__section-container title-details__release-date">
+    <div class="title-details__section-container title-details__release-date title-details__subsection-container">
       <h3 class="title-details__section-title">Release Date</h3>
       <p id="title-data--release-date" class="title_details__release-date">release-date</p>
     </div>`;
 
   private static templateSubsectionDVD = /*html*/ `
-    <div class="title-details__section-container title-details__dvd">
+    <div class="title-details__section-container title-details__dvd title-details__subsection-container">
       <h3 class="title-details__section-title">DVD</h3>
       <p id="title-data--dvd" class="title_details__dvd">dvd-date</p>
     </div>`;
 
   private static templateSubsectionBoxOffice = /*html*/ `
-      <div class="title-details__section-container title-details__box-office">
+      <div class="title-details__section-container title-details__box-office title-details__subsection-container">
         <h3 class="title-details__section-title">Box Office</h3>
         <p id="title-data--box-office" class="title_details__box-office">$000,000,000</p>
       </div>`;
 
-  // static templateDotSeparatorMetadata = /*html*/ `<p class="dot-separator metadata">•</p>`;
+  static templateDotSeparatorMetadata = /*html*/ `<p class="dot-separator metadata">•</p>`;
   private static templateDotSeparatorTextItem = /*html*/ `<p class="dot-separator sections">•</p>`;
 }

@@ -99,10 +99,11 @@ export class GeneralTitleSearch extends OmdbFetch {
               parsedFilm.Year = [0];
             }
           } else if (filmProp === 'Type') {
-            const [firstLetter, ...restOfLettters] = film.Type;
-            const joinedType = [firstLetter.toUpperCase(), ...restOfLettters].join('');
-
-            parsedFilm.Type = joinedType;
+            const type = film[filmProp];
+            const typeChanged = type
+              .replace(/^[a-z]/, type[0].toLocaleUpperCase())
+              .replace('Series', 'TV Series');
+            parsedFilm[filmProp] = typeChanged;
           } else {
             parsedFilm[filmProp] = film[filmProp];
           }
