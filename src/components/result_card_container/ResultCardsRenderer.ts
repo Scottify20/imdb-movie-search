@@ -209,7 +209,7 @@ export class ViewGeneralResults {
   <div class="card__details-container">
     <h2 class="card__title">
       <span
-        class="card__title-text medium-text cursor--pointer hover--underline"
+        class="card__title-text medium-text cursor--pointer hover--underline .active--underline"
         >Film Title</span
       >
     </h2>

@@ -280,18 +280,15 @@ span.medium {
   //   background-image: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.312));
   // }
   .title-details__cast-container {
-    overflow-x: hidden;
-    // overflow-x: auto;
+    overflow-x: auto;
     display: flex;
     flex-flow: row nowrap;
     gap: 1.5em;
-    // border: 1px solid red;
 
     .title-details__actor-container {
       flex-shrink: 0;
       flex-grow: 0;
       width: 120px;
-      // border: 1px solid red;
       display: grid;
       gap: 1em;
       .title-details__actor-photo {
@@ -426,14 +423,16 @@ span.medium {
       .title-details__subsection-container:nth-child(even) {
         border-radius: 0 1em 1em 0;
       }
+    }
 
-      & > .title-details__subsection-container:nth-last-child(1) {
-        border-radius: 1em 0 0 0;
-      }
+    & div.title-details__subsection-container:nth-last-child(1) {
+      border-radius: 1em 0 0 0 !important;
+      // border: 1px solid red ;
+    }
 
-      & > .title-details__subsection-container:nth-last-child(2) {
-        border-radius: 0 1em 0 0;
-      }
+    & div.title-details__subsection-container:nth-last-child(2) {
+      border-radius: 0 1em 0 0 !important;
+      // border: 1px solid blue;
     }
   }
 }
@@ -458,5 +457,26 @@ span.medium {
 
 @media only screen and (min-width: 320px) {
   :root {
+  }
+}
+
+// for scrollbar styling on cast container
+
+@media (hover: hover) {
+  .title-details__cast-container {
+    scrollbar-color: transparent transparent;
+    &:hover {
+      scrollbar-color: #87878c transparent;
+    }
+    transition: all ease-in-out 0.12s;
+  }
+}
+
+@media (hover: none) {
+  .title-details__cast-container {
+    scrollbar-color: auto auto;
+    &:hover {
+      scrollbar-color: auto auto;
+    }
   }
 }

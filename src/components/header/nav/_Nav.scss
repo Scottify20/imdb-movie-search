@@ -1,3 +1,9 @@
+:root {
+  --navbar-height: 3.5rem;
+  --navbar-gap: 1em;
+  --navbar-width: calc((4 * var(--card-width)) + (3 * var(--card-group-gap)));
+}
+
 .nav:has(.nav-search-bar:focus) {
   opacity: 98%;
 }
@@ -126,5 +132,37 @@
   .nav__left-items-container.spec-up-1,
   .nav__right-items-container.spec-up-1 {
     display: none;
+  }
+}
+
+// --------------nav bar
+@media only screen and (max-width: 1280px) {
+  :root {
+    --navbar-width: calc((3 * var(--card-width)) + (2 * var(--card-group-gap)));
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  :root {
+    --navbar-width: calc((2 * var(--card-width)) + (1 * var(--card-group-gap)));
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  :root {
+    --navbar-height: 3.25rem;
+    --navbar-width: calc((2 * var(--card-width)) + (1 * var(--card-group-gap)));
+  }
+}
+
+@media only screen and (max-width: 475px) {
+  :root {
+    --navbar-width: calc(100% - 2em);
+  }
+}
+
+@media only screen and (max-width: 320px) {
+  :root {
+    --navbar-width: calc(100% - 2em);
   }
 }

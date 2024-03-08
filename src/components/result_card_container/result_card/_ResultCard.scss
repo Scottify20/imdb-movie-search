@@ -2,7 +2,7 @@
   --card-width: 200px;
   --card-thumb-height: 170px;
 
-  --card-title-font-size: 1rem;
+  --card-title-font-size: 1.1rem;
   --desc-font-size: 1rem;
   --tags-font-size: 0.8rem;
 }
@@ -55,6 +55,7 @@
       button {
         z-index: 1;
         visibility: var(--card__link-buttons-visibilty);
+
         transition: all ease-in-out 0.2s;
         opacity: 0%;
         font-size: 1.125rem;
@@ -143,7 +144,6 @@
 
 @media only screen and (max-width: 500px) {
   :root {
-    --card-title-font-size: 1rem;
   }
 }
 
@@ -155,6 +155,7 @@
 
 @media only screen and (max-width: 360px) {
   :root {
+    --card-title-font-size: 1rem;
     --card-width: 210px;
   }
 }
@@ -167,23 +168,31 @@
 
 /* ---media query for devices that can hover */
 @media (hover: hover) {
+  :root {
+    --card__link-buttons-visibilty: hidden;
+    --toggle-card-links-display-prop: none;
+  }
   .card:hover {
     background-color: var(--card-highlight-bg-color);
     color: var(--dark-text-color);
-
-    -webkit-transition: all 0.175s;
-    -moz-transition: all 0.175s;
     transition: all 0.175s;
   }
 
   .card:hover .card__thumb {
     overflow: hidden;
-    // transform: scale(1.1);
+    transform: scale(1.1);
   }
 }
 
 /* -----media query and other properties for phones and tablets
 (primarily touch devices)----- */
+
+@media (hover: none) {
+  :root {
+    --card__link-buttons-visibilty: visible;
+    --toggle-card-links-display-prop: inline-block;
+  }
+}
 
 @media (hover: none) {
   .card__thumb-and-links-container {
@@ -241,10 +250,6 @@
       &:checked::before {
         background: #626262;
       }
-
-      // &:checked {
-      //   --card__link-buttons-visibilty: visible;
-      // }
 
       & + .card__link-buttons-container button {
         // opacity: 100%;

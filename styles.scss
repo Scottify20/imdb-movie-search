@@ -5,7 +5,7 @@
 @import 'src/components/result_card_container/ResultCardsGroup';
 @import 'src/components/result_card_container/result_card/ResultCard';
 @import 'src/components/footer/Footer';
-@import 'src/utils/Utils';
+@import 'src/scss-globals/Globals';
 @import 'src/components/title_details/TilteDetails';
 @import 'src/components/under_development_dialog/UnderDevelopmentDialogue';
 
@@ -28,11 +28,6 @@ html {
 
   /* global font family */
   font-family: 'Inter', Arial, sans-serif;
-
-  /* Component dimension variables */
-  --navbar-height: 3.5rem;
-  --navbar-gap: 1em;
-  --navbar-width: calc((4 * var(--card-width)) + (3 * var(--card-group-gap)));
 
   /* variables for article description cutoff */
   --max-lines: 3;
@@ -57,10 +52,6 @@ html {
   --nav-items-color: #413b17;
   --nav-items-hover-color: #73682c;
   --nav-text-item-hover-background-color: var(--nav-items-color);
-
-  //visibility
-  --card__link-buttons-visibilty: hidden;
-  --toggle-card-links-display-prop: none;
 }
 
 a {
@@ -87,43 +78,4 @@ main {
   display: flex;
   flex-flow: column nowrap;
   // place-content: center;
-}
-
-@media (hover: none) {
-  :root {
-    --card__link-buttons-visibilty: visible;
-    --toggle-card-links-display-prop: inline-block;
-    --card__link-buttons-visibilty: visible;
-  }
-}
-// --------------nav bar
-@media only screen and (max-width: 1280px) {
-  :root {
-    --navbar-width: calc((3 * var(--card-width)) + (2 * var(--card-group-gap)));
-  }
-}
-
-@media only screen and (max-width: 768px) {
-  :root {
-    --navbar-width: calc((2 * var(--card-width)) + (1 * var(--card-group-gap)));
-  }
-}
-
-@media only screen and (max-width: 500px) {
-  :root {
-    --navbar-height: 3.25rem;
-    --navbar-width: calc((2 * var(--card-width)) + (1 * var(--card-group-gap)));
-  }
-}
-
-@media only screen and (max-width: 475px) {
-  :root {
-    --navbar-width: calc(100% - 2em);
-  }
-}
-
-@media only screen and (max-width: 320px) {
-  :root {
-    --navbar-width: calc(100% - 2em);
-  }
 }

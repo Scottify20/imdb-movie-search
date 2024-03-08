@@ -29,6 +29,11 @@
     filter: invert(0.3);
   }
 
+  *:active.active--underline {
+    text-decoration: underline solid white 1.5px;
+    filter: invert(0.3);
+  }
+
   span.nowrap {
     display: block;
   }
