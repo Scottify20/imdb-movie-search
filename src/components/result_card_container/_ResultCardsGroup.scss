@@ -7,9 +7,6 @@
   top: 0;
   margin: 0 auto;
   padding: var(--card-group-gap);
-
-  // max-width: var(--card-group-max-width);
-
   display: grid;
   gap: var(--card-group-gap);
   grid-template-columns: repeat(4, 1fr);
@@ -26,6 +23,22 @@
     transform: scale(1.35);
     opacity: 100%;
   }
+}
+
+div.loading-container {
+  display: none;
+}
+
+div.loading-container.visible {
+  display: grid;
+  place-content: center;
+  place-self: center;
+  border-radius: 50%;
+  padding: 2rem;
+  aspect-ratio: 1 / 1;
+  background-color: white;
+  animation: Loading 1s ease-in-out infinite;
+  margin: calc(var(--card-group-gap) + 1rem);
 }
 
 //--------------------------
@@ -52,7 +65,7 @@
 
 @media only screen and (max-width: 500px) {
   :root {
-    --card-group-gap: 2rem;
+    --card-group-gap: 1.75rem;
     --no-of-cards-in-a-row: 1;
   }
   .card-group {
@@ -104,20 +117,4 @@ div.search-error-container {
 div.search-error-container.no-more-results {
   gap: 0.5em;
   height: auto;
-}
-
-div.loading-container {
-  display: none;
-}
-
-div.loading-container.visible {
-  display: grid;
-  place-content: center;
-  place-self: center;
-  border-radius: 50%;
-  padding: 2rem;
-  aspect-ratio: 1 / 1;
-  background-color: white;
-  animation: Loading 1s ease-in-out infinite;
-  margin: calc(var(--card-group-gap) + 1rem);
 }

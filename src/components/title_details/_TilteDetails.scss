@@ -2,9 +2,7 @@
   --title-details-popup-width: 90vw;
   --title-details-popup-max-width: 680px;
   --title-details-popup-height: calc(100vh - 10vw);
-
   --title-details-global-padding-and-gap: 1em;
-
   --close-button-width: 1.8em;
 }
 
@@ -74,7 +72,7 @@ span.medium {
   width: var(--title-details-popup-width);
   max-width: var(--title-details-popup-max-width);
 
-  background-color: #262629;
+  background-color: var(--bg-color);
   // background-color: var(--bg-color);
   margin: clamp(5vw, 5vw, 60px) auto;
 }
@@ -239,11 +237,9 @@ span.medium {
 
       .title-details__rating__logo {
         height: 20px;
-        // border: 1px solid red;
       }
-
-      .title-details__rating__rating {
-      }
+      // .title-details__rating__rating {
+      // }
     }
 
     .title-details__rating-container.title-details__rating--metacritic {
@@ -308,7 +304,6 @@ span.medium {
     flex-flow: row nowrap;
     gap: 0.5em;
     align-items: center;
-    // justify-content: space-between;
 
     .more-seasons-button {
       width: 1.5em;
@@ -321,8 +316,6 @@ span.medium {
       svg {
         fill: white;
         width: 0.75em;
-        // padding-top: 0.2em;
-        // transform: rotate(270deg);
       }
     }
   }
@@ -337,12 +330,6 @@ span.medium {
   :root {
     --title-details-global-padding-and-gap: 1.3em;
   }
-  // .title-details {
-  //   gap: 0;
-  //   .title-details__section--other-info-group {
-  //     gap: 0;
-  //   }
-  // }
 
   .title-details__title-and-close-btn-container {
     .title-details__close-btn {
@@ -427,12 +414,10 @@ span.medium {
 
     & div.title-details__subsection-container:nth-last-child(1) {
       border-radius: 1em 0 0 0 !important;
-      // border: 1px solid red ;
     }
 
     & div.title-details__subsection-container:nth-last-child(2) {
       border-radius: 0 1em 0 0 !important;
-      // border: 1px solid blue;
     }
   }
 }
@@ -445,9 +430,6 @@ span.medium {
 }
 
 @media only screen and (max-width: 475px) {
-  :root {
-  }
-
   .title-details__metadata-container {
     p {
       font-size: 0.9em;
@@ -455,13 +437,7 @@ span.medium {
   }
 }
 
-@media only screen and (min-width: 320px) {
-  :root {
-  }
-}
-
 // for scrollbar styling on cast container
-
 @media (hover: hover) {
   .title-details__cast-container {
     scrollbar-color: transparent transparent;

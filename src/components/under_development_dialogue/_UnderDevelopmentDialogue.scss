@@ -15,7 +15,6 @@
   position: fixed;
   width: 100%;
   height: 100%;
-  // pointer-events: none;
   background-color: rgba(0, 0, 0, 0.658);
 }
 
@@ -33,11 +32,7 @@
   z-index: 1;
   width: var(--title-details-popup-width);
   padding: 0 clamp(1rem, 4vw, 3rem);
-  // border: 1px solid red;
-
-  background-color: #262629;
-  // background-color: var(--bg-color);
-  // margin: 5vw auto;
+  background-color: var(--bg-color);
 
   .under-development__title {
     text-align: center;

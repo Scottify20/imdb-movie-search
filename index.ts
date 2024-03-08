@@ -5,7 +5,7 @@ import { navBarAutoHide } from './src/components/header/Header';
 import { mobileSidebarLogic } from './src/components/mobile_sidebar_menu/MobileSidebarMenu';
 import { inject } from '@vercel/analytics';
 import { resultCardLogic } from './src/components/result_card_container/result_card/ResultCard';
-import { UnderDevelopmentDialogue } from './src/components/under_development_dialog/UnderDevelopmentDialogue';
+import { UnderDevelopmentDialogue } from './src/components/under_development_dialogue/UnderDevelopmentDialogue';
 import { TitleDetailsRenderer } from './src/components/title_details/TitleDetailsRenderer';
 import { ViewGeneralResults } from './src/components/result_card_container/ResultCardsRenderer';
 

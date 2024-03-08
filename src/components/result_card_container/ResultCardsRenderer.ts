@@ -92,10 +92,7 @@ export class ViewGeneralResults {
         const filmTitle = cardTemplate.content.querySelector('.card__title-text');
         const filmYear = cardTemplate.content.querySelector('.card__tag-year-text');
         const filmType = cardTemplate.content.querySelector('.card__tag-media-type-text');
-        const filmPoster = cardTemplate.content.querySelector('.card__thumb') as HTMLImageElement;
-        const openImdbBtn = cardTemplate.content.querySelector('.visit-imdb-btn');
-        const viewTitleButton = cardTemplate.content.querySelector('.view-details-btn');
-        const linksMenuCBToggle = cardTemplate.content.querySelector('.toggle-links-for-no-hover');
+        const filmPoster = cardTemplate.content.querySelector('.card__poster') as HTMLImageElement;
 
         if (filmCardParent && filmTitle && filmYear && filmType) {
           filmCardParent.setAttribute('id', `card-${film.imdbID}`);
@@ -105,10 +102,6 @@ export class ViewGeneralResults {
         }
 
         if (film.Poster) {
-          filmPoster?.setAttribute(
-            'onerror',
-            `this.onerror=null; this.src='https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg';`
-          );
           filmPoster?.setAttribute('src', film.Poster);
           filmPoster?.setAttribute('parent-card-id', `card-${film.imdbID}`);
         }
@@ -122,21 +115,11 @@ export class ViewGeneralResults {
           parentElement?.classList.add('image-error');
         });
 
-        openImdbBtn?.setAttribute(
-          'onclick',
-          `window.open(
-            'https://imdb.com/title/${film.imdbID}/',
-            '_blank'
-            );`
-        );
+        // for viewing the title details the imdb id is sent to TitleDetailsRenderer.viewTitle()
+        filmPoster.addEventListener('click', (event) => {
+          TitleDetailsRenderer.viewTitle(film.imdbID);
+        });
 
-        // set unique ids for checkboxes for toggling links
-        if (linksMenuCBToggle) {
-          linksMenuCBToggle.setAttribute('id', `cb-menu-toggle-${film.imdbID}`);
-        }
-
-        // set id of view title button to imdb id
-        viewTitleButton?.setAttribute('id', film.imdbID);
         // set id of title to imdb id
         filmTitle?.setAttribute('id', film.imdbID);
 
@@ -179,29 +162,10 @@ export class ViewGeneralResults {
 
   templateCardResultsSuccess: string = /*html*/ `
   <article class="card search-result-card" tabindex="0">
-  <div class="card__thumb-and-links-container cursor--pointer">
-    <input
-      type="checkbox"
-      name="card-links-toggle"
-      class="toggle-links-for-no-hover"
-    />
-    <div class="card__link-buttons-container">
-      <button id="" class="view-details-btn cursor--pointer">
-        View Details
-      </button>
-      <button id="" class="visit-imdb-btn cursor--pointer">
-        View in
-        <img
-          src="https://upload.wikimedia.org/wikipedia/commons/6/69/IMDB_Logo_2016.svg"
-          alt="imdb-logo"
-          class="imdb-logo"
-          height="20px"
-        />
-      </button>
-    </div>
+  <div class="card__poster-container cursor--pointer">
     <img
-      alt="movie thumbnail"
-      class="card__thumb"
+      alt="movie poster"
+      class="card__poster"
       width="100px"
     />
   </div>

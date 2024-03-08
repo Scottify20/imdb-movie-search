@@ -7,7 +7,7 @@
 @import 'src/components/footer/Footer';
 @import 'src/scss-globals/Globals';
 @import 'src/components/title_details/TilteDetails';
-@import 'src/components/under_development_dialog/UnderDevelopmentDialogue';
+@import 'src/components/under_development_dialogue/UnderDevelopmentDialogue';
 
 * {
   margin: 0;
@@ -20,29 +20,25 @@ html {
 }
 
 :root {
-  /* ---remove touch highlight indicator for touchscreens--- */
+  /* ---remove the blue touch highlight for touchscreens--- */
   * {
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     -webkit-tap-highlight-color: transparent;
   }
-
   /* global font family */
   font-family: 'Inter', Arial, sans-serif;
 
-  /* variables for article description cutoff */
-  --max-lines: 3;
-  --line-height: 1.5;
-
   /* color variables */
   --card-font-color: white;
-  --bg-color: #3e3f44;
-  --card-bg-color: #5a5b68;
-  --card-highlight-bg-color: #585b67;
+  --bg-color: #262629;
+  --card-bg-color: #494b59;
+  --card-highlight-bg-color: rgb(92, 95, 110);
+  --card-tag-bg-color: #ffffff11;
   --footer-bg-color: #2a2a2a;
 
   --card-outline-color: transparent;
   --dark-text-color: #151515;
-  --header-bg-color: #efcd78;
+  --header-bg-color: #edd085;
   --search-box-bg-color: #ffffffbc;
   --light-text-color: #ffffff;
 
@@ -74,5 +70,4 @@ main {
   flex-grow: 1;
   display: flex;
   flex-flow: column nowrap;
-  // place-content: center;
 }
