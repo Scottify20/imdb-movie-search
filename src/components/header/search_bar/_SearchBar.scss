@@ -1,3 +1,8 @@
+:root {
+  --nav-search-bar-hover-color: #ffffff;
+  --nav-search-bar-focus-bg-color: #ffffff;
+}
+
 .nav__search-bar-container {
   border-radius: 999px;
   position: relative;
@@ -13,7 +18,9 @@
   .nav__search-button-container {
     position: absolute;
     height: 100%;
+    min-width: 40px;
     right: 0;
+    aspect-ratio: 1 / 1;
 
     .nav__search-bar-search-icon {
       position: absolute;
@@ -37,10 +44,11 @@
     }
 
     .nav__search-bar-submit-btn {
-      color: transparent;
       position: absolute;
+      color: transparent;
       right: 0;
       height: 100%;
+      min-width: 40px;
       aspect-ratio: 1 / 1;
       border: none;
       background-color: var(--nav-items-color);

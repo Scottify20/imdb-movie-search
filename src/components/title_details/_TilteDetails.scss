@@ -475,8 +475,5 @@ span.medium {
 @media (hover: none) {
   .title-details__cast-container {
     scrollbar-color: auto auto;
-    &:hover {
-      scrollbar-color: auto auto;
-    }
   }
 }
