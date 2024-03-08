@@ -7,7 +7,7 @@
 @import 'src/components/footer/Footer';
 @import 'src/utils/Utils';
 @import 'src/components/title_details/TilteDetails';
-@import 'src/components/under_development_dialog/UnderDevelopmentDialog';
+@import 'src/components/under_development_dialog/UnderDevelopmentDialogue';
 
 * {
   margin: 0;
@@ -33,16 +33,6 @@ html {
   --navbar-height: 3.5rem;
   --navbar-gap: 1em;
   --navbar-width: calc((4 * var(--card-width)) + (3 * var(--card-group-gap)));
-
-  --no-of-cards-in-a-row: 0;
-
-  --card-group-gap: 3rem;
-  --card-width: 200px;
-  --card-thumb-height: 170px;
-
-  --card-title-font-size: 1rem;
-  --desc-font-size: 1rem;
-  --tags-font-size: 0.8rem;
 
   /* variables for article description cutoff */
   --max-lines: 3;
@@ -106,31 +96,6 @@ main {
     --card__link-buttons-visibilty: visible;
   }
 }
-
-@media only screen and (max-width: 1280px) {
-  :root {
-    --card-group-gap: 2.5rem;
-  }
-}
-
-@media only screen and (max-width: 768px) {
-  :root {
-    --card-group-gap: 1.75rem;
-  }
-}
-
-@media only screen and (max-width: 500px) {
-  :root {
-    --card-group-gap: 1.5rem;
-  }
-}
-
-@media only screen and (max-width: 475px) {
-  :root {
-    --card-group-gap: 2em;
-  }
-}
-
 // --------------nav bar
 @media only screen and (max-width: 1280px) {
   :root {

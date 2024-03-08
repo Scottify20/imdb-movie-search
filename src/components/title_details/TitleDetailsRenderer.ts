@@ -20,7 +20,6 @@ export class TitleDetailsRenderer {
       this._titleData = (await OmdbTitleDetailsFetch.getTitleData(titleId)) as TitlePropsParsed;
 
       // console.log(this._titleData);
-      // console.log(this._titleData);
 
       this.renderTitleDetailsWindow();
       this.bindData();

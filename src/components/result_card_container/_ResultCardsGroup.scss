@@ -1,3 +1,8 @@
+:root {
+  --no-of-cards-in-a-row: 0;
+  --card-group-gap: 3rem;
+}
+
 .card-group {
   top: 0;
   margin: 0 auto;
@@ -27,36 +32,38 @@
 //--------------------------
 
 @media only screen and (max-width: 1280px) {
+  :root {
+    --card-group-gap: 2rem;
+    --no-of-cards-in-a-row: 3;
+  }
   .card-group {
     grid-template-columns: repeat(3, 1fr);
-    --no-of-cards-in-a-row: 3;
   }
 }
 
 @media only screen and (max-width: 768px) {
+  :root {
+    --card-group-gap: 1.75rem;
+    --no-of-cards-in-a-row: 2;
+  }
   .card-group {
     grid-template-columns: repeat(2, 1fr);
-    --no-of-cards-in-a-row: 2;
   }
 }
 
 @media only screen and (max-width: 500px) {
-  .card-group {
-    grid-template-columns: repeat(2, 1fr);
-    --no-of-cards-in-a-row: 2;
+  :root {
+    --card-group-gap: 2rem;
+    --no-of-cards-in-a-row: 1;
   }
-}
-
-@media only screen and (max-width: 475px) {
   .card-group {
     grid-template-columns: repeat(1, 1fr);
-    --no-of-cards-in-a-row: 1;
   }
 }
 
 @media only screen and (max-width: 320px) {
-  .card-group {
-    grid-template-columns: repeat(1, 1fr);
+  :root {
+    --card-group-gap: 1.75rem;
     --no-of-cards-in-a-row: 1;
   }
 }

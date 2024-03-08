@@ -173,6 +173,7 @@ span.medium {
   z-index: 1;
   display: flex;
   flex-flow: row wrap;
+  justify-content: flex-start;
   column-gap: 0.5rem;
   row-gap: 0.55rem;
   // height: 20px;
@@ -389,6 +390,7 @@ span.medium {
       margin: 0;
     }
     .genre-container {
+      // justify-content: center;
       grid-area: gnr;
       margin: 0 0;
     }
@@ -436,12 +438,13 @@ span.medium {
   }
 }
 
-@media only screen and (min-width: 500px) {
-  :root {
+// max width
+@media only screen and (max-width: 500px) {
+  .genre-container {
+    justify-content: center;
   }
 }
 
-// max width
 @media only screen and (max-width: 475px) {
   :root {
   }

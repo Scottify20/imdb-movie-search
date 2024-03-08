@@ -1,3 +1,12 @@
+:root {
+  --card-width: 200px;
+  --card-thumb-height: 170px;
+
+  --card-title-font-size: 1rem;
+  --desc-font-size: 1rem;
+  --tags-font-size: 0.8rem;
+}
+
 .card.image-error {
   display: none;
 }
@@ -117,7 +126,6 @@
 
       .card__tag {
         border: 1px solid transparent;
-
         transition: all ease-in-out 0.2s;
       }
 
@@ -127,7 +135,7 @@
         border-radius: 100px;
         padding: 0.4em 0.7em;
         background-color: rgba(255, 255, 255, 0.067);
-        font-size: 12.5px;
+        font-size: 12px;
       }
     }
   }
@@ -135,25 +143,25 @@
 
 @media only screen and (max-width: 500px) {
   :root {
-    --card-width: 190px;
     --card-title-font-size: 1rem;
   }
 }
 
-@media only screen and (max-width: 475px) {
+@media only screen and (max-width: 480px) {
   :root {
-    --card-width: 220px;
+    --card-width: 230px;
+  }
+}
+
+@media only screen and (max-width: 360px) {
+  :root {
+    --card-width: 210px;
   }
 }
 
 @media only screen and (max-width: 320px) {
   :root {
     --card-width: 220px;
-  }
-
-  .card__thumb {
-    // transform: scale(1); // to fix
-    aspect-ratio: 23 / 25;
   }
 }
 
