@@ -40,4 +40,4 @@ A simple web app to browse information about Movies, TV Series, and more in the 
 - Adobe Illustrator (For UI prototyping and creating custom icons. I should probably start using Figma/Adobe XD)
 
 ## Assets and Prototyping Files
-- The SVG and  Adobe Illustrator files can be accessed in [this Google Drive Folder](https://drive.google.com/drive/folders/1-Fbwd9o2TkgyCTO9tmkua9vQNFdGJ375?usp=sharing)
+- The SVG and  Adobe Illustrator files can be accessed inside [this Google Drive Folder](https://drive.google.com/drive/folders/1-Fbwd9o2TkgyCTO9tmkua9vQNFdGJ375?usp=sharing)
