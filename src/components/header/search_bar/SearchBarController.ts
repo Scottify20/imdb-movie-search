@@ -36,7 +36,7 @@ export class SearchBarController {
     });
   }
 
-  private static async searchAndRender() {
+  public static async searchAndRender() {
     if (GeneralTitleSearch.isNoMorePages) {
       FooterObserver.unobserve();
       const noMorePagesResult: GeneralResultParsedTypes = {
@@ -79,10 +79,7 @@ class FooterObserver {
   static footerObserver = new IntersectionObserver(
     (entries) => {
       const footerEntry = entries[0];
-      if (
-        footerEntry.isIntersecting &&
-        GeneralTitleSearch.resultCopy?.Error !== 'Movie not found!'
-      ) {
+      if (footerEntry.isIntersecting && GeneralTitleSearch.resultCopy?.Error === 'No Error') {
         // console.log('intersecting');
         this.footerObserver.unobserve(this.footerElement);
         SearchBarController.seeMoreResults();

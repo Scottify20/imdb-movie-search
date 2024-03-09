@@ -1,4 +1,5 @@
 import { GeneralResultParsedTypes, GeneralTitleSearch } from '../../omdb/OmdbGeneralSearch';
+import { SearchBarController } from '../header/search_bar/SearchBarController';
 import { TitleDetailsRenderer } from '../title_details/TitleDetailsRenderer';
 
 export class ResultCardsRenderer {
@@ -21,6 +22,9 @@ export class ResultCardsRenderer {
       }
 
       parent.append(this.bindResults().content);
+      if (this._generalResult.Error === "Can't connect to server.") {
+        this.retrySearchButtonListener();
+      }
     }
   }
 
@@ -40,6 +44,10 @@ export class ResultCardsRenderer {
       // If too many results found
       else if (result.Error === 'Too many results.') {
         templateElement.innerHTML = this.templateTooManyResultsError;
+      }
+      // if can't connect to server
+      else if (result.Error === "Can't connect to server.") {
+        templateElement.innerHTML = this.templateCantConnectToServer;
       }
       // If results found
       else if (result.Search && result.Search[0] != undefined) {
@@ -120,11 +128,29 @@ export class ResultCardsRenderer {
     return cardTemplateElement;
   }
 
+  private static retrySearchButtonListener() {
+    const retryButton = document.getElementById('retry-search-button') as Element;
+    const errorMessage = document.getElementById('cant-connect-to-server-container') as Element;
+    retryButton.addEventListener('click', () => {
+      errorMessage.remove();
+      SearchBarController.searchAndRender();
+    });
+  }
+
+  private static get templateCantConnectToServer(): string {
+    return /*html*/ `
+    <div class="search-error-container" id="cant-connect-to-server-container">
+    <h2 class="search-error-title">Failed to fetch data</h2>
+    <p class="search-error-desc"> ${this._generalResult?.Error}</p>
+    <button id="retry-search-button" class="retry-search-button">Retry</button>
+  </div>`;
+  }
+
   private static get templateLastPageWarning(): string {
     return /*html*/ `
     <div class="no-more-results search-error-container error-fetching-general-results">
       <h2 class="search-error-title">That's all for:</h2>
-      <p class="search-error-desc"> ${this._generalResult?.searchQuery}<p>
+      <p class="search-error-desc"> ${this._generalResult?.searchQuery}</p>
     </div>
     `;
   }
@@ -133,7 +159,7 @@ export class ResultCardsRenderer {
     return /*html*/ `
   <div class="search-error-container error-fetching-general-results">
     <h2 class="search-error-title">Failed to fetch data</h2>
-    <p class="search-error-desc"> ${this._generalResult?.Error}<p>
+    <p class="search-error-desc"> ${this._generalResult?.Error}</p>
   </div>`;
   }
 
@@ -141,7 +167,7 @@ export class ResultCardsRenderer {
     return /*html*/ `
   <div class="search-error-container error-too-many-results">
     <h2 class="search-error-title">Too many results.</h2>
-    <p class="search-error-desc">Please be more specific.<p>
+    <p class="search-error-desc">Please be more specific.</p>
   </div>`;
   }
 

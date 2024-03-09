@@ -46,7 +46,10 @@ export class GeneralTitleSearch extends OmdbFetch {
       // copy the number of available results
       this._totalResults = searchResult?.totalResults as number;
       // check if there is no more next page
-      this.isNoMorePages = this.page >= Math.ceil(this._totalResults / 10) ? true : false;
+      this.isNoMorePages =
+        this.page >= Math.ceil(this._totalResults / 10) && this.resultCopy?.Error === 'No Error'
+          ? true
+          : false;
       return searchResult;
     } catch {
       // console.log(this.searchParamsObj);
@@ -67,7 +70,7 @@ export class GeneralTitleSearch extends OmdbFetch {
       parsedData.searchQuery = searchQuery;
       parsedData.pageNumber = parseInt(pageNumberString);
     }
-    // console.log(parsedData);
+    console.log(parsedData);
     return parsedData;
   }
 

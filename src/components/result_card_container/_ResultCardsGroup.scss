@@ -101,6 +101,28 @@ div.search-error-container {
   .search-error-desc {
     font-size: 1.25rem;
   }
+
+  .retry-search-button {
+    font-family: Inter;
+    font-size: 1em;
+    font-weight: 500;
+    margin-top: 1em;
+    padding: 0.5em 1em;
+    background-color: var(--header-bg-color);
+    color: black;
+    border-radius: 2em;
+    border: none;
+    place-self: center;
+    transition: all ease-in-out 0.15s;
+
+    &:hover {
+      filter: brightness(130%);
+    }
+
+    &:active {
+      transform: scale(0.9);
+    }
+  }
 }
 
 @media only screen and (max-width: 480px) {
