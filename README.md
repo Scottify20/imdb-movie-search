@@ -3,9 +3,6 @@
 A simple web app to browse information about Movies, TV Series, and more in the [OMDB API](https://www.omdbapi.com/ "OMDB API's Website")'s Dataset.
 
 ### Notes:
-
-- For demo purposes, the [OMDB API](https://www.omdbapi.com/ "OMDB API's Website")
-  key for this project is exposed. Please do not use the API key for any purposes other than running this web app.
 - Due to the limitations of the OMDB API, I will be replacing it with [TMDB API](https://developer.themoviedb.org/docs/getting-started 'TMDB API Section') and secure the new API key in future versions of this app.
 
 ## Live Preview
@@ -41,3 +38,6 @@ A simple web app to browse information about Movies, TV Series, and more in the 
 - Visual Studio Code
 - Nodes.js and npm
 - Adobe Illustrator (For UI prototyping and creating custom icons. I should probably start using Figma/Adobe XD)
+
+## Assets and Prototyping Files
+- The SVG and  Adobe Illustrator files can be accessed in [this Google Drive Folder](https://drive.google.com/drive/folders/1-Fbwd9o2TkgyCTO9tmkua9vQNFdGJ375?usp=sharing)
