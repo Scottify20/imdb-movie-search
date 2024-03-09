@@ -1,16 +1,60 @@
 import { OmdbResponse, OmdbFetch } from './OmdbFetch';
 
 export class GeneralTitleSearch extends OmdbFetch {
-  static async search(params: SearchParamsObj): Promise<GeneralResultParsedTypes> {
+  // searching parameters
+  public static titleName = ''; // search query title
+  public static page = 1; // page number
+  public static type: OmdbSearchTitleTypes = ''; // title type (movie, series, etc.)
+  public static year: string; // year
+  private static _maxPages = 5;
+
+  private static _totalResults: number;
+  private static previousTitle = ''; // previous search title searched
+  private static previousSearchParamsObj: SearchParamsObj;
+  public static resultCopy: GeneralResultParsedTypes;
+
+  public static get isWholeQueryRepeated(): boolean {
+    return this.previousSearchParamsObj === this.searchParamsObj ? true : false;
+  }
+  public static get isRepeatedTitleQuery(): boolean {
+    return this.titleName === this.previousTitle ? true : false;
+  }
+  public static get isMaxPageReached(): boolean {
+    return GeneralTitleSearch.page === 5 ? true : false;
+  }
+
+  public static isNoMorePages = false;
+
+  private static get searchParamsObj(): SearchParamsObj {
+    const paramsObj: SearchParamsObj = { s: '', page: '', type: '', y: '' };
+    paramsObj.s = this.titleName;
+    paramsObj.page = this.page.toString();
+    paramsObj.type = this.type;
+    paramsObj.year = this.year;
+    return paramsObj;
+  }
+
+  static async search(): Promise<GeneralResultParsedTypes> {
     try {
-      const searchResult = await GeneralTitleSearch.processSearch(params);
+      const searchResult = await GeneralTitleSearch.processSearch(this.searchParamsObj);
+      // set the succesfully searched title to as the previous title
+      this.previousTitle = this.titleName;
+      // copy the searchParamsObj if it worked
+      this.previousSearchParamsObj = this.searchParamsObj;
+      // copy the searchResults
+      this.resultCopy = searchResult;
+      // copy the number of available results
+      this._totalResults = searchResult?.totalResults as number;
+      // check if there is no more next page
+      this.isNoMorePages = this.page >= Math.ceil(this._totalResults / 10) ? true : false;
       return searchResult;
     } catch {
+      // console.log(this.searchParamsObj);
       console.log('General Search Result Error');
     }
   }
 
-  static async processSearch(params: SearchParamsObj) {
+  private static async processSearch(params: SearchParamsObj) {
     const searchQuery = params.s;
     const pageNumberString = params.page;
 
@@ -27,15 +71,14 @@ export class GeneralTitleSearch extends OmdbFetch {
     return parsedData;
   }
 
-  static requestUrl(params: SearchParamsObj): string {
+  private static requestUrl(params: SearchParamsObj): string {
     let fullUrl = this.baseUrl;
     const paramKeys = Object.keys(params);
+
     for (const paramKey of paramKeys) {
-      if (params[paramKey] !== '') {
+      if (params[paramKey] && params[paramKey] !== '') {
         let paramVal = params[paramKey];
-        if (paramVal) {
-          paramVal = paramVal.replace(/^\s+|\s+$/g, '').replace(/\s+/g, '+');
-        }
+        paramVal = paramVal?.replace(/^\s+|\s+$/g, '').replace(/\s+/g, '+');
         fullUrl = fullUrl.concat(`&${paramKey}=${paramVal}`);
       }
     }
@@ -43,7 +86,7 @@ export class GeneralTitleSearch extends OmdbFetch {
     return fullUrl;
   }
 
-  static async parseSearchResults(
+  private static async parseSearchResults(
     dataFromFetch: GeneralSearchResult | undefined
   ): Promise<GeneralResultParsedTypes> {
     if (dataFromFetch) {
@@ -58,7 +101,7 @@ export class GeneralTitleSearch extends OmdbFetch {
         // parse the properties of films inside Search:{}[]
         const parsedFilms = this.parseSearchedFilms(dataFromFetch);
         parsedResult.Search = [...parsedFilms];
-        // get parsedresponseString
+        // get parsedResponseMessage String
         parsedResult.Response = dataFromFetch.Response;
         // get total results number
         if (dataFromFetch.totalResults) {
@@ -75,7 +118,7 @@ export class GeneralTitleSearch extends OmdbFetch {
     }
   }
 
-  static parseSearchedFilms(fetchedData: GeneralSearchResult): GeneralParsedFilm[] {
+  private static parseSearchedFilms(fetchedData: GeneralSearchResult): GeneralParsedFilm[] {
     let parsedFilms: GeneralParsedFilm[] = [];
     if (fetchedData.Search) {
       const films = fetchedData.Search;
@@ -113,9 +156,9 @@ export class GeneralTitleSearch extends OmdbFetch {
     }
     return parsedFilms;
   }
+  // End of Class
 }
 
-// End of Class
 // Type and interface Definitions
 
 export type SearchParamsObj = {
@@ -163,3 +206,5 @@ type GeneralFilmProps = {
 };
 
 type yearOrYearRange = number | number[];
+
+export type OmdbSearchTitleTypes = 'movie' | 'series' | 'episode' | '';

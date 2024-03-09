@@ -1,55 +1,40 @@
-import { GeneralResultParsedTypes } from '../../omdb/OmdbGeneralSearch';
+import { GeneralResultParsedTypes, GeneralTitleSearch } from '../../omdb/OmdbGeneralSearch';
 import { TitleDetailsRenderer } from '../title_details/TitleDetailsRenderer';
 
-export class ViewGeneralResults {
-  constructor(public parentElement: Element, public generalResult: GeneralResultParsedTypes) {}
+export class ResultCardsRenderer {
+  private static _parentElement: Element;
+  private static _generalResult: GeneralResultParsedTypes;
 
   static renderResults(parentElement: Element, result: GeneralResultParsedTypes) {
-    return new ViewGeneralResults(parentElement, result).processRender();
+    this._parentElement = parentElement;
+    this._generalResult = result;
+    this.processRender();
   }
 
-  processRender(): void {
-    if (this.generalResult?.pageNumber) {
-      const parent = this.parentElement;
-      const page = this.generalResult?.pageNumber as number;
-
+  private static processRender(): void {
+    if (this._generalResult?.pageNumber) {
+      const parent = this._parentElement;
+      const page = this._generalResult?.pageNumber as number;
       if (page <= 1) {
         parent.innerHTML = '';
+        window.scrollTo(0, 0);
       }
+
       parent.append(this.bindResults().content);
     }
   }
 
-  static addViewTitleButtonListeners() {
-    document.addEventListener('click', (event) => {
-      const target = event.target as Element;
-
-      if (target.classList.contains('view-details-btn')) {
-        TitleDetailsRenderer.viewTitle(target.id);
-      }
-    });
-  }
-
-  static addViewTitleViaTitleClickListener() {
-    document.addEventListener('click', (event) => {
-      const target = event.target as Element;
-
-      if (target.classList.contains('card__title-text')) {
-        TitleDetailsRenderer.viewTitle(target.id);
-      }
-    });
-  }
-
-  bindResults(): HTMLTemplateElement {
-    const result = this.generalResult;
+  private static bindResults(): HTMLTemplateElement {
+    const result = this._generalResult;
 
     let templateElement = document.createElement('template');
     if (result) {
       // No more results
-      // No results found
       if (result.Error === 'No more results found!') {
         templateElement.innerHTML = this.templateLastPageWarning;
-      } else if (result.Error === 'Movie not found!') {
+      }
+      // No results found
+      else if (result.Error === 'Movie not found!') {
         templateElement.innerHTML = this.templateNoResults;
       }
       // If too many results found
@@ -72,15 +57,17 @@ export class ViewGeneralResults {
     return templateElement;
   }
 
-  yearArraytoString(yearArray: number[]): string {
+  private static yearArraytoString(yearArray: number[]): string {
     let yearString = yearArray.join(' - ');
     return yearString;
   }
 
-  bindTemplateCardResultsSuccess(templateElement: HTMLTemplateElement): HTMLTemplateElement {
+  private static bindTemplateCardResultsSuccess(
+    templateElement: HTMLTemplateElement
+  ): HTMLTemplateElement {
     const cardTemplateElement = templateElement;
 
-    this.generalResult?.Search?.forEach((film) => {
+    this._generalResult?.Search?.forEach((film) => {
       // if poster url is N/A, it will not be appended and not rendered
       if (film.Poster === 'N/A') {
         /* do nothing */
@@ -97,6 +84,10 @@ export class ViewGeneralResults {
         if (filmCardParent && filmTitle && filmYear && filmType) {
           filmCardParent.setAttribute('id', `card-${film.imdbID}`);
           filmTitle.textContent = film.Title;
+          filmTitle.addEventListener('click', (event) => {
+            const target = event.target as Element;
+            TitleDetailsRenderer.viewTitle(target.id);
+          });
           filmYear.textContent = this.yearArraytoString(film.Year);
           filmType.textContent = film.Type;
         }
@@ -129,38 +120,49 @@ export class ViewGeneralResults {
     return cardTemplateElement;
   }
 
-  templateLastPageWarning: string = /*html*/ `
-  <div class="no-more-results search-error-container error-fetching-general-results">
-    <h2 class="search-error-title">That's all for:</h2>
-    <p class="search-error-desc"> ${this.generalResult?.searchQuery}<p>
-  </div>
-  `;
+  private static get templateLastPageWarning(): string {
+    return /*html*/ `
+    <div class="no-more-results search-error-container error-fetching-general-results">
+      <h2 class="search-error-title">That's all for:</h2>
+      <p class="search-error-desc"> ${this._generalResult?.searchQuery}<p>
+    </div>
+    `;
+  }
 
-  templateFallbacktoServerMessageError: string = /*html*/ `
+  private static get templateFallbacktoServerMessageError(): string {
+    return /*html*/ `
   <div class="search-error-container error-fetching-general-results">
     <h2 class="search-error-title">Failed to fetch data</h2>
-    <p class="search-error-desc"> ${this.generalResult!.Error}<p>
+    <p class="search-error-desc"> ${this._generalResult?.Error}<p>
   </div>`;
+  }
 
-  templateTooManyResultsError: string = /*html*/ `
+  private static get templateTooManyResultsError(): string {
+    return /*html*/ `
   <div class="search-error-container error-too-many-results">
     <h2 class="search-error-title">Too many results.</h2>
     <p class="search-error-desc">Please be more specific.<p>
   </div>`;
+  }
 
-  templateFetchCodeError: string = /*html*/ `
+  private static get templateFetchCodeError(): string {
+    return /*html*/ `
   <div class="search-error-container error-fetch-code-error">
     <h2 class="search-error-title">A Fetch API error has occurred.</h2>
-    <p class="search-error-desc">Please notify: 'Scottify20'about this error.</p>
+    <p class="search-error-desc">Please notify: 'Scottify20' about this error.</p>
   </div>`;
+  }
 
-  templateNoResults: string = /*html*/ `
+  private static get templateNoResults(): string {
+    return /*html*/ `
   <div class="search-error-container error-no-results">
     <h2 class="search-error-title">No results found for:</h2>
-    <p class="search-error-desc">${this.generalResult?.searchQuery}</p>
+    <p class="search-error-desc">${this._generalResult?.searchQuery}</p>
   </div>`;
+  }
 
-  templateCardResultsSuccess: string = /*html*/ `
+  private static get templateCardResultsSuccess(): string {
+    return /*html*/ `
   <article class="card search-result-card" tabindex="0">
   <div class="card__poster-container cursor--pointer">
     <img
@@ -188,4 +190,5 @@ export class ViewGeneralResults {
     </div>
   </div>
 </article>`;
+  }
 }

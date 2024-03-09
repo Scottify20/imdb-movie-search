@@ -7,7 +7,7 @@ export class OmdbFetch {
   private static _apiKey = 'cbb2cfa7';
   protected static baseUrl = `https://www.omdbapi.com/?apikey=${this._apiKey}`;
 
-  static async fetchOmdb(requestUrl: string): Promise<OmdbResponse> {
+  protected static async fetchOmdb(requestUrl: string): Promise<OmdbResponse> {
     try {
       const res = await fetch(requestUrl);
       const data: OmdbResponse = await res.json();

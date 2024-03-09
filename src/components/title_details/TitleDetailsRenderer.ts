@@ -10,6 +10,7 @@ export class TitleDetailsRenderer {
   static [key: string]: any; // static index signature
   private static _IsOn = false;
   private static _titleData: TitlePropsParsed;
+  private static _viewingAlreadyActive = false;
 
   constructor(isOn: boolean) {
     TitleDetailsRenderer._IsOn = isOn;
@@ -17,10 +18,17 @@ export class TitleDetailsRenderer {
 
   static async viewTitle(titleId: string) {
     if (this._IsOn) {
+      if (this._viewingAlreadyActive) {
+        console.log('already active');
+        return;
+      }
+      TitleDetailsRenderer._viewingAlreadyActive = true;
+      setTimeout(() => {
+        TitleDetailsRenderer._viewingAlreadyActive = false;
+      }, 2000);
       this._titleData = (await OmdbTitleDetailsFetch.getTitleData(titleId)) as TitlePropsParsed;
 
       // console.log(this._titleData);
-
       this.renderTitleDetailsWindow();
       this.bindData();
       this.showParentElementsAfterDataBinding();
@@ -118,6 +126,7 @@ export class TitleDetailsRenderer {
   }
 
   private static hideDialogAndBackdrop() {
+    this._viewingAlreadyActive = false;
     document.body.classList.remove('scroll-disabled');
     const dialogContainer = document.getElementById('title-details__container');
     const backdrop = document.getElementById('title-details__backdrop');
