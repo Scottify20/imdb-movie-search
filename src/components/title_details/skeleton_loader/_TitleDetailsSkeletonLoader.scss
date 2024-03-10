@@ -70,11 +70,11 @@
   }
 }
 
-.skeleton.shown {
+.skeleton__container:has(.skeleton.shown) {
   opacity: 0%;
   animation: SkeletonFadeInAndSlideUp 0.4s cubic-bezier(0.16, 0.7, 0.28, 1) forwards;
 }
-.skeleton.closed {
+.skeleton__container:has(.skeleton.closed) {
   opacity: 100%;
   animation: SkeletonFadeOutAndSlideDown 0.25s cubic-bezier(0.16, 0.7, 0.28, 1) forwards;
 }

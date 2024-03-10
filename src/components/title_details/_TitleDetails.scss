@@ -27,7 +27,7 @@
   overflow: hidden;
 }
 
-.title-details.closed {
+.title-details__container:has(.title-details.closed) {
   opacity: 100%;
   animation: SkeletonFadeOutAndSlideDown 0.5s cubic-bezier(0.16, 0.7, 0.28, 1) forwards;
 }
