@@ -1,4 +1,4 @@
-import { SvgStrings } from '../../SvgStrings/SvgStrings';
+import { SvgStrings } from '../../assets/svg-strings/SvgStrings';
 
 export class UnderDevelopmentDialogue {
   private static IsOn = false;
@@ -26,8 +26,10 @@ export class UnderDevelopmentDialogue {
   }
 
   static cbAndProceedButtonListener() {
+    // console.log('listerner started');
     const proceedButton = document.getElementById('under-development__okay-button');
     proceedButton?.addEventListener('click', () => {
+      // console.log('clicked');
       this.setDoNotShowDialogInSessionTrue();
       this.hideDialogAndBackdrop();
     });
@@ -96,7 +98,7 @@ export class UnderDevelopmentDialogue {
 
   static dialogBackdropTemplate: string = `<div class="under_development__backdrop"></div>`;
 
-  static dialogTemplate: string = `
+  static dialogTemplate: string = /*html*/ `
   <div id="under-development__container" class="under-development__container">
     <div id="under-development__dialog" class="under-development__dialog">
 

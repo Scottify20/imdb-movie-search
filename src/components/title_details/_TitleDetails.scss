@@ -1,17 +1,46 @@
 :root {
-  --title-details-popup-width: 90vw;
+  --title-details-popup-width: 95vw;
   --title-details-popup-max-width: 680px;
-  --title-details-popup-height: calc(100vh - 10vw);
+  --title-details-popup-height: calc(100vh - 5vw);
   --title-details-global-padding-and-gap: 1em;
   --close-button-width: 1.8em;
+
+  @keyframes TitleDetailsFadeOutAndSlideDown {
+    0% {
+      opacity: 100%;
+      transform: translateY(0);
+    }
+    50% {
+      opacity: 100%;
+    }
+    80% {
+      opacity: 0%;
+    }
+    100% {
+      opacity: 0%;
+      transform: translateY(100vh);
+    }
+  }
+}
+
+.title-details__container:has(.title-details.closed) {
+  overflow: hidden;
+}
+
+.title-details.closed {
+  opacity: 100%;
+  animation: SkeletonFadeOutAndSlideDown 0.5s cubic-bezier(0.16, 0.7, 0.28, 1) forwards;
+}
+
+.title-details__backdrop.closed {
+  opacity: 100%;
+  animation: FadeOut 0.5s cubic-bezier(0.16, 0.7, 0.28, 1) forwards;
 }
 
 p.text-dot-separated,
 .dot-separator {
   flex-grow: 0;
 }
-// p.text-dot-separated {
-// }
 
 p.dot-separator.metadata {
   font-size: 0.5em;
@@ -72,7 +101,7 @@ span.medium {
   max-width: var(--title-details-popup-max-width);
 
   background-color: var(--bg-color);
-  margin: clamp(5vw, 5vw, 60px) auto;
+  margin: clamp(2.5vw, 2.5vw, 60px) auto;
 }
 
 .title-details__hero {

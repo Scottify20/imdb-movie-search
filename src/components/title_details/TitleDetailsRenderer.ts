@@ -1,10 +1,11 @@
-import { SvgStrings } from '../../SvgStrings/SvgStrings';
+import { SvgStrings } from '../../assets/svg-strings/SvgStrings';
 import { TitlePropsParsed, OmdbTitleDetailsFetch } from '../../omdb/OmdbTitleDetailsFetch';
 import {
   insertHTMLInsideElementById,
   elementByIdExists,
   elementFromHTMLString,
 } from '../../utils/GlobalUtils';
+import { TitleDetailsSkeletonLoader } from './skeleton_loader/TitleDetailsSkeletonLoader';
 
 export class TitleDetailsRenderer {
   static [key: string]: any; // static index signature
@@ -22,17 +23,24 @@ export class TitleDetailsRenderer {
         console.log('already active');
         return;
       }
+
       TitleDetailsRenderer._viewingAlreadyActive = true;
       setTimeout(() => {
         TitleDetailsRenderer._viewingAlreadyActive = false;
       }, 2000);
+
+      TitleDetailsSkeletonLoader.show();
+
       this._titleData = (await OmdbTitleDetailsFetch.getTitleData(titleId)) as TitlePropsParsed;
 
       // console.log(this._titleData);
-      this.renderTitleDetailsWindow();
-      this.bindData();
-      this.showParentElementsAfterDataBinding();
-      this.closeButtonAndBackdropListener();
+      setTimeout(() => {
+        TitleDetailsSkeletonLoader.fadeOut();
+        this.renderTitleDetailsWindow();
+        this.bindData();
+        this.showParentElementsAfterDataBinding();
+        this.closeButtonAndBackdropListener();
+      }, 500);
     }
   }
 
@@ -127,12 +135,18 @@ export class TitleDetailsRenderer {
 
   private static hideDialogAndBackdrop() {
     this._viewingAlreadyActive = false;
-    document.body.classList.remove('scroll-disabled');
-    const dialogContainer = document.getElementById('title-details__container');
-    const backdrop = document.getElementById('title-details__backdrop');
+    const titleDetailsContainer = document.getElementById('title-details__container');
+    const titleDetails = document.getElementById('title-details');
+    const titleDetailsBackdrop = document.getElementById('title-details__backdrop');
 
-    dialogContainer?.remove();
-    backdrop?.remove();
+    titleDetails?.classList.add('closed');
+    titleDetailsBackdrop?.classList.add('closed');
+    document.body.classList.remove('scroll-disabled');
+
+    setTimeout(() => {
+      titleDetailsContainer?.remove();
+      titleDetailsBackdrop?.remove();
+    }, 400);
   }
 
   private static propNotNull(...propKeys: string[]): boolean {
@@ -163,6 +177,7 @@ export class TitleDetailsRenderer {
 
   private static renderTitleDetailsWindow() {
     // disable scrolling of content under the title detais window
+
     document.body.classList.add('scroll-disabled');
     // insert the parent container (the parent container of the window) to the body
     document.body.insertAdjacentHTML('afterbegin', this.templateTitleDetailsContainer);
@@ -566,7 +581,7 @@ export class TitleDetailsRenderer {
   `;
 
   private static templateSubsectionPoster = /* html */ `
-  <img id="title-data--posterURL" class="title-details__poster" src="https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg" onerror="this.onerror=null; this.style.display='none'; this.classList.add('title-details__poster--not-available'); this.src='https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg'" alt="">
+  <img id="title-data--posterURL" class="title-details__poster" src="https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg" onerror="this.classList.add('title-details__poster--not-available'); this.src='https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg'" alt="">
   `;
 
   private static templateSubsectionPlot = /* html */ `
@@ -590,7 +605,7 @@ export class TitleDetailsRenderer {
       </div>
   `;
 
-  private static rtSvgStringSelector(rating: 'fresh' | 'certified-fresh' | 'rotten'): string {
+  public static rtSvgStringSelector(rating: 'fresh' | 'certified-fresh' | 'rotten'): string {
     switch (rating) {
       case 'fresh':
         return SvgStrings.rtFresh;

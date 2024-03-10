@@ -70,7 +70,7 @@ export class GeneralTitleSearch extends OmdbFetch {
       parsedData.searchQuery = searchQuery;
       parsedData.pageNumber = parseInt(pageNumberString);
     }
-    console.log(parsedData);
+    // console.log(parsedData);
     return parsedData;
   }
 

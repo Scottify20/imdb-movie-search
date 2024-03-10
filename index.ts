@@ -8,6 +8,7 @@ import { resultCardLogic } from './src/components/result_card_container/result_c
 import { UnderDevelopmentDialogue } from './src/components/under_development_dialogue/UnderDevelopmentDialogue';
 import { TitleDetailsRenderer } from './src/components/title_details/TitleDetailsRenderer';
 import { SearchBarController } from './src/components/header/search_bar/SearchBarController';
+import { TitleDetailsSkeletonLoader } from './src/components/title_details/skeleton_loader/TitleDetailsSkeletonLoader';
 
 inject(); // enable vercel analytics
 // OmdbSearchLogic(true); //enables the search feature
@@ -20,3 +21,15 @@ animateSearchBtn(); // search button animation
 new SearchBarController(true);
 new UnderDevelopmentDialogue(true);
 new TitleDetailsRenderer(true);
+
+// TitleDetailsSkeletonLoader.show();
+
+// setTimeout(() => {
+//   TitleDetailsSkeletonLoader.close();
+//   console.log('closed');
+// }, 5000);
+
+// setTimeout(() => {
+//   TitleDetailsSkeletonLoader.fadeOut();
+//   console.log('fadeout');
+// }, 5000);

@@ -5,9 +5,10 @@
 @import 'src/components/result_card_container/ResultCardsGroup';
 @import 'src/components/result_card_container/result_card/ResultCard';
 @import 'src/components/footer/Footer';
-@import 'src/scss-globals/Globals';
+@import 'src/scss_globals/Globals';
 @import 'src/components/title_details/TitleDetails';
 @import 'src/components/under_development_dialogue/UnderDevelopmentDialogue';
+@import 'src/components/title_details/skeleton_loader/TitleDetailsSkeletonLoader';
 
 * {
   margin: 0;
@@ -17,6 +18,7 @@
 
 html {
   scroll-behavior: smooth;
+  // scrollbar-width: thin;
 }
 
 :root {
@@ -60,8 +62,22 @@ body {
   background-color: var(--bg-color);
 }
 
-body.scroll-disabled {
+body.scroll-disabled,
+body.scroll-disabled header nav {
   overflow: hidden;
+  scrollbar-width: none;
+}
+
+@media (hover: hover) {
+  /* CSS code for browsers that support hover and have a WebKit/Blink engine */
+  @supports (-webkit-font-smoothing: antialiased) {
+    body.scroll-disabled,
+    body.scroll-disabled header nav {
+      padding-right: 16px;
+      overflow: hidden;
+      scrollbar-width: none;
+    }
+  }
 }
 
 main {
