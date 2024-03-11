@@ -1,99 +1,248 @@
-.nav__mobile-menu-container {
+.nav__mobile-menu-backdrop.shown {
+  z-index: 1001;
+  display: block;
+  position: absolute;
+  opacity: 100%;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+}
+
+.nav__mobile-menu-container.floating {
+  display: none;
+  transform-origin: top;
   position: fixed;
   z-index: 1001;
-  left: -100%;
-  top: 0;
-  transition: all ease-in-out 0.25s;
+  top: calc(var(--navbar-height) * 1.2);
 
-  .nav__mobile-menu-backdrop {
+  &.hidden,
+  &.shown {
+    display: grid;
+  }
+}
+
+@keyframes PopIn {
+  0% {
+    transform-origin: 2.12em -2.02em;
+    transform: scale(0);
+  }
+
+  20% {
+    opacity: 0;
+  }
+
+  100% {
+    transform-origin: 2.12em -2.02em;
+    transform: scale(1);
+    opacity: 100;
+  }
+}
+
+@keyframes PopOut {
+  0% {
+    transform-origin: 2.12em -2.02em;
+    transform: scale(1);
+    opacity: 100;
+  }
+  100% {
+    transform-origin: 2.12em -2.02em;
+    transform: scale(0);
+  }
+}
+
+.nav__mobile-menu-container.shown.floating .nav__mobile-menu {
+  animation: PopIn cubic-bezier(0.13, 0.73, 0.39, 0.99) 0.2s forwards;
+}
+
+.nav__mobile-menu-container.hidden.floating .nav__mobile-menu {
+  animation: PopOut cubic-bezier(0.39, 0.99, 0.13, 0.73) 0.2s forwards;
+}
+
+.nav__mobile-menu-container.floating .nav__mobile-menu {
+  filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.438));
+}
+
+.nav__mobile-menu {
+  width: 280px;
+  height: auto;
+  position: absolute;
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 1em;
+  background-color: var(--card-bg-color);
+  border-radius: 1em;
+  padding: 1em;
+
+  svg.nav__mobile-menu-pointer {
     position: absolute;
-    background-color: transparent;
+    width: 2em;
+    height: 2em;
+    top: -27px;
+    left: 23px;
+    path {
+      fill: var(--card-bg-color);
+      // fill: green;
+    }
+  }
+}
+
+.nav__mobile-menu-close-button {
+  display: none;
+}
+
+.nav__mobile-menu-container.floating .nav__links-container {
+  .links {
+    border-radius: 0.65em;
+  }
+}
+
+.nav__links-container {
+  display: grid;
+  grid-template-columns: 1fr;
+
+  .links {
+    color: white;
+    padding: 1em;
+    transition: all ease-in-out 0.1s;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.65em;
+    align-items: start;
+    user-select: none;
+
+    &:hover,
+    &:active {
+      background-color: #ffffffdb;
+      color: black;
+    }
+
+    &:hover svg path,
+    &:active svg path {
+      fill: var(--bg-color);
+    }
+
+    svg {
+      width: 1.25em;
+    }
+  }
+  .links__view-source-code,
+  .links__favourites {
+    display: none;
+  }
+}
+////
+/// when width is less than 500px
+///
+@media only screen and (max-width: 499px) {
+  .nav__mobile-menu-pointer {
+    display: none;
+  }
+
+  @keyframes NavMenuSlideIn {
+    0% {
+      left: -100%;
+    }
+    100% {
+      left: 0;
+    }
+  }
+
+  @keyframes NavMenuSlideOff {
+    0% {
+      left: 0;
+    }
+    100% {
+      left: -100%;
+    }
+  }
+
+  .nav__mobile-menu-container {
+    z-index: 1001;
+    pointer-events: none;
+    position: absolute;
+    left: -100%;
+  }
+
+  .nav__mobile-menu-container.shown {
+    animation: NavMenuSlideIn cubic-bezier(0.13, 0.73, 0.39, 0.99) 0.25s forwards;
+    display: grid;
+    z-index: 1001;
+    top: 0;
     width: 100vw;
     height: 100vh;
   }
 
+  .nav__mobile-menu-container.hidden {
+    animation: NavMenuSlideOff cubic-bezier(0.39, 0.99, 0.13, 0.73) 0.25s forwards;
+  }
+
+  .nav__mobile-menu-backdrop {
+    z-index: 1001;
+    background-color: transparent;
+    transition: background-color ease-out 0.25s 0.25s;
+  }
+
+  .nav__mobile-menu-backdrop.shown {
+    background-color: rgba(0, 0, 0, 0.622);
+    transition: background-color ease-out 0.25s 0.25s;
+  }
+
   .nav__mobile-menu {
+    pointer-events: all;
     overflow-y: auto;
-    width: 280px;
+    width: 250px;
     height: 100vh;
-    position: absolute;
+    position: relative;
     display: flex;
     flex-flow: column nowrap;
     gap: 1em;
     background-color: var(--bg-color);
     border-radius: 0 1em 1em 0;
     padding: 1em;
+  }
 
-    .nav__mobile-menu-close-button {
-      position: fixed;
-      z-index: 6;
-      min-width: 2.5em;
-      max-width: 2.5em;
-      aspect-ratio: 1 / 1;
-      display: grid;
-      place-content: center;
-      border: none;
-      border-radius: 50%;
-      background-color: #ffffffe5;
-      cursor: pointer;
-      transition: transform ease-out 0.15s;
+  .nav__mobile-menu-close-button {
+    position: fixed;
+    z-index: 6;
+    min-width: 2.5em;
+    max-width: 2.5em;
+    aspect-ratio: 1 / 1;
+    display: grid;
+    place-content: center;
+    border: none;
+    border-radius: 50%;
+    background-color: #ffffffe5;
+    cursor: pointer;
+    transition: transform ease-out 0.15s;
 
-      &:active {
-        transform: scale(0.7);
-      }
-
-      .x-icon {
-        pointer-events: none;
-        width: 1.1em;
-        path {
-          fill: black;
-        }
-      }
+    &:active {
+      transform: scale(0.7);
     }
 
-    .nav__links-container {
-      display: grid;
-      grid-template-columns: 1fr;
-      margin-left: -0.5em;
-      margin-top: 3em;
-
-      .links {
-        color: white;
-        padding: 1em;
-        border-radius: 999px;
-        transition: all ease-in-out 0.1s;
-        display: grid;
-        grid-template-columns: auto 1fr;
-        gap: 0.65em;
-        align-items: start;
-        user-select: none;
-
-        &:hover,
-        &:active {
-          background-color: #ffffffe5;
-          color: black;
-        }
-
-        &:hover svg path,
-        &:active svg path {
-          fill: var(--bg-color);
-        }
-
-        svg {
-          width: 1.25em;
-        }
+    .x-icon {
+      pointer-events: none;
+      width: 1.1em;
+      path {
+        fill: black;
       }
     }
   }
-}
 
-@media only screen and (max-width: 1023px) {
-  .nav__mobile-menu-container.shown {
-    left: 0;
+  .nav__links-container {
+    display: none;
+    .links {
+      border-radius: 1000px;
+    }
   }
 
-  .nav__mobile-menu-container.shown .nav__mobile-menu-backdrop {
-    background-color: rgba(0, 0, 0, 0.622);
-    transition: background-color ease-out 0.25s 0.25s;
+  .nav__mobile-menu-container.shown .nav__links-container {
+    display: grid;
+    margin-left: -0.5em;
+    margin-top: 3em;
+    .links__view-source-code,
+    .links__favourites {
+      display: grid;
+    }
   }
 }

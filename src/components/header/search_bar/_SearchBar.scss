@@ -54,7 +54,8 @@
       background-color: var(--nav-items-color);
       border-radius: 0 999px 999px 0;
 
-      &:active {
+      &:active,
+      &:hover {
         background-color: var(--nav-items-hover-color);
       }
     }

@@ -10,13 +10,12 @@ const ButtonsDisabler = (isOn: boolean) => {
     DisableButtons.disableMutipleButtonsbyIds(
       'links__preferences',
       'links__favourites',
-      'links__about'
+      'links__about',
+      'favourites-btn'
     );
     DisableButtons.disableMultipleButtonByClass('view-details-btn');
   }
 };
-
-type elementSelectorType = 'id' | 'class';
 
 class DisableButtons {
   private static buttonList: Element[] = [];

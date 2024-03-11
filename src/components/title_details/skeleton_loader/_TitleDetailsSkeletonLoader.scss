@@ -25,7 +25,6 @@
       opacity: 100%;
     }
   }
-
   @keyframes FadeOut {
     0% {
       opacity: 100%;
@@ -34,7 +33,6 @@
       opacity: 0%;
     }
   }
-
   @keyframes SkeletonFadeInAndSlideUp {
     0% {
       transform: translateY(100vh);
@@ -132,10 +130,12 @@ p {
   pointer-events: none;
 }
 
-@media (hover: hover) and (-webkit-min-device-pixel-ratio: 0) {
+@media (hover: hover) {
   /* CSS code for browsers that support hover and have a WebKit/Blink engine */
-  .skeleton__container {
-    padding-right: 16px;
+  @supports (-webkit-font-smoothing: antialiased) {
+    .skeleton__container {
+      padding-right: 15px;
+    }
   }
 }
 
