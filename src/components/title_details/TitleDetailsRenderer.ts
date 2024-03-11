@@ -17,10 +17,15 @@ export class TitleDetailsRenderer {
     TitleDetailsRenderer._IsOn = isOn;
   }
 
-  static async viewTitle(titleId: string) {
+  static async viewTitle(imdbId: string) {
     if (this._IsOn) {
       if (this._viewingAlreadyActive) {
-        console.log('already active');
+        // console.log('already active');
+        return;
+      }
+      // check if already in cache
+      if (OmdbTitleDetailsFetch.istitleInCache(imdbId)) {
+        this.viewCachedTitle(imdbId);
         return;
       }
 
@@ -31,7 +36,7 @@ export class TitleDetailsRenderer {
 
       TitleDetailsSkeletonLoader.show();
 
-      this._titleData = (await OmdbTitleDetailsFetch.getTitleData(titleId)) as TitlePropsParsed;
+      this._titleData = (await OmdbTitleDetailsFetch.getTitleData(imdbId)) as TitlePropsParsed;
 
       // console.log(this._titleData);
       setTimeout(() => {
@@ -42,6 +47,24 @@ export class TitleDetailsRenderer {
         this.closeButtonAndBackdropListener();
       }, 500);
     }
+  }
+
+  static async viewCachedTitle(imdbId: string) {
+    // console.log('title in cache');
+    TitleDetailsRenderer._viewingAlreadyActive = true;
+    setTimeout(() => {
+      TitleDetailsRenderer._viewingAlreadyActive = false;
+    }, 2000);
+
+    this._titleData = OmdbTitleDetailsFetch.getCachedTitleData(imdbId);
+    // console.log(this._titleData);
+    this.renderTitleDetailsWindow();
+    this.bindData();
+
+    this.showParentElementsAfterDataBinding();
+    document.getElementById('title-details')?.classList.add('shown-skip-skeleton');
+    document.getElementById('title-details__backdrop')?.classList.add('shown-skip-skeleton');
+    this.closeButtonAndBackdropListener();
   }
 
   private static bindData() {

@@ -11,6 +11,31 @@ export class OmdbTitleDetailsFetch extends OmdbFetch {
     episode: '',
   };
 
+  private static titleDetailsCollection: { [key: string]: TitlePropsParsed | undefined } = {
+    placeholder: undefined,
+  };
+
+  private static storeToTitleDetailsCollection(titleResult: TitlePropsParsed) {
+    if (!titleResult.imdbID) {
+      return;
+    }
+    const imdbIdKeysInCollection = Object.keys(this.titleDetailsCollection);
+    const imdbId = titleResult.imdbID;
+    if (!imdbIdKeysInCollection.includes(imdbId)) {
+      this.titleDetailsCollection[imdbId] = titleResult;
+    }
+  }
+
+  static istitleInCache(imdbId: string): boolean {
+    const imdbIdKeysInCollection = Object.keys(this.titleDetailsCollection);
+    // console.log(imdbIdKeysInCollection);
+    return imdbIdKeysInCollection.includes(imdbId);
+  }
+
+  static getCachedTitleData(imdbId: string): TitlePropsParsed {
+    return this.titleDetailsCollection[imdbId] as TitlePropsParsed;
+  }
+
   static async getTitleData(
     imdbID: string,
     plotLength?: omdbTitlePlotLength,
@@ -37,6 +62,8 @@ export class OmdbTitleDetailsFetch extends OmdbFetch {
         this.fetchTitleDetailsParamsObj
       )) as TitlePropsParsed;
 
+      // stores the results to the collection
+      this.storeToTitleDetailsCollection(searchResult);
       // console.log(searchResult);
       return searchResult;
     } catch {
@@ -163,7 +190,7 @@ const plainStringKeysParsed: string[] = [
   'Plot',
   'Awards',
   'Poster',
-  'ImdbID',
+  'imdbID',
   'Response',
   'BoxOffice',
   'Production',

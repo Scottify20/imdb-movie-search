@@ -1,7 +1,3 @@
-import { SvgStrings } from '../../../assets/svg-strings/SvgStrings';
-import { insertHTMLInsideElementById } from '../../../utils/GlobalUtils';
-import { TitleDetailsRenderer } from '../TitleDetailsRenderer';
-
 export class TitleDetailsSkeletonLoader {
   public static show() {
     document.body.insertAdjacentHTML('afterbegin', this.templateSkeleton);

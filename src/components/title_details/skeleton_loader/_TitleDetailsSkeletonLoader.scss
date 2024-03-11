@@ -33,48 +33,15 @@
       opacity: 0%;
     }
   }
-  @keyframes SkeletonFadeInAndSlideUp {
-    0% {
-      transform: translateY(100vh);
-    }
-    20% {
-      opacity: 0%;
-    }
-
-    50% {
-      opacity: 100%;
-    }
-    100% {
-      opacity: 100%;
-      transform: translateY(0);
-    }
-  }
-
-  @keyframes SkeletonFadeOutAndSlideDown {
-    0% {
-      opacity: 100%;
-      transform: translateY(0);
-    }
-    50% {
-      opacity: 100%;
-    }
-    80% {
-      opacity: 0%;
-    }
-    100% {
-      opacity: 0%;
-      transform: translateY(100vh);
-    }
-  }
 }
 
 .skeleton__container:has(.skeleton.shown) {
   opacity: 0%;
-  animation: SkeletonFadeInAndSlideUp 0.4s cubic-bezier(0.16, 0.7, 0.28, 1) forwards;
+  animation: FadeInAndSlideUp 0.5s cubic-bezier(0.16, 0.7, 0.28, 1) forwards;
 }
 .skeleton__container:has(.skeleton.closed) {
   opacity: 100%;
-  animation: SkeletonFadeOutAndSlideDown 0.25s cubic-bezier(0.16, 0.7, 0.28, 1) forwards;
+  animation: FadeOutAndSlideDown 0.25s cubic-bezier(0.16, 0.7, 0.28, 1) forwards;
 }
 .skeleton__backdrop.shown {
   opacity: 0%;

@@ -131,10 +131,18 @@
     display: none;
   }
 }
-////
+//// when width is leed than 768px
+@media only screen and (max-width: 767px) {
+  .nav__mobile-menu-container.shown .nav__links-container {
+    .links__view-source-code,
+    .links__favourites {
+      display: grid;
+    }
+  }
+}
+
 /// when width is less than 500px
-///
-@media only screen and (max-width: 499px) {
+@media only screen and (max-width: 500px) {
   .nav__mobile-menu-pointer {
     display: none;
   }
@@ -165,7 +173,8 @@
   }
 
   .nav__mobile-menu-container.shown {
-    animation: NavMenuSlideIn cubic-bezier(0.13, 0.73, 0.39, 0.99) 0.25s forwards;
+    // animation: NavMenuSlideIn cubic-bezier(0.13, 0.73, 0.39, 0.99) 0.25s forwards;
+    animation: NavMenuSlideIn cubic-bezier(0.13, 0.73, 0.39, 0.99) 0.3s forwards;
     display: grid;
     z-index: 1001;
     top: 0;
@@ -174,7 +183,8 @@
   }
 
   .nav__mobile-menu-container.hidden {
-    animation: NavMenuSlideOff cubic-bezier(0.39, 0.99, 0.13, 0.73) 0.25s forwards;
+    // animation: NavMenuSlideOff cubic-bezier(0.39, 0.99, 0.13, 0.73) 0.25s forwards;
+    animation: NavMenuSlideOff cubic-bezier(0.39, 0.99, 0.13, 0.73) 0.3s forwards;
   }
 
   .nav__mobile-menu-backdrop {
@@ -191,7 +201,7 @@
   .nav__mobile-menu {
     pointer-events: all;
     overflow-y: auto;
-    width: 250px;
+    width: 260px;
     height: 100vh;
     position: relative;
     display: flex;
@@ -207,6 +217,8 @@
     z-index: 6;
     min-width: 2.5em;
     max-width: 2.5em;
+    margin-left: 0.75em;
+    margin-top: 0.25em;
     aspect-ratio: 1 / 1;
     display: grid;
     place-content: center;
@@ -230,6 +242,7 @@
   }
 
   .nav__links-container {
+    row-gap: 0.25em;
     display: none;
     .links {
       border-radius: 1000px;
@@ -238,8 +251,8 @@
 
   .nav__mobile-menu-container.shown .nav__links-container {
     display: grid;
-    margin-left: -0.5em;
-    margin-top: 3em;
+    // margin-left: 0.75em;
+    margin-top: 3.25em;
     .links__view-source-code,
     .links__favourites {
       display: grid;

@@ -3,9 +3,26 @@
   --title-details-popup-max-width: 680px;
   --title-details-popup-height: calc(100vh - 5vw);
   --title-details-global-padding-and-gap: 1em;
-  --close-button-width: 1.8em;
+  --close-button-width: 2em;
 
-  @keyframes TitleDetailsFadeOutAndSlideDown {
+  @keyframes FadeInAndSlideUp {
+    0% {
+      transform: translateY(100vh);
+    }
+    20% {
+      opacity: 0%;
+    }
+
+    50% {
+      opacity: 100%;
+    }
+    100% {
+      opacity: 100%;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes FadeOutAndSlideDown {
     0% {
       opacity: 100%;
       transform: translateY(0);
@@ -23,13 +40,23 @@
   }
 }
 
+.title-details.shown-skip-skeleton {
+  opacity: 0%;
+  animation: FadeInAndSlideUp 0.5s cubic-bezier(0.16, 0.7, 0.28, 1) forwards;
+}
+
+.title-details__backdrop.shown-skip-skeleton {
+  opacity: 0%;
+  animation: FadeIn 0.3s cubic-bezier(0.16, 0.7, 0.28, 1) forwards;
+}
+
 .title-details__container:has(.title-details.closed) {
   overflow: hidden;
 }
 
 .title-details__container:has(.title-details.closed) {
   opacity: 100%;
-  animation: SkeletonFadeOutAndSlideDown 0.5s cubic-bezier(0.16, 0.7, 0.28, 1) forwards;
+  animation: FadeOutAndSlideDown 0.5s cubic-bezier(0.16, 0.7, 0.28, 1) forwards;
 }
 
 .title-details__backdrop.closed {

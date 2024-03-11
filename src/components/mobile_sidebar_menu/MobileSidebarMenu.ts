@@ -9,8 +9,8 @@ export function mobileSidebarLogic(isOn: boolean) {
       '#nav__mobile-menu-container'
     ) as HTMLElement;
     const mobileMenuBackdrop = document.querySelector('#nav__mobile-menu-backdrop') as HTMLElement;
-    const mobileMenu = document.getElementById('nav__mobile-menu');
-    const burgerMenuIcon = document.getElementById('nav__hamburger-menu-container');
+    // const mobileMenu = document.getElementById('nav__mobile-menu');
+    // const burgerMenuIcon = document.getElementById('nav__hamburger-menu-container');
 
     function hideMobileMenu() {
       mobileMenuContainer.classList.add('hidden');
@@ -31,9 +31,11 @@ export function mobileSidebarLogic(isOn: boolean) {
     function setNavMenuAsFloatingOrNot() {
       // on first load
       if (window.innerWidth >= 500) {
+        mobileMenuContainer.classList.remove('side');
         mobileMenuContainer.classList.add('floating');
       } else {
         mobileMenuContainer.classList.remove('floating');
+        mobileMenuContainer.classList.add('side');
       }
       // listen for window resizing
       window.addEventListener('resize', () => {

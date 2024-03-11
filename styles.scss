@@ -62,8 +62,8 @@ body {
   background-color: var(--bg-color);
 }
 
-body.scroll-disabled:has(.skeleton__container),
-body.scroll-disabled:has(.skeleton__container) header nav {
+body.scroll-disabled,
+body.scroll-disabled header nav {
   overflow: hidden;
   scrollbar-width: none;
 }
