@@ -201,7 +201,7 @@
   .nav__mobile-menu {
     pointer-events: all;
     overflow-y: auto;
-    width: 260px;
+    width: 250px;
     height: 100vh;
     position: relative;
     display: flex;
@@ -217,7 +217,7 @@
     z-index: 6;
     min-width: 2.5em;
     max-width: 2.5em;
-    margin-left: 0.75em;
+    // margin-left: 0.75em;
     margin-top: 0.25em;
     aspect-ratio: 1 / 1;
     display: grid;
@@ -252,7 +252,7 @@
   .nav__mobile-menu-container.shown .nav__links-container {
     display: grid;
     // margin-left: 0.75em;
-    margin-top: 3.25em;
+    margin-top: 3em;
     .links__view-source-code,
     .links__favourites {
       display: grid;

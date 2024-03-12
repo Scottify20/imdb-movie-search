@@ -103,6 +103,10 @@ export class ResultCardsRenderer {
         if (film.Poster) {
           filmPoster?.setAttribute('src', film.Poster);
           filmPoster?.setAttribute('parent-card-id', `card-${film.imdbID}`);
+          filmPoster?.setAttribute(
+            'alt',
+            `poster image of ${film.Title} (${this.yearArraytoString(film.Year)})`
+          );
         }
 
         // if there was an error in getting the image
@@ -189,9 +193,10 @@ export class ResultCardsRenderer {
 
   private static get templateCardResultsSuccess(): string {
     return /*html*/ `
-  <article class="card search-result-card" tabindex="0">
+  <article class="card search-result-card">
   <div class="card__poster-container cursor--pointer">
     <img
+    role="button"
       alt="movie poster"
       class="card__poster"
       width="100px"
@@ -199,7 +204,7 @@ export class ResultCardsRenderer {
   </div>
 
   <div class="card__details-container">
-    <h2 class="card__title">
+    <h2 class="card__title"  tabindex="0" role="button">
       <span
         class="card__title-text medium-text cursor--pointer hover--underline .active--underline"
         >Film Title</span

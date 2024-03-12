@@ -44,12 +44,19 @@ export class TitleDetailsRenderer {
         this.renderTitleDetailsWindow();
         this.bindData();
         this.showParentElementsAfterDataBinding();
+        this.escapeButtonToCloseListener();
+        this.setFocusToTitleDetailsWindow();
         this.closeButtonAndBackdropListener();
       }, 500);
     }
   }
 
-  static async viewCachedTitle(imdbId: string) {
+  private static async setFocusToTitleDetailsWindow() {
+    const titleDetailsWindow = document.getElementById('title-details') as HTMLElement;
+    titleDetailsWindow.focus();
+  }
+
+  private static async viewCachedTitle(imdbId: string) {
     // console.log('title in cache');
     TitleDetailsRenderer._viewingAlreadyActive = true;
     setTimeout(() => {
@@ -64,6 +71,8 @@ export class TitleDetailsRenderer {
     this.showParentElementsAfterDataBinding();
     document.getElementById('title-details')?.classList.add('shown-skip-skeleton');
     document.getElementById('title-details__backdrop')?.classList.add('shown-skip-skeleton');
+    this.escapeButtonToCloseListener();
+    this.setFocusToTitleDetailsWindow();
     this.closeButtonAndBackdropListener();
   }
 
@@ -153,6 +162,16 @@ export class TitleDetailsRenderer {
 
     backdrop?.addEventListener('click', () => {
       this.hideDialogAndBackdrop();
+    });
+  }
+
+  private static escapeButtonToCloseListener() {
+    const titleDetailsWindow = document.getElementById('title-details');
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && titleDetailsWindow) {
+        console.log('escape pressed');
+        this.hideDialogAndBackdrop();
+      }
     });
   }
 
@@ -569,13 +588,13 @@ export class TitleDetailsRenderer {
   <div class="title-details__hero title-details__section-container">
     <div class="title-details__title-and-close-btn-container">
       <h2 id="title-data--title" class="title-details__title">Title</h2>
-      <div id="title-details__close-btn" class="title-details__close-btn">
+      <button type="button" tabindex="0" name="close-title-details-window" id="title-details__close-btn" class="title-details__close-btn">
         <svg class="x-icon" viewBox="0 0 847 1058.8" xmlns="http://www.w3.org/2000/svg">
           <path d="M423.4,407.4l274.2-274.2c80.9-80.9,202.8,42,121.9,122.9L546.4,529.3l273.2,274.2
   c80.9,80.9-41,202.8-121.9,121.9L423.4,652.2L150.3,925.4c-80.9,80.9-203.8-41-122.9-121.9l274.2-274.2L27.3,256.1
   c-80.9-80.9,42-203.8,122.9-122.9L423.4,407.4z"/>
         </svg>
-      </div>
+      </button>
     </div>
     <div id="title-details__metadata-container" class="title-details__metadata-container">
     <!-- metadata info here-->
