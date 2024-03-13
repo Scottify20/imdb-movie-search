@@ -1,5 +1,6 @@
 import { SvgStrings } from '../../assets/svg-strings/SvgStrings';
-import { TitlePropsParsed, OmdbTitleDetailsFetch } from '../../omdb/OmdbTitleDetailsFetch';
+import { TitlePropsParsed, OmdbTitleDetailsFetch } from '../../utils/omdb/OmdbTitleDetailsFetch';
+
 import {
   insertHTMLInsideElementById,
   elementByIdExists,

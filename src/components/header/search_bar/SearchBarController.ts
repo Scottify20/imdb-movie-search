@@ -2,7 +2,8 @@ import {
   GeneralResultParsedTypes,
   GeneralTitleSearch,
   OmdbSearchTitleTypes,
-} from '../../../omdb/OmdbGeneralSearch';
+} from '../../../utils/omdb/OmdbGeneralSearch';
+
 import { ResultCardsRenderer } from '../../result_card_container/ResultCardsRenderer';
 
 export class SearchBarController {

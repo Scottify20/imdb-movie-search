@@ -80,22 +80,6 @@ export class OmdbTitleDetailsFetch extends OmdbFetch {
     return this.parseFetchedData(fetchData);
   }
 
-  static requestUrl(params: FetchTitleDetailsParamsObj): string {
-    let fullUrl = this.baseUrl;
-    const paramKeys = Object.keys(params);
-    for (const paramKey of paramKeys) {
-      if (params[paramKey] !== '') {
-        let paramVal = params[paramKey];
-        if (paramVal) {
-          paramVal = paramVal.replace(/^\s+|\s+$/g, '').replace(/\s+/g, '+');
-        }
-        fullUrl = fullUrl.concat(`&${paramKey}=${paramVal}`);
-      }
-    }
-    // console.log('requesting data with url:', fullUrl);
-    return fullUrl;
-  }
-
   static parseFetchedData(fetchedData: TitleProps): TitlePropsParsed | undefined {
     return this.parseTitle(fetchedData);
   }
@@ -220,7 +204,7 @@ const arrayStringKeysParsed: string[] = [
 
 // const dateKeysParsed: string[] = ['Released', 'DVD'];
 
-type FetchTitleDetailsParamsObj = {
+export type FetchTitleDetailsParamsObj = {
   i: string; // id
   plot: omdbTitlePlotLength;
   type: OmdbTitleType;

@@ -74,21 +74,6 @@ export class GeneralTitleSearch extends OmdbFetch {
     return parsedData;
   }
 
-  private static requestUrl(params: SearchParamsObj): string {
-    let fullUrl = this.baseUrl;
-    const paramKeys = Object.keys(params);
-
-    for (const paramKey of paramKeys) {
-      if (params[paramKey] && params[paramKey] !== '') {
-        let paramVal = params[paramKey];
-        paramVal = paramVal?.replace(/^\s+|\s+$/g, '').replace(/\s+/g, '+');
-        fullUrl = fullUrl.concat(`&${paramKey}=${paramVal}`);
-      }
-    }
-    // console.log('requesting data with url:', fullUrl);
-    return fullUrl;
-  }
-
   private static async parseSearchResults(
     dataFromFetch: GeneralSearchResult | undefined
   ): Promise<GeneralResultParsedTypes> {

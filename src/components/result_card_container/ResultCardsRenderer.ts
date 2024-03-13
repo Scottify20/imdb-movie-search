@@ -1,4 +1,4 @@
-import { GeneralResultParsedTypes, GeneralTitleSearch } from '../../omdb/OmdbGeneralSearch';
+import { GeneralResultParsedTypes, GeneralTitleSearch } from '../../utils/omdb/OmdbGeneralSearch';
 import { SearchBarController } from '../header/search_bar/SearchBarController';
 import { TitleDetailsRenderer } from '../title_details/TitleDetailsRenderer';
 
