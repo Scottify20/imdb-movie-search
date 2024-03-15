@@ -3,8 +3,7 @@
 A simple web app to browse information about Movies, TV Series, and more in the [OMDB API](https://www.omdbapi.com/ "OMDB API's Website")'s Dataset.
 
 ### Notes:
-- Due to the limitations of the OMDB API, I will be replacing it with [TMDB API](https://developer.themoviedb.org/docs/getting-started 'TMDB API Section') and secure the new API key in future versions of this app.
-
+- Due to the limitations of the OMDB API, I will be gradually replacing it with [TMDB API](https://developer.themoviedb.org/docs/getting-started 'TMDB API Section').
 ## Live Preview
 
 [OMDB Titles Search](https://omdb-titles-browser.vercel.app/ 'OMDB Titles Search: Live Preview')
