@@ -3,7 +3,7 @@
   --title-details-popup-max-width: 680px;
   --title-details-popup-height: calc(100vh - 5vw);
   --title-details-global-padding-and-gap: 1em;
-  --close-button-width: 2em;
+  --close-button-width: 5em;
 
   @keyframes FadeInAndSlideUp {
     0% {
@@ -47,7 +47,7 @@
 
 .title-details__backdrop.shown-skip-skeleton {
   opacity: 0%;
-  animation: FadeIn 0.3s cubic-bezier(0.16, 0.7, 0.28, 1) forwards;
+  animation: FadeIn 0.5s cubic-bezier(0.16, 0.7, 0.28, 1) forwards;
 }
 
 .title-details__container:has(.title-details.closed) {
@@ -148,7 +148,7 @@ span.medium {
       width: 100%;
       transform: scale(1.75);
       object-fit: cover;
-      filter: blur(50px) brightness(50%);
+      filter: blur(40px) brightness(50%);
     }
   }
 }
@@ -168,21 +168,22 @@ span.medium {
     filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.659));
     border-radius: 50%;
     border: none;
-
     width: var(--close-button-width);
     aspect-ratio: 1 /1;
+    transform: scale(1.2);
 
     transition: all ease-in-out 0.1s;
 
     &:hover {
-      background-color: rgba(182, 182, 182, 0.734);
+      background-color: rgba(147, 147, 147, 0.538);
     }
 
     &:active {
-      transform: scale(0.8);
+      transform: scale(1);
     }
 
     svg {
+      opacity: 100%;
       width: 0.7em;
     }
     svg path {
@@ -390,9 +391,9 @@ span.medium {
       // display: none;
     }
 
-    .title-details__title {
-      margin-right: -0.7em;
-    }
+    // .title-details__title {
+    //   margin-right: -0.7em;
+    // }
   }
 
   .title-details__hero {
@@ -476,6 +477,23 @@ span.medium {
 }
 
 // max width
+@media only screen and (max-width: 768px) {
+  .title-details__title-and-close-btn-container {
+    .title-details__close-btn {
+      transform: scale(1.4);
+    }
+    .title-details__close-btn.low-opacity:not(:hover) {
+      transition: all ease-in-out 0.5s;
+      background-color: transparent;
+      filter: none;
+
+      svg {
+        transition: all ease-in-out 0.5s;
+        opacity: 50%;
+      }
+    }
+  }
+}
 @media only screen and (max-width: 500px) {
   .genre-container,
   .title-details__metadata-container {

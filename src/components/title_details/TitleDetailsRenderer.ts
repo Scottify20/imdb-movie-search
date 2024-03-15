@@ -21,12 +21,6 @@ export class TitleDetailsRenderer {
   static async viewTitle(imdbId: string) {
     if (this._IsOn) {
       if (this._viewingAlreadyActive) {
-        // console.log('already active');
-        return;
-      }
-      // check if already in cache
-      if (OmdbTitleDetailsFetch.istitleInCache(imdbId)) {
-        this.viewCachedTitle(imdbId);
         return;
       }
 
@@ -34,6 +28,12 @@ export class TitleDetailsRenderer {
       setTimeout(() => {
         TitleDetailsRenderer._viewingAlreadyActive = false;
       }, 2000);
+
+      // check if already in cache
+      if (OmdbTitleDetailsFetch.istitleInCache(imdbId)) {
+        this.viewCachedTitle(imdbId);
+        return;
+      }
 
       TitleDetailsSkeletonLoader.show();
 
@@ -44,18 +44,19 @@ export class TitleDetailsRenderer {
         TitleDetailsSkeletonLoader.fadeOut();
         this.renderTitleDetailsWindow();
         this.bindData();
+        this.startCloseButtonController();
         this.showParentElementsAfterDataBinding();
         this.escapeButtonToCloseListener();
-        this.setFocusToTitleDetailsWindow();
+        // this.setFocusToTitleDetailsWindow();
         this.closeButtonAndBackdropListener();
       }, 500);
     }
   }
 
-  private static async setFocusToTitleDetailsWindow() {
-    const titleDetailsWindow = document.getElementById('title-details') as HTMLElement;
-    titleDetailsWindow.focus();
-  }
+  // private static async setFocusToTitleDetailsWindow() {
+  //   const titleDetailsWindow = document.getElementById('title-details') as HTMLElement;
+  //   titleDetailsWindow.focus();
+  // }
 
   private static async viewCachedTitle(imdbId: string) {
     // console.log('title in cache');
@@ -65,16 +66,45 @@ export class TitleDetailsRenderer {
     }, 2000);
 
     this._titleData = OmdbTitleDetailsFetch.getCachedTitleData(imdbId);
-    // console.log(this._titleData);
     this.renderTitleDetailsWindow();
     this.bindData();
-
-    this.showParentElementsAfterDataBinding();
-    document.getElementById('title-details')?.classList.add('shown-skip-skeleton');
-    document.getElementById('title-details__backdrop')?.classList.add('shown-skip-skeleton');
+    this.startCloseButtonController();
     this.escapeButtonToCloseListener();
-    this.setFocusToTitleDetailsWindow();
     this.closeButtonAndBackdropListener();
+    this.showParentElementsAfterDataBinding();
+
+    const titleDetailsWindow = document.getElementById('title-details') as HTMLElement;
+    const titleDetailsBackdrop = document.getElementById('title-details__backdrop') as HTMLElement;
+    // to add the slide in animation
+    titleDetailsWindow.classList.add('shown-skip-skeleton');
+    titleDetailsBackdrop.classList.add('shown-skip-skeleton');
+
+    // to remove the slide in animation after the animation has finished
+    // because the animation disables the fixed property set to the close button
+    setTimeout(() => {
+      titleDetailsWindow.classList.remove('shown-skip-skeleton');
+      titleDetailsBackdrop.classList.remove('shown-skip-skeleton');
+    }, 550);
+  }
+
+  private static startCloseButtonController() {
+    const titleDetailsContainer = document.getElementById(
+      'title-details__container'
+    ) as HTMLElement;
+    const closeButton = document.getElementById('title-details__close-btn') as HTMLElement;
+
+    if (window.innerWidth < 768) {
+      closeButton.classList.add('low-opacity');
+    }
+
+    titleDetailsContainer.addEventListener('scroll', () => {
+      const scrollDistance = titleDetailsContainer.scrollTop;
+      if (scrollDistance > 26) {
+        closeButton.classList.remove('low-opacity');
+      } else {
+        closeButton.classList.add('low-opacity');
+      }
+    });
   }
 
   private static bindData() {

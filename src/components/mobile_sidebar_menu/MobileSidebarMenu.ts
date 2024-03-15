@@ -18,6 +18,7 @@ export function mobileSidebarLogic(isOn: boolean) {
       mobileMenuContainer.classList.remove('shown');
       mobileMenuBackdrop.classList.remove('shown');
       mobileMenuToggle.checked = false;
+      toggleBodyScrolling();
     }
 
     function showMobileMenu() {
@@ -26,9 +27,10 @@ export function mobileSidebarLogic(isOn: boolean) {
       mobileMenuContainer.classList.remove('hidden');
       mobileMenuBackdrop.classList.remove('hidden');
       mobileMenuToggle.checked = true;
+      toggleBodyScrolling();
     }
 
-    function setNavMenuAsFloatingOrNot() {
+    (function setNavMenuAsFloatingOrNot() {
       // on first load
       if (window.innerWidth >= 500) {
         mobileMenuContainer.classList.remove('side');
@@ -37,6 +39,8 @@ export function mobileSidebarLogic(isOn: boolean) {
         mobileMenuContainer.classList.remove('floating');
         mobileMenuContainer.classList.add('side');
       }
+      toggleBodyScrolling();
+
       // listen for window resizing
       window.addEventListener('resize', () => {
         if (window.innerWidth >= 500) {
@@ -46,9 +50,9 @@ export function mobileSidebarLogic(isOn: boolean) {
           mobileMenuContainer.classList.remove('floating');
           mobileMenuContainer.classList.add('side');
         }
+        toggleBodyScrolling();
       });
-    }
-    setNavMenuAsFloatingOrNot();
+    })();
 
     function anchorFloatingNavMenuToBurger() {
       const childElement = document.getElementById('nav__mobile-menu-container') as HTMLElement;
@@ -72,11 +76,8 @@ export function mobileSidebarLogic(isOn: boolean) {
       if (target === mobileMenuToggle && mobileMenuToggle.checked) {
         showMobileMenu();
         anchorFloatingNavMenuToBurger();
-
-        toggleBodyScrolling();
       } else {
         hideMobileMenu();
-        toggleBodyScrolling();
       }
     });
 
@@ -88,7 +89,6 @@ export function mobileSidebarLogic(isOn: boolean) {
       if (target === mobileMenuBackdrop) {
         mobileMenuToggle.checked = false;
         hideMobileMenu();
-        toggleBodyScrolling();
       }
     });
 
@@ -98,15 +98,18 @@ export function mobileSidebarLogic(isOn: boolean) {
       if (target.id == 'nav__mobile-menu-close-button') {
         mobileMenuToggle.checked = false;
         hideMobileMenu();
-        toggleBodyScrolling();
       }
     });
 
     // disable scrolling of content below menu when menu is shown
     function toggleBodyScrolling() {
-      if (mobileMenuToggle.checked && window.innerHeight < 500) {
+      const titleDetailsContainer =
+        document.getElementById('title-details__container') || undefined;
+      if (mobileMenuToggle.checked && window.innerWidth < 500) {
+        // console.log('body scrolling disabled');
         document.body.classList.add('scroll-disabled');
-      } else {
+      } else if (!titleDetailsContainer) {
+        // console.log('body scrolling enabled');
         document.body.classList.remove('scroll-disabled');
       }
     }
