@@ -3,7 +3,7 @@
 A simple web app to browse information about Movies, TV Series, and more in the [OMDB API](https://www.omdbapi.com/ "OMDB API's Website") and [TMDB API's](https://developer.themoviedb.org/docs/getting-started 'TMDB API Section') Dataset.
 
 ### Notes:
-- Due to the limitations of the OMDB API, I am gradually replacing it and will be exclusively using the TMDB API.
+- Due to the limitations of the OMDB API, I am gradually replacing it with the TMDB API.
 
 - As of March 13, 2024, to protect my TMDB API keys and tokens, I implemented an Express.js proxy server. This server acts as a middleman, fetching data from the APIs and relaying it to this web app.
 
