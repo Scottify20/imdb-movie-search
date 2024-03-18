@@ -25,7 +25,7 @@ A simple web app to browse information about Movies, TV Series, and more in the 
 
 #### Planned
 - Rebuilt with Angular and Sass
-- See popular and your recently viewed titles on the homepage
+- See trending movies and TV series on the homepage. 
 - Create custom lists
 - Keep track of the movies, series, and episodes you have watched.
 
