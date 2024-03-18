@@ -7,7 +7,7 @@ A simple web app to browse information about Movies, TV Series, and more in the 
 
 - As of March 13, 2024, to protect my TMDB API keys and tokens, I implemented an Express.js proxy server. This server acts as a middleman, fetching data from the APIs and relaying it to this web app.
 
-- By using a proxy, I store the credentials securely as environment variables on the server. Unlike the web app, the proxy server doesn't expose these credentials to the client-side (user's browser). I then further enhanced security by implementing a CORS-based domain whitelist system. This ensures only the web app and my development environment can access the proxy server.
+- By using a proxy, I store the credentials securely as environment variables on the server. Unlike the web app, the proxy server doesn't expose these credentials to the client-side (user's browser). I then further enhanced security by implementing a CORS-based domain whitelist system. And I still plan on implementing other securing methods in future updates.
 
   
 ## Live Preview
