@@ -21,11 +21,11 @@ A simple web app to browse information about Movies, TV Series, and more in the 
 - Built with Typescript and Sass
 - Search and filter through titles (movies, tv series, etc.) in the OMDB Database
 - View the titles' detailed info
+- See trending movies and TV series on the homepage. 
 - Add titles to your Favourites
 
 #### Planned
 - Rebuilt with Angular and Sass
-- See trending movies and TV series on the homepage. 
 - Create custom lists
 - Keep track of the movies, series, and episodes you have watched.
 
