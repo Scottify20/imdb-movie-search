@@ -104,9 +104,9 @@ export class UnderDevelopmentDialogue {
 
       ${SvgStrings.warningBandTop}
 
-      <h2 class="under-development__title">Website is Under Development</h2>
+      <h2 class="under-development__title">This Web App is in Beta</h2>
       <p class="under-development__description"><span class="nowrap">Not all of the features are enabled yet.</span><span class="nowrap"> And some of them might not work as expected.</span></p>
-      <label class="under-development__do-not-show-again-label"><input type="checkbox" name="under-development__do-not-show-again-cb" id="under-development__do-not-show-again-cb" class="under-development__do-not-show-again-cb"> Do not show again</label>
+      <label class="under-development__do-not-show-again-label"><input type="checkbox" name="under-development__do-not-show-again-cb" id="under-development__do-not-show-again-cb" class="under-development__do-not-show-again-cb"> Don't show again</label>
       <button id="under-development__okay-button" class="under-development__okay-button">Proceed</button>
 
       ${SvgStrings.warningBandBottom}     

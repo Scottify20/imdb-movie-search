@@ -1,0 +1,146 @@
+.homepage-trending__movies-container {
+  overflow: clip;
+}
+
+.homepage-trending__movies__title-and-toggle-container {
+  padding-bottom: 1rem;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+
+  .homepage-trending__movies__title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: white;
+  }
+
+  .homepage-trending__movies__dw-toggle {
+    position: relative;
+    // right: 1em;
+    padding-right: 0.3em;
+
+    background-color: var(--fg-color);
+    border-radius: 4rem;
+
+    display: flex;
+    flex-flow: row nowrap;
+
+    .trending-toggle-label {
+      position: absolute;
+      color: transparent;
+      pointer-events: none;
+    }
+
+    .trending-toggle-radio {
+      appearance: none;
+      // outline: 1px solid red;
+      cursor: pointer;
+      position: relative;
+
+      &.movie-day {
+        width: 3.2em;
+        height: 2em;
+      }
+
+      &.movie-week {
+        width: 4em;
+      }
+
+      &::after {
+        transition: all ease-in-out 0.125s;
+        padding: 0 0.18em 0 0.18em;
+        border-radius: 4em;
+
+        color: rgba(255, 255, 255, 0.8);
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+
+        display: grid;
+        place-content: center;
+      }
+
+      &:checked::after {
+        color: black;
+        background-color: rgba(255, 255, 255, 0.9);
+      }
+
+      &#movies-day-radio::after {
+        content: 'Day';
+      }
+
+      &#movies-week-radio::after {
+        content: 'Week';
+      }
+    }
+  }
+}
+
+.homepage-trending__movies__cards-container {
+  overflow-x: auto;
+}
+
+.homepage-trending__movies__cards-subcontainer {
+  min-width: 100%;
+  padding: 0.75rem;
+  margin-bottom: 0.75rem;
+  border-radius: 1rem;
+
+  background-color: var(--fg-color);
+  display: inline-flex;
+  flex-flow: row nowrap;
+  gap: 0.75rem;
+}
+
+.trending-card-container {
+  width: 140px;
+  flex: 0;
+
+  .trending-card__poster {
+    width: 140px;
+    border-radius: 9px;
+  }
+
+  .trending-card__title-and-year-genre-container {
+    line-height: 1.25;
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 0.3em;
+
+    margin-top: 0.25em;
+
+    .trending-card__title {
+      color: white;
+      font-size: 1rem;
+      font-weight: 500;
+    }
+    .trending-card-year-and-genre {
+      font-size: 0.813rem;
+      font-weight: 200;
+      color: rgba(255, 255, 255, 0.8);
+    }
+  }
+}
+
+@media (hover: hover) {
+  .homepage-trending__movies__cards-container {
+    scrollbar-color: transparent transparent;
+    scrollbar-width: thin;
+    &:hover {
+      scrollbar-color: #87878c transparent;
+    }
+    transition: all ease-in-out 0.12s;
+  }
+}
+
+@media (hover: none) {
+  .homepage-trending__movies__cards-container {
+    scrollbar-color: auto auto;
+  }
+
+  .homepage-trending__movies__cards-subcontainer {
+    margin-bottom: 0.75rem;
+  }
+}
