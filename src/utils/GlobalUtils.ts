@@ -1,6 +1,13 @@
-export function insertHTMLInsideElementById(template: string, parentElementId: string) {
+type anchoringPosition = 'left' | 'right' | 'top' | 'bottom';
+type HTMLInsertPosition = 'afterbegin' | 'afterend' | 'beforebegin' | 'beforeend';
+
+export function insertHTMLInsideElementById(
+  template: string,
+  parentElementId: string,
+  position: HTMLInsertPosition = 'beforeend'
+) {
   const parentElement = document.getElementById(parentElementId);
-  parentElement?.insertAdjacentHTML('beforeend', template);
+  parentElement?.insertAdjacentHTML(position, template);
 }
 
 export function elementByIdExists(elementId: string): boolean {
@@ -48,5 +55,3 @@ export function anchorToElementById(
     }
   });
 }
-
-type anchoringPosition = 'left' | 'right' | 'top' | 'bottom';

@@ -186,10 +186,10 @@
     width: 7px;
     aspect-ratio: 1 /1;
     transform: scale(1);
+    transition: all ease-in 0.15s;
   }
 
   .homepage-hero__indicator.visible {
-    transition: all ease-in 0.15s;
     transform: scale(1.2);
     background-color: #cfcfcf;
   }
