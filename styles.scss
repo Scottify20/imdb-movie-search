@@ -9,6 +9,8 @@
 @import 'src/components/title_details/TitleDetails';
 @import 'src/components/under_development_dialogue/UnderDevelopmentDialogue';
 @import 'src/components/title_details/skeleton_loader/TitleDetailsSkeletonLoader';
+@import 'src/components/homepage/hero/Hero';
+@import 'src/components/homepage/trending/TrendingMovies';
 
 * {
   margin: 0;
@@ -17,7 +19,7 @@
 }
 
 html {
-  scroll-behavior: smooth;
+  // scroll-behavior: smooth;
 }
 
 :root {
@@ -32,6 +34,7 @@ html {
   /* color variables */
   --card-font-color: white;
   --bg-color: #262629;
+  --body-bg-color: #2b2b2d;
   --card-bg-color: #434552;
   --card-highlight-bg-color: rgb(92, 95, 110);
   --card-tag-bg-color: #ffffff0e;
@@ -54,12 +57,13 @@ a {
 
 body {
   overflow-y: scroll;
+  overflow-x: hidden;
   margin: 0 auto;
   min-height: 100vh;
   min-width: 280px;
   display: flex;
   flex-flow: column nowrap;
-  background-color: var(--bg-color);
+  background-color: var(--body-bg-color);
 }
 
 body.scroll-disabled,
@@ -81,9 +85,20 @@ body.scroll-disabled header nav {
 }
 
 main {
+  max-width: calc((4 * var(--card-width)) + (3 * var(--card-group-gap)));
   margin: 0 auto;
   margin-top: var(--navbar-height);
+  width: 100%;
+  padding: 1rem;
   flex-grow: 1;
   display: flex;
   flex-flow: column nowrap;
+  gap: 1.5rem;
+}
+
+@media only screen and (max-width: 360px) {
+  main {
+    padding: 0.75rem;
+    gap: 1.5rem;
+  }
 }

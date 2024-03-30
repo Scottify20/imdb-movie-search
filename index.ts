@@ -8,6 +8,9 @@ import { resultCardLogic } from './src/components/result_card_container/result_c
 import { UnderDevelopmentDialogue } from './src/components/under_development_dialogue/UnderDevelopmentDialogue';
 import { TitleDetailsRenderer } from './src/components/title_details/TitleDetailsRenderer';
 import { SearchBarController } from './src/components/header/search_bar/SearchBarController';
+import { Hero } from './src/components/homepage/hero/Hero';
+import { TrendingMovies } from './src/components/homepage/trending/TrendingMovies';
+import { FetchTrendingTitles } from './src/utils/proxy_api/FetchTrendingtTitles';
 
 inject(); // enable vercel analytics
 // OmdbSearchLogic(true); //enables the search feature
@@ -20,3 +23,12 @@ animateSearchBtn(); // search button animation
 new SearchBarController(true);
 new UnderDevelopmentDialogue(true);
 new TitleDetailsRenderer(true);
+new Hero(true);
+new TrendingMovies(true);
+
+// FetchTrendingTitles.fetchTrending('movies', 'day');
+
+// const tmdbTrend = new TmdbFetchTrending();
+// tmdbTrend.fetchTrendingActors('day');
+// tmdbTrend.fetchTrendingMovies('day');
+// tmdbTrend.fetchTrendingSeries('day');
