@@ -24,6 +24,7 @@
 
     display: flex;
     flex-flow: row nowrap;
+    gap: 0.1em;
 
     .trending-toggle-label {
       position: absolute;
@@ -38,12 +39,12 @@
       position: relative;
 
       &.movie-day {
-        width: 3.2em;
+        width: 3.75em;
         height: 2em;
       }
 
       &.movie-week {
-        width: 4em;
+        width: 5.75em;
       }
 
       &::after {
@@ -67,12 +68,14 @@
         background-color: rgba(255, 255, 255, 0.9);
       }
 
-      &#movies-day-radio::after {
-        content: 'Day';
+      &#movies-day-radio::after,
+      &#series-day-radio::after {
+        content: 'Today';
       }
 
-      &#movies-week-radio::after {
-        content: 'Week';
+      &#movies-week-radio::after,
+      &#series-week-radio::after {
+        content: 'This Week';
       }
     }
   }
@@ -80,21 +83,26 @@
 
 .homepage-trending__movies__cards-container {
   overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  scroll-padding: var(--homepage-card-padding);
 }
 
 .homepage-trending__movies__cards-subcontainer {
   min-width: 100%;
-  padding: 0.75rem;
+  padding: var(--homepage-card-padding);
   margin-bottom: 0.75rem;
   border-radius: 1rem;
-
   background-color: var(--fg-color);
   display: inline-flex;
   flex-flow: row nowrap;
-  gap: 0.75rem;
+  gap: var(--homepage-card-padding);
 }
 
 .trending-card-container {
+  cursor: pointer;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
   width: 140px;
   flex: 0;
 
@@ -124,6 +132,29 @@
   }
 }
 
+@media only screen and (max-width: 360px) {
+  .trending-card-container {
+    width: 120px;
+
+    .trending-card__poster {
+      width: 120px;
+    }
+
+    .trending-card__title-and-year-genre-container {
+      margin-top: 0.25em;
+
+      .trending-card__title {
+        font-size: 0.9rem;
+        font-weight: 500;
+      }
+      .trending-card-year-and-genre {
+        font-size: 0.8rem;
+        font-weight: 200;
+      }
+    }
+  }
+}
+
 @media (hover: hover) {
   .homepage-trending__movies__cards-container {
     scrollbar-color: transparent transparent;
@@ -137,10 +168,28 @@
 
 @media (hover: none) {
   .homepage-trending__movies__cards-container {
+    scroll-behavior: auto;
+    scroll-snap-type: none;
+  }
+
+  .trending-card-container {
+    scroll-snap-stop: normal;
+  }
+
+  .homepage-trending__movies__cards-container {
     scrollbar-color: auto auto;
   }
 
   .homepage-trending__movies__cards-subcontainer {
     margin-bottom: 0.75rem;
+  }
+}
+
+// min width
+@media only screen and (min-width: 768px) {
+  .homepage-trending__movies__title-and-toggle-container {
+    .homepage-trending__movies__title {
+      font-size: 1.5rem;
+    }
   }
 }

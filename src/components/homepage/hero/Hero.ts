@@ -1,5 +1,5 @@
 import { insertHTMLInsideElementById } from '../../../utils/GlobalUtils';
-import { TmdbMovieResult } from '../../../utils/tmdb/TmdbFetchTrending';
+import { TmdbMovieResult, TmdbSeriesResult } from '../../../utils/tmdb/TmdbFetchTrending';
 import { TmdbMovieGenreIds } from '../../../utils/tmdb/TmdbFetch';
 
 export class Hero {
@@ -7,7 +7,61 @@ export class Hero {
   private static MovieList: TmdbMovieResult[] = [
     {
       adult: false,
-      backdrop_path: '/4k46cQr1msDErfsEqZJVT10oKoH.jpg',
+      backdrop_path: '/tZ7ZWsmAg3HMxLbzDj9nl0OC5bX.jpg',
+      id: 984324,
+      title: 'The Wages of Fear',
+      original_language: 'fr',
+      original_title: 'Le salaire de la peur',
+      overview:
+        'When an explosion at an oil well threatens hundreds of lives, a crack team is called upon to make a deadly desert crossing with nitroglycerine in tow.',
+      poster_path: '/jFK2ZLQUzo9pea0jfMCHDfvWsx7.jpg',
+      media_type: 'movie',
+      genre_ids: [28, 53],
+      popularity: 70.491,
+      release_date: '2024-03-28',
+      video: false,
+      vote_average: 5.517,
+      vote_count: 30,
+    },
+    {
+      adult: false,
+      backdrop_path: '/sR0SpCrXamlIkYMdfz83sFn5JS6.jpg',
+      id: 823464,
+      title: 'Godzilla x Kong: The New Empire',
+      original_language: 'en',
+      original_title: 'Godzilla x Kong: The New Empire',
+      overview:
+        'Following their explosive showdown, Godzilla and Kong must reunite against a colossal undiscovered threat hidden within our world, challenging their very existence – and our own.',
+      poster_path: '/gmGK5Gw5CIGMPhOmTO0bNA9Q66c.jpg',
+      media_type: 'movie',
+      genre_ids: [28, 878, 12],
+      popularity: 4825.24,
+      release_date: '2024-03-27',
+      video: false,
+      vote_average: 7.246,
+      vote_count: 171,
+    },
+    {
+      adult: false,
+      backdrop_path: '/wUp0bUXaveR40ikBhDgWwNTijuD.jpg',
+      id: 1181548,
+      title: 'Heart of the Hunter',
+      original_language: 'en',
+      original_title: 'Heart of the Hunter',
+      overview:
+        'A retired assassin is pulled back into action when his friend uncovers a dangerous conspiracy at the heart of the South African government.',
+      poster_path: '/n726fdyL1dGwt15bY7Nj3XOXc4Q.jpg',
+      media_type: 'movie',
+      genre_ids: [28, 9648, 53],
+      popularity: 78.245,
+      release_date: '2024-03-28',
+      video: false,
+      vote_average: 4.7,
+      vote_count: 9,
+    },
+    {
+      adult: false,
+      backdrop_path: '/39LxWqvQCsbAe0Cm2B7dtBe3Rd4.jpg',
       id: 359410,
       title: 'Road House',
       original_language: 'en',
@@ -17,83 +71,29 @@ export class Hero {
       poster_path: '/bXi6IQiQDHD00JFio5ZSZOeRSBh.jpg',
       media_type: 'movie',
       genre_ids: [28, 53],
-      popularity: 340.262,
+      popularity: 3944.132,
       release_date: '2024-03-08',
       video: false,
-      vote_average: 6.908,
-      vote_count: 196,
+      vote_average: 7.266,
+      vote_count: 903,
     },
     {
       adult: false,
-      backdrop_path: '/1ZSKH5GGFlM8M32K34GMdaNS2Ew.jpg',
-      id: 802219,
-      title: 'Bob Marley: One Love',
+      backdrop_path: '/1tDMeyxEMa2zNMWL8BXvXydKxTX.jpg',
+      id: 857655,
+      title: 'The Beautiful Game',
       original_language: 'en',
-      original_title: 'Bob Marley: One Love',
+      original_title: 'The Beautiful Game',
       overview:
-        'Jamaican singer-songwriter Bob Marley overcomes adversity to become the most famous reggae musician in the world.',
-      poster_path: '/mKWalirPreEdCKDJjc5TKeOP2xi.jpg',
+        'Advocates to end homelessness, organize an annual tournament for Homeless people to compete in a series of football matches known as The Homeless World Cup.',
+      poster_path: '/3Laz0p3Qg47vI2XIalpL2SlNUDI.jpg',
       media_type: 'movie',
-      genre_ids: [10402, 36, 18],
-      popularity: 819.473,
-      release_date: '2024-02-14',
+      genre_ids: [18],
+      popularity: 26.699,
+      release_date: '2024-03-22',
       video: false,
-      vote_average: 6.97,
-      vote_count: 322,
-    },
-    {
-      adult: false,
-      backdrop_path: '/zAepSrO99owYwQqi0QG2AS0dHXw.jpg',
-      id: 634492,
-      title: 'Madame Web',
-      original_language: 'en',
-      original_title: 'Madame Web',
-      overview:
-        'Forced to confront revelations about her past, paramedic Cassandra Webb forges a relationship with three young women destined for powerful futures...if they can all survive a deadly present.',
-      poster_path: '/rULWuutDcN5NvtiZi4FRPzRYWSh.jpg',
-      media_type: 'movie',
-      genre_ids: [28, 14],
-      popularity: 2483.029,
-      release_date: '2024-02-14',
-      video: false,
-      vote_average: 5.553,
-      vote_count: 666,
-    },
-    {
-      adult: false,
-      backdrop_path: '/87IVlclAfWL6mdicU1DDuxdwXwe.jpg',
-      id: 693134,
-      title: 'Dune: Part Two',
-      original_language: 'en',
-      original_title: 'Dune: Part Two',
-      overview:
-        'Follow the mythic journey of Paul Atreides as he unites with Chani and the Fremen while on a path of revenge against the conspirators who destroyed his family. Facing a choice between the love of his life and the fate of the known universe, Paul endeavors to prevent a terrible future only he can foresee.',
-      poster_path: '/8b8R8l88Qje9dn9OE8PY05Nxl1X.jpg',
-      media_type: 'movie',
-      genre_ids: [878, 12],
-      popularity: 736.807,
-      release_date: '2024-02-27',
-      video: false,
-      vote_average: 8.397,
-      vote_count: 1998,
-    },
-    {
-      adult: false,
-      backdrop_path: '/deLWkOLZmBNkm8p16igfapQyqeq.jpg',
-      id: 763215,
-      title: 'Damsel',
-      original_language: 'en',
-      original_title: 'Damsel',
-      overview:
-        "A young woman's marriage to a charming prince turns into a fierce fight for survival when she's offered up as a sacrifice to a fire-breathing dragon.",
-      poster_path: '/sMp34cNKjIb18UBOCoAv4DpCxwY.jpg',
-      media_type: 'movie',
-      genre_ids: [9648, 14, 28, 12],
-      popularity: 1398.123,
-      release_date: '2024-03-08',
-      video: false,
-      vote_average: 7.181,
-      vote_count: 1055,
+      vote_average: 6.5,
+      vote_count: 14,
     },
   ];
 
@@ -131,9 +131,9 @@ export class Hero {
         .replace('[YEAR]', movie.release_date.substring(0, 4))
         .replace('[GENRE]', TmdbMovieGenreIds[movie.genre_ids[0].toString()])
         .replace(/\[POSTER-PATH\]/g, movie.poster_path)
-        .replace('[POSTER-ALT]', `${movie.title}'s poster image`)
+        .replace(/\[POSTER-ALT\]/g, `A poster image of a movie entitled: ${movie.title}`)
         .replace('[BACKDROP-PATH]', movie.backdrop_path)
-        .replace('[BACKDROP-ALT]', `${movie.title}'s backdrop image`);
+        .replace('[BACKDROP-ALT]', `A backdrop image of a movie entitled: ${movie.title}`);
 
       insertHTMLInsideElementById(bindedTemplate, 'homepage-hero-cards-container');
 
@@ -224,12 +224,12 @@ export class Hero {
   private static templateHero = /*html*/ `
  <section class="homepage-hero__container" id="homepage__hero">
  <div class="homepage-hero__scroll-buttons-container">
-   <button id="homepage-hero__scroll-left-btn" class="homepage-hero__scroll-button homepage-hero__scroll-left-btn">
+   <button id="homepage-hero__scroll-left-btn" aria-label="Scroll Left" type="button" class="homepage-hero__scroll-button homepage-hero__scroll-left-btn" tabindex="0">
      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 13 7.44">
        <path id="arrow_down_expanded" data-name="arrow down expanded" class="cls-1" d="M6.44,7.44a1,1,0,0,1-.71-.29L.29,1.71A1,1,0,0,1,1.71.29L6.45,5,11.3.29a1,1,0,1,1,1.4,1.42L7.14,7.16A1,1,0,0,1,6.44,7.44Z"/>
      </svg></button>
 
-   <button id="homepage-hero__scroll-right-btn" class="homepage-hero__scroll-button homepage-hero__scroll-right-btn">
+   <button id="homepage-hero__scroll-right-btn" aria-label="Scroll Right" type="button" class="homepage-hero__scroll-button homepage-hero__scroll-right-btn" tabindex="0">
      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 13 7.44">
        <path id="arrow_down_expanded" data-name="arrow down expanded" class="cls-1" d="M6.44,7.44a1,1,0,0,1-.71-.29L.29,1.71A1,1,0,0,1,1.71.29L6.45,5,11.3.29a1,1,0,1,1,1.4,1.42L7.14,7.16A1,1,0,0,1,6.44,7.44Z"/>
      </svg></button>
@@ -271,15 +271,17 @@ export class Hero {
  <div class="homepage-hero-hero-details-and-poster">
    <img
      class="homepage-hero__poster"
-     src="https://image.tmdb.org/t/p/w154[POSTER-PATH]"
-     alt=""
+     src="https://image.tmdb.org/t/p/w342[POSTER-PATH]"
+     alt="[POSTER-ALT]"
+     role="button"
+     tabindex="0"
    />
-   <h4 class="homepage-hero__title">[TITLE]</h4>
+   <h4 class="homepage-hero__title" role="button" tabindex="0">[TITLE]</h4>
    <p class="homepage-hero__year-and-genre"><span class="homepage-hero__year">[YEAR]<span> • <span class="homepage-hero__genre">[GENRE]</span></p>
-   <div class="homepage-hero__play-trailer-btn">
-     <img class="play-trailer-button-img-bg" src="https://image.tmdb.org/t/p/w92[POSTER-PATH]" alt="[POSTER-ALT]">
+   <div class="homepage-hero__play-trailer-btn" role="button" tabindex="0">
+     <img class="play-trailer-button-img-bg" src="https://image.tmdb.org/t/p/w92[POSTER-PATH]" alt="">
      <p class="play-trailer-txt">Play Trailer</p>
-     <svg width="14px" class="play-icon"xmlns="http://www.w3.org/2000/svg" viewBox="0 0 84.18 93.81"><path d="M78.64,37.3l-62-35.8A11.09,11.09,0,0,0,0,11.1V82.71A11.08,11.08,0,0,0,16.63,92.3l62-35.8A11.09,11.09,0,0,0,78.64,37.3Z"/></g></g></svg>
+     <svg width="14px" class="play-icon"xmlns="http://www.w3.org/2000/svg" viewBox="0 0 84.18 93.81"><path d="M78.64,37.3l-62-35.8A11.09,11.09,0,0,0,0,11.1V82.71A11.08,11.08,0,0,0,16.63,92.3l62-35.8A11.09,11.09,0,0,0,78.64,37.3Z"/></svg>
    </div>
  </div>
 </div>`;

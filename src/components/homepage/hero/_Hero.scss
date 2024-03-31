@@ -22,7 +22,7 @@
     top: 40%;
     margin-top: calc((var(--scroll-btn-height) / -2));
     border: none;
-    background-color: rgba(0, 0, 0, 0.236);
+    background-color: rgba(255, 255, 255, 0.238);
     border-radius: 10rem;
 
     transition: all ease-in-out 0.15s;
@@ -32,9 +32,9 @@
     }
 
     &:hover {
-      background-color: rgba(0, 0, 0, 0.682);
+      background-color: rgba(255, 255, 255, 0.814);
       svg path {
-        fill: white;
+        fill: rgb(0, 0, 0);
       }
     }
 
@@ -44,7 +44,7 @@
       height: var(--scroll-btn-height);
       // background-color: black;
       path {
-        fill: rgba(255, 255, 255, 0.414);
+        fill: rgba(0, 0, 0, 0.468);
       }
     }
   }
@@ -75,6 +75,7 @@
   flex-flow: row nowrap;
   gap: 1rem;
   overflow-x: auto;
+  border-radius: 1rem;
   scrollbar-width: none;
   scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
@@ -88,6 +89,7 @@
   background-color: var(--fg-color);
   border-radius: 1rem;
   overflow: clip;
+
   img.homepage-hero__backdrop {
     width: 100%;
     aspect-ratio: 16/9;
@@ -95,7 +97,7 @@
 
   .homepage-hero-hero-details-and-poster {
     margin-top: -60px;
-    padding: 0.75rem;
+    padding: var(--homepage-card-padding);
     display: grid;
     grid-template-areas:
       'ps nn'
@@ -107,17 +109,18 @@
     column-gap: 0.75rem;
 
     .homepage-hero__poster {
+      cursor: zoom-in;
       grid-area: ps;
       width: 100px;
       aspect-ratio: 1/ 1.5;
       object-fit: cover;
       border-radius: 0.75rem;
 
-      filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.2));
+      filter: drop-shadow(0 0 3px rgba(0, 0, 0, 0.3));
     }
     .homepage-hero__title {
-      grid-area: tt;
       font-size: 1.25rem;
+      grid-area: tt;
       font-weight: 600;
       color: white;
       padding: 0.5em 0;
@@ -131,6 +134,7 @@
     }
 
     .homepage-hero__play-trailer-btn {
+      cursor: pointer;
       filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.2));
       position: relative;
       overflow: clip;
@@ -148,13 +152,13 @@
         position: absolute;
         top: -100%;
         left: -10%;
-        width: 150px;
+        width: 160px;
         // opacity: 50%;
         filter: blur(20px);
       }
 
       .play-trailer-txt {
-        font-size: 14px;
+        font-size: 0.9rem;
         z-index: 1;
 
         text-wrap: nowrap;
@@ -195,6 +199,74 @@
   }
 }
 
+// min width
+@media only screen and (min-width: 768px) {
+  .homepage-hero__scroll-buttons-container {
+    .homepage-hero__scroll-button {
+      top: 42%;
+    }
+  }
+  .homepage-hero-hero {
+    position: relative;
+    &::after {
+      position: absolute;
+      content: '';
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      background: linear-gradient(
+        to bottom,
+        transparent,
+        transparent,
+        rgba(0, 0, 0, 0.522),
+        rgba(0, 0, 0, 0.941)
+      );
+    }
+
+    img.homepage-hero__backdrop {
+      width: 100%;
+      aspect-ratio: 16/9;
+      transform-origin: top;
+      transform: scale(1.008);
+
+      border-radius: 1rem;
+    }
+
+    .homepage-hero-hero-details-and-poster {
+      z-index: 1;
+      bottom: 0;
+      left: 0;
+      position: absolute;
+
+      .homepage-hero__poster {
+        width: 120px;
+      }
+      .homepage-hero__title {
+        font-size: 1.8rem;
+        padding: 0.2em 0;
+      }
+      .homepage-hero__year-and-genre {
+        font-size: 1.1rem;
+      }
+
+      .homepage-hero__play-trailer-btn {
+        margin-top: 0.8rem;
+        padding: 0.5rem 0.75rem;
+        border-radius: 0.75rem;
+        .play-trailer-txt {
+          font-size: 1rem;
+        }
+
+        .play-icon {
+          width: 1em;
+        }
+      }
+    }
+  }
+}
+
+// max width
 @media only screen and (max-width: 499px) {
   .homepage-hero__container {
     .homepage-hero-hero {
@@ -206,12 +278,54 @@
   }
 }
 
+@media only screen and (max-width: 424px) {
+  .homepage-hero__container {
+    .homepage-hero-hero {
+      .homepage-hero-hero-details-and-poster {
+        margin-top: -70px;
+        .homepage-hero__title {
+          font-size: 1.1rem;
+        }
+
+        .homepage-hero__year-and-genre {
+          font-size: 0.8rem;
+        }
+
+        .homepage-hero__play-trailer-btn {
+          width: min-content;
+          padding: 0.4rem 0.6rem;
+          border-radius: 0.75rem;
+          grid-area: tr;
+          margin-top: 0.75rem;
+          .play-trailer-txt {
+            font-size: 0.8rem;
+          }
+
+          .play-icon {
+            width: 12px;
+          }
+        }
+      }
+    }
+  }
+}
+
 @media (hover: hover) {
   .homepage-hero__scroll-buttons-container {
     .homepage-hero__scroll-button {
       opacity: 0;
       pointer-events: none;
       transition: all ease-in-out 0.15s;
+
+      &:focus {
+        opacity: 100%;
+      }
+    }
+
+    .homepage-hero__scroll-left-btn + label {
+    }
+
+    .homepage-hero__scroll-right-btn + label {
     }
   }
 
