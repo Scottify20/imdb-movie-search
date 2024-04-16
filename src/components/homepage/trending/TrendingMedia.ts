@@ -58,41 +58,31 @@ export class TrendingMedia {
   }
 
   private static async fetchTrendingMedia() {
-    const moviesDay = (await FetchTrendingTitles.fetchTrending(
-      'movies',
-      'day'
-    )) as TrendingFetchResult<TmdbMovieResult2>;
-    const moviesWeek = (await FetchTrendingTitles.fetchTrending(
-      'movies',
-      'week'
-    )) as TrendingFetchResult<TmdbMovieResult2>;
-    const seriesDay = (await FetchTrendingTitles.fetchTrending(
-      'series',
-      'week'
-    )) as TrendingFetchResult<TmdbSeriesResult2>;
-    const seriesWeek = (await FetchTrendingTitles.fetchTrending(
-      'series',
-      'week'
-    )) as TrendingFetchResult<TmdbSeriesResult2>;
+    const [moviesDay, moviesWeek, seriesDay, seriesWeek] = await Promise.all([
+      FetchTrendingTitles.fetchTrending('movies', 'day'),
+      FetchTrendingTitles.fetchTrending('movies', 'week'),
+      FetchTrendingTitles.fetchTrending('series', 'week'),
+      FetchTrendingTitles.fetchTrending('series', 'week'),
+    ]);
 
     if (moviesDay.results[0].id === 404.0) {
     } else {
-      this.trendingMoviesDay = moviesDay.results;
+      this.trendingMoviesDay = moviesDay.results as TmdbMovieResult2[];
     }
 
     if (moviesWeek.results[0].id === 404.0) {
     } else {
-      this.trendingMoviesWeek = moviesWeek.results;
+      this.trendingMoviesWeek = moviesWeek.results as TmdbMovieResult2[];
     }
 
     if (seriesDay.results[0].id === 404.0) {
     } else {
-      this.trendingSeriesDay = seriesDay.results;
+      this.trendingSeriesDay = seriesDay.results as TmdbSeriesResult2[];
     }
 
     if (seriesWeek.results[0].id === 404.0) {
     } else {
-      this.trendingSeriesWeek = seriesWeek.results;
+      this.trendingSeriesWeek = seriesWeek.results as TmdbSeriesResult2[];
     }
   }
 
