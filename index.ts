@@ -25,10 +25,3 @@ new UnderDevelopmentDialogue(true);
 new TitleDetailsRenderer(true);
 new Hero(true);
 new TrendingMedia(true);
-
-// FetchTrendingTitles.fetchTrending('movies', 'day');
-
-// const tmdbTrend = new TmdbFetchTrending();
-// tmdbTrend.fetchTrendingActors('day');
-// tmdbTrend.fetchTrendingMovies('day');
-// tmdbTrend.fetchTrendingSeries('day');

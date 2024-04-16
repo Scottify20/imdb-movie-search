@@ -1,101 +1,14 @@
 import { insertHTMLInsideElementById } from '../../../utils/GlobalUtils';
-import { TmdbMovieResult, TmdbSeriesResult } from '../../../utils/tmdb/TmdbFetchTrending';
+import { TmdbMovieResult2 } from '../../../utils/tmdb/TmdbFetchTrending';
 import { TmdbMovieGenreIds } from '../../../utils/tmdb/TmdbFetch';
+import {
+  FetchTrendingTitles,
+  TrendingFetchResult,
+} from '../../../utils/proxy_api/FetchTrendingtTitles';
 
 export class Hero {
   private static IsOn = false;
-  private static MovieList: TmdbMovieResult[] = [
-    {
-      adult: false,
-      backdrop_path: '/tZ7ZWsmAg3HMxLbzDj9nl0OC5bX.jpg',
-      id: 984324,
-      title: 'The Wages of Fear',
-      original_language: 'fr',
-      original_title: 'Le salaire de la peur',
-      overview:
-        'When an explosion at an oil well threatens hundreds of lives, a crack team is called upon to make a deadly desert crossing with nitroglycerine in tow.',
-      poster_path: '/jFK2ZLQUzo9pea0jfMCHDfvWsx7.jpg',
-      media_type: 'movie',
-      genre_ids: [28, 53],
-      popularity: 70.491,
-      release_date: '2024-03-28',
-      video: false,
-      vote_average: 5.517,
-      vote_count: 30,
-    },
-    {
-      adult: false,
-      backdrop_path: '/sR0SpCrXamlIkYMdfz83sFn5JS6.jpg',
-      id: 823464,
-      title: 'Godzilla x Kong: The New Empire',
-      original_language: 'en',
-      original_title: 'Godzilla x Kong: The New Empire',
-      overview:
-        'Following their explosive showdown, Godzilla and Kong must reunite against a colossal undiscovered threat hidden within our world, challenging their very existence – and our own.',
-      poster_path: '/gmGK5Gw5CIGMPhOmTO0bNA9Q66c.jpg',
-      media_type: 'movie',
-      genre_ids: [28, 878, 12],
-      popularity: 4825.24,
-      release_date: '2024-03-27',
-      video: false,
-      vote_average: 7.246,
-      vote_count: 171,
-    },
-    {
-      adult: false,
-      backdrop_path: '/wUp0bUXaveR40ikBhDgWwNTijuD.jpg',
-      id: 1181548,
-      title: 'Heart of the Hunter',
-      original_language: 'en',
-      original_title: 'Heart of the Hunter',
-      overview:
-        'A retired assassin is pulled back into action when his friend uncovers a dangerous conspiracy at the heart of the South African government.',
-      poster_path: '/n726fdyL1dGwt15bY7Nj3XOXc4Q.jpg',
-      media_type: 'movie',
-      genre_ids: [28, 9648, 53],
-      popularity: 78.245,
-      release_date: '2024-03-28',
-      video: false,
-      vote_average: 4.7,
-      vote_count: 9,
-    },
-    {
-      adult: false,
-      backdrop_path: '/39LxWqvQCsbAe0Cm2B7dtBe3Rd4.jpg',
-      id: 359410,
-      title: 'Road House',
-      original_language: 'en',
-      original_title: 'Road House',
-      overview:
-        'Ex-UFC fighter Dalton takes a job as a bouncer at a Florida Keys roadhouse, only to discover that this paradise is not all it seems.',
-      poster_path: '/bXi6IQiQDHD00JFio5ZSZOeRSBh.jpg',
-      media_type: 'movie',
-      genre_ids: [28, 53],
-      popularity: 3944.132,
-      release_date: '2024-03-08',
-      video: false,
-      vote_average: 7.266,
-      vote_count: 903,
-    },
-    {
-      adult: false,
-      backdrop_path: '/1tDMeyxEMa2zNMWL8BXvXydKxTX.jpg',
-      id: 857655,
-      title: 'The Beautiful Game',
-      original_language: 'en',
-      original_title: 'The Beautiful Game',
-      overview:
-        'Advocates to end homelessness, organize an annual tournament for Homeless people to compete in a series of football matches known as The Homeless World Cup.',
-      poster_path: '/3Laz0p3Qg47vI2XIalpL2SlNUDI.jpg',
-      media_type: 'movie',
-      genre_ids: [18],
-      popularity: 26.699,
-      release_date: '2024-03-22',
-      video: false,
-      vote_average: 6.5,
-      vote_count: 14,
-    },
-  ];
+  private static MovieList: TmdbMovieResult2[] = [];
 
   constructor(isOn: boolean) {
     Hero.IsOn = isOn;
@@ -107,12 +20,31 @@ export class Hero {
 
   private static heroPage: number = 0; // 0 to 4 hero cards/pages
 
-  private static render() {
+  private static async render() {
+    await this.fetchMovies();
     this.insertHeroContainer();
     this.insertCardsAndBindData();
 
     this.startScrollButtonsController();
     this.startPageIndicatorObserver();
+  }
+
+  private static async fetchMovies() {
+    const movies = (await FetchTrendingTitles.fetchTrending(
+      'movies',
+      'day'
+    )) as TrendingFetchResult<TmdbMovieResult2>;
+
+    if (movies.results[0].id === 404.0) {
+    } else {
+      let index = 0;
+      movies.results.forEach((movie) => {
+        if (index < 5) {
+          this.MovieList.push(movie);
+        }
+        index++;
+      });
+    }
   }
 
   private static insertHeroContainer() {

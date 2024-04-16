@@ -7,7 +7,7 @@ export class TmdbFetchTrending extends TmdbFetch {
     fetchInstance.setTitleType('movie');
     fetchInstance.setTimeWindow(timeWindow);
     fetchInstance.setPage(page);
-    const result = await fetchInstance.fetchTmdb();
+    const result: TmdbProxyApiResponse<TmdbMovieResult2> = await fetchInstance.fetchTmdb();
   }
 
   public async fetchTrendingSeries(timeWindow: tmdbTimeWindowTypes, page: number = 1) {
@@ -16,17 +16,21 @@ export class TmdbFetchTrending extends TmdbFetch {
     fetchInstance.setTitleType('tv');
     fetchInstance.setTimeWindow(timeWindow);
     fetchInstance.setPage(page);
-    const result = await fetchInstance.fetchTmdb();
+    const result: TmdbProxyApiResponse<TmdbSeriesResult2> = await fetchInstance.fetchTmdb();
   }
 
-  public async fetchTrendingActors(timeWindow: tmdbTimeWindowTypes, page: number = 1) {
-    const fetchInstance = new TmdbFetchTrending();
-    fetchInstance.setFrom('trending');
-    fetchInstance.setTitleType('person');
-    fetchInstance.setTimeWindow(timeWindow);
-    fetchInstance.setPage(page);
-    const result = await fetchInstance.fetchTmdb();
-  }
+  // public async fetchTrendingActors(timeWindow: tmdbTimeWindowTypes, page: number = 1) {
+  //   const fetchInstance = new TmdbFetchTrending();
+  //   fetchInstance.setFrom('trending');
+  //   fetchInstance.setTitleType('person');
+  //   fetchInstance.setTimeWindow(timeWindow);
+  //   fetchInstance.setPage(page);
+  //   const result = await fetchInstance.fetchTmdb();
+  // }
+}
+
+interface TmdbProxyApiResponse<T> {
+  results: T[];
 }
 
 interface TmdbTrendingResponse {
@@ -68,6 +72,42 @@ export interface TmdbMovieResult extends TmdbMovieOrSeriesResult {
   media_type: 'movie';
   release_date: string;
   video: boolean;
+}
+
+export interface TmdbMovieResult2 {
+  adult: boolean;
+  backdrop_path: string;
+  id: number;
+  title: string;
+  original_language: string;
+  original_title: string;
+  overview: string;
+  poster_path: string;
+  media_type: string;
+  genre_ids: number[];
+  popularity: number;
+  release_date: string;
+  video: boolean;
+  vote_average: number;
+  vote_count: number;
+}
+
+export interface TmdbSeriesResult2 {
+  adult: boolean;
+  backdrop_path: string;
+  id: number;
+  name: string;
+  original_language: string;
+  original_name: string;
+  overview: string;
+  poster_path: string;
+  media_type: string;
+  genre_ids: number[];
+  popularity: number;
+  first_air_date: string;
+  vote_average: number;
+  vote_count: number;
+  origin_country: string[];
 }
 
 export interface TmdbPersonResult {
