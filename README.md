@@ -1,14 +1,11 @@
 # OMDB Titles Browser (Beta)
 
-A simple web app to browse information about Movies, TV Series, and more in the [OMDB API](https://www.omdbapi.com/ "OMDB API's Website") and [TMDB API's](https://developer.themoviedb.org/docs/getting-started 'TMDB API Section') Dataset.
+A web app to browse information about Movies, TV Series, and more in the [OMDB API](https://www.omdbapi.com/ "OMDB API's Website") and [TMDB API's](https://developer.themoviedb.org/docs/getting-started 'TMDB API Section') Dataset.
 
 ### Notes:
 - Due to the limitations of the OMDB API, I am gradually replacing it with the TMDB API.
 
 - As of March 13, 2024, to protect my TMDB API keys and tokens, I implemented an Express.js proxy server. This server acts as a middleman, fetching data from the APIs and relaying it to this web app.
-
-- By using a proxy, I store the credentials securely as environment variables on the server. Unlike the web app, the proxy server doesn't expose these credentials to the client-side (user's browser). I then further enhanced security by implementing a CORS-based domain whitelist system. And I still plan on implementing other securing methods in future updates.
-
   
 ## Live Preview
 
@@ -26,6 +23,7 @@ A simple web app to browse information about Movies, TV Series, and more in the 
 
 #### Planned
 - Rebuilt with Angular and Sass
+- User login and data storage system with Firebase Authentication and Firestore
 - Create custom lists
 - Keep track of the movies, series, and episodes you have watched.
 
@@ -43,6 +41,7 @@ A simple web app to browse information about Movies, TV Series, and more in the 
 - Visual Studio Code
 - Nodes.js and npm
 - Express JS
+- Vercel along with Vercel KV Database
 - Adobe Illustrator (For UI prototyping and creating custom icons. I should probably start using Figma/Adobe XD)
 
 ## Assets and Prototyping Files
