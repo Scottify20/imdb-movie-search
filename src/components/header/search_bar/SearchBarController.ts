@@ -4,7 +4,7 @@ import {
   OmdbSearchTitleTypes,
 } from '../../../utils/omdb/OmdbGeneralSearch';
 
-import { ResultCardsRenderer } from '../../result_card_container/ResultCardsRenderer';
+import { ResultCardsRenderer } from '../../search_results_container/result_card_container/ResultCardsRenderer';
 
 export class SearchBarController {
   constructor(isOn: boolean) {
@@ -39,7 +39,7 @@ export class SearchBarController {
 
   public static async searchAndRender() {
     if (GeneralTitleSearch.isNoMorePages) {
-      FooterObserver.unobserve();
+      Observer.unobserve();
       const noMorePagesResult: GeneralResultParsedTypes = {
         Response: 'True',
         Error: 'No more results found!',
@@ -58,14 +58,14 @@ export class SearchBarController {
     LoadingAnimation.show();
     const searchResult = await GeneralTitleSearch.search();
     ResultCardsRenderer.renderResults(this.cardGroupElement, searchResult);
-    FooterObserver.observe();
+    Observer.observe();
     LoadingAnimation.hide();
   }
 
   static seeMoreResults() {
     if (GeneralTitleSearch.isMaxPageReached) {
       console.log('max page reached');
-      FooterObserver.unobserve();
+      Observer.unobserve();
       return;
     }
     GeneralTitleSearch.page += 1;
@@ -74,15 +74,15 @@ export class SearchBarController {
 }
 
 // Footer Observer // semi-Infinite scrolling
-class FooterObserver {
-  private static footerElement = document.querySelector('#footer') as Element;
+class Observer {
+  private static elementToObserve = document.querySelector('.intesection-observee') as Element;
 
   static footerObserver = new IntersectionObserver(
     (entries) => {
       const footerEntry = entries[0];
       if (footerEntry.isIntersecting && GeneralTitleSearch.resultCopy?.Error === 'No Error') {
         // console.log('intersecting');
-        this.footerObserver.unobserve(this.footerElement);
+        this.footerObserver.unobserve(this.elementToObserve);
         SearchBarController.seeMoreResults();
       } else {
         // console.log('not intersecting');
@@ -92,10 +92,10 @@ class FooterObserver {
   );
 
   public static observe() {
-    this.footerObserver.observe(this.footerElement);
+    this.footerObserver.observe(this.elementToObserve);
   }
   public static unobserve() {
-    this.footerObserver.unobserve(this.footerElement);
+    this.footerObserver.unobserve(this.elementToObserve);
   }
 }
 

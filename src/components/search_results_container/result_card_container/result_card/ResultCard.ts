@@ -1,4 +1,4 @@
-import { OmdbTitleDetailsFetch } from '../../../omdb/OmdbTitleDetailsFetch';
+// import { OmdbTitleDetailsFetch } from '../../../../utils/omdb/OmdbTitleDetailsFetch';
 
 export function resultCardLogic(isOn: boolean) {
   const cardGroupElementParent = document.querySelector('#card-group');

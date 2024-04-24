@@ -1,16 +1,19 @@
 :root {
   --no-of-cards-in-a-row: 4;
   --card-group-gap: 3rem;
+  --car-group-gap-new: 2.25rem;
 }
 
 .card-group {
   top: 0;
   margin: 0 auto;
-  padding: var(--card-group-gap);
+  padding: var(--car-group-gap-new) 0;
   display: grid;
-  gap: var(--card-group-gap);
+  gap: var(--car-group-gap-new);
   grid-template-columns: repeat(4, 1fr);
   place-content: center;
+  // width: 100%;
+  // max-width: var(--navbar-width-new);
 }
 
 // Animations for loading search results
@@ -33,6 +36,8 @@ div.loading-container.visible {
   display: grid;
   place-content: center;
   place-self: center;
+  align-self: flex-start;
+  top: 0;
   border-radius: 50%;
   padding: 2rem;
   aspect-ratio: 1 / 1;
@@ -45,7 +50,7 @@ div.loading-container.visible {
 
 @media only screen and (max-width: 1280px) {
   :root {
-    --card-group-gap: 2rem;
+    // --card-group-gap: 1.75rem;
     --no-of-cards-in-a-row: 3;
   }
   .card-group {
@@ -55,7 +60,7 @@ div.loading-container.visible {
 
 @media only screen and (max-width: 768px) {
   :root {
-    --card-group-gap: 1.75rem;
+    // --card-group-gap: 1.75rem;
     --no-of-cards-in-a-row: 2;
   }
   .card-group {
@@ -65,7 +70,7 @@ div.loading-container.visible {
 
 @media only screen and (max-width: 500px) {
   :root {
-    --card-group-gap: 1.75rem;
+    // --card-group-gap: 1.75rem;
     --no-of-cards-in-a-row: 1;
   }
   .card-group {
@@ -75,7 +80,7 @@ div.loading-container.visible {
 
 @media only screen and (max-width: 320px) {
   :root {
-    --card-group-gap: 1.75rem;
+    // --card-group-gap: 1.75rem;
     --no-of-cards-in-a-row: 1;
   }
   .card-group {
