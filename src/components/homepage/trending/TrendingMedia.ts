@@ -8,11 +8,6 @@ import {
 } from '../../../utils/tmdb/TmdbFetch';
 import { TmdbMovieResult2, TmdbSeriesResult2 } from '../../../utils/tmdb/TmdbFetchTrending';
 
-import {
-  TrendingFetchResult,
-  TrendingFetchError,
-} from '../../../utils/proxy_api/FetchTrendingtTitles';
-
 export class TrendingMedia {
   private static IsOn = false;
   private static TrendingTimeWindow: tmdbTimeWindowTypes = 'day';
@@ -61,7 +56,7 @@ export class TrendingMedia {
     const [moviesDay, moviesWeek, seriesDay, seriesWeek] = await Promise.all([
       FetchTrendingTitles.fetchTrending('movies', 'day'),
       FetchTrendingTitles.fetchTrending('movies', 'week'),
-      FetchTrendingTitles.fetchTrending('series', 'week'),
+      FetchTrendingTitles.fetchTrending('series', 'day'),
       FetchTrendingTitles.fetchTrending('series', 'week'),
     ]);
 
@@ -187,7 +182,7 @@ export class TrendingMedia {
       trendingSeries = [...this.trendingSeriesWeek];
     }
 
-    let cardIndex = 1;
+    // let cardIndex = 1;
 
     trendingSeries.forEach((series) => {
       let bindedTemplate = String(this.templateCard);
@@ -200,14 +195,16 @@ export class TrendingMedia {
         .replace('[YEAR]', series.first_air_date.substring(0, 4))
         .replace('[GENRE]', TmdbSeriesGenreIds[series.genre_ids[0].toString()]);
 
-      if (cardIndex > 5) {
-        insertHTMLInsideElementById(
-          bindedTemplate,
-          'homepage-trending__series__cards-subcontainer'
-        );
-      }
+      // if (cardIndex > 5) {
+      //   insertHTMLInsideElementById(
+      //     bindedTemplate,
+      //     'homepage-trending__series__cards-subcontainer'
+      //   );
+      // }
 
-      cardIndex++;
+      insertHTMLInsideElementById(bindedTemplate, 'homepage-trending__series__cards-subcontainer');
+
+      // cardIndex++;
     });
   }
 
@@ -225,8 +222,10 @@ export class TrendingMedia {
 
         if (index === 0) {
           this.TrendingTimeWindow = 'day';
+          // console.log('day');
         } else if (index === 1) {
           this.TrendingTimeWindow = 'week';
+          // console.log('week');
         }
 
         this.reRender();
@@ -239,8 +238,10 @@ export class TrendingMedia {
 
         if (index === 0) {
           this.TrendingTimeWindow = 'day';
+          // console.log('day');
         } else if (index === 1) {
           this.TrendingTimeWindow = 'week';
+          // console.log('week');
         }
 
         this.reRender();

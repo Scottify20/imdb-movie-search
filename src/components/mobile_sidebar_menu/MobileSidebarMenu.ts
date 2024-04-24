@@ -1,4 +1,6 @@
 import { anchorToElementById, getGlobalPositionById } from '../../utils/GlobalUtils';
+import { SearchBarController } from '../header/search_bar/SearchBarController';
+import { SearchResultsContainer } from '../search_results_container/SearchResultsContainer';
 
 export function mobileSidebarLogic(isOn: boolean) {
   if (isOn) {
@@ -60,12 +62,12 @@ export function mobileSidebarLogic(isOn: boolean) {
 
       //initial positioning after the toggle is triggered
       if (window.innerWidth >= 500) {
-        childElement.style.left = Math.round(parentPositionInitial.x - 30).toString() + 'px';
+        childElement.style.left = Math.round(parentPositionInitial.x - 18).toString() + 'px';
       }
       window.addEventListener('resize', () => {
         const parentPosition = getGlobalPositionById('nav__hamburger-menu-container');
         if (window.innerWidth >= 500) {
-          childElement.style.left = Math.round(parentPosition.x - 30).toString() + 'px';
+          childElement.style.left = Math.round(parentPosition.x - 18).toString() + 'px';
         }
       });
     }
@@ -108,7 +110,10 @@ export function mobileSidebarLogic(isOn: boolean) {
       if (mobileMenuToggle.checked && window.innerWidth < 500) {
         // console.log('body scrolling disabled');
         document.body.classList.add('scroll-disabled');
-      } else if (!titleDetailsContainer) {
+      } else if (
+        !titleDetailsContainer &&
+        SearchResultsContainer.searchResultsContainer.classList.contains('hidden')
+      ) {
         // console.log('body scrolling enabled');
         document.body.classList.remove('scroll-disabled');
       }

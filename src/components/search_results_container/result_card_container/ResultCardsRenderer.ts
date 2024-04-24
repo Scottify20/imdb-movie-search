@@ -1,6 +1,9 @@
-import { GeneralResultParsedTypes, GeneralTitleSearch } from '../../utils/omdb/OmdbGeneralSearch';
-import { SearchBarController } from '../header/search_bar/SearchBarController';
-import { TitleDetailsRenderer } from '../title_details/TitleDetailsRenderer';
+import {
+  GeneralResultParsedTypes,
+  // GeneralTitleSearch,
+} from '../../../utils/omdb/OmdbGeneralSearch';
+import { SearchBarController } from '../../header/search_bar/SearchBarController';
+import { TitleDetailsRenderer } from '../../title_details/TitleDetailsRenderer';
 
 export class ResultCardsRenderer {
   private static _parentElement: Element;

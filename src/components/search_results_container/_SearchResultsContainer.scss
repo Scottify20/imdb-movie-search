@@ -1,0 +1,25 @@
+.search-results-container {
+  display: grid;
+  // place-content: center;
+  z-index: 1000;
+  width: 100%;
+  height: calc(100vh - var(--navbar-height));
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: var(--bg-color);
+  // background-color: rgba(0, 0, 0, 0.704);
+  margin-top: calc(var(--navbar-height) * 1);
+  overflow-y: auto;
+
+  transition: all 0.25s ease-in-out;
+
+  &.hidden {
+    display: none;
+  }
+}
+
+.intesection-observee {
+  height: 1px;
+  width: 100%;
+}

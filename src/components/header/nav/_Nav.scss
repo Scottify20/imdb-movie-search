@@ -2,6 +2,7 @@
   --navbar-height: 3.5rem;
   --navbar-gap: 1em;
   --navbar-width: calc((4 * var(--card-width)) + (3 * var(--card-group-gap)));
+  --navbar-width-new: calc((4 * var(--card-width)) + (3 * var(--card-group-gap)));
 }
 
 .nav:has(.nav-search-bar:focus) {
@@ -62,12 +63,17 @@
 
 .nav__center-items-container {
   height: 70%;
-  width: var(--navbar-width);
+  /////////////////////////////////////////////////////////////////
+  width: 100%;
+  max-width: var(--navbar-width-new);
   display: flex;
   flex-flow: row nowrap;
   justify-content: center;
   align-items: center;
   gap: var(--navbar-gap);
+  position: relative;
+
+  padding: 0 1rem;
 
   .nav__mobile-menu-hamburger-menu-container {
     position: relative;
@@ -109,6 +115,23 @@
     }
   }
 
+  .exit-search-results-container-btn {
+    border: transparent;
+    background-color: transparent;
+
+    svg {
+      width: 23px;
+      transform: rotate(90deg);
+      margin-bottom: -1px;
+      path {
+      }
+    }
+
+    &.hidden {
+      display: none;
+    }
+  }
+
   .github-src-btn {
     & svg path {
       fill: var(--nav-items-color);
@@ -128,6 +151,36 @@
       fill: var(--nav-items-hover-color);
     }
   }
+}
+
+@keyframes HideNavItemOnSearchBarFocus {
+  0% {
+    opacity: 100%;
+  }
+
+  100% {
+    opacity: 0;
+    display: none;
+  }
+}
+
+@keyframes ShowNavItemOnSearchBarFocus {
+  0% {
+    opacity: 0%;
+    display: none;
+  }
+
+  100% {
+    opacity: 100%;
+  }
+}
+
+.nav__center-items-container .nav__items-hidden-on-search-bar-focus {
+  animation: HideNavItemOnSearchBarFocus 0.5s ease-in-out forwards;
+}
+
+.nav__center-items-container .nav__items-shown-on-search-bar-focus {
+  animation: ShowNavItemOnSearchBarFocus 0.5s ease-in-out forwards;
 }
 
 // --------------nav bar

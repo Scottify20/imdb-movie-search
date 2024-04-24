@@ -24,7 +24,7 @@
 
 @keyframes PopIn {
   0% {
-    transform-origin: 2.12em -2.02em;
+    transform-origin: 1.6em -2.02em;
     transform: scale(0);
   }
 
@@ -33,7 +33,7 @@
   }
 
   100% {
-    transform-origin: 2.12em -2.02em;
+    transform-origin: 1.6em -2.02em;
     transform: scale(1);
     opacity: 100;
   }
@@ -41,12 +41,12 @@
 
 @keyframes PopOut {
   0% {
-    transform-origin: 2.12em -2.02em;
+    transform-origin: 1.6em -2.02em;
     transform: scale(1);
     opacity: 100;
   }
   100% {
-    transform-origin: 2.12em -2.02em;
+    transform-origin: 1.6em -2.02em;
     transform: scale(0);
   }
 }
@@ -71,15 +71,15 @@
   flex-flow: column nowrap;
   gap: 1em;
   background-color: var(--card-bg-color);
-  border-radius: 1em;
+  border-radius: 1em 1em 1em 1em;
   padding: 1em;
 
   svg.nav__mobile-menu-pointer {
     position: absolute;
-    width: 2em;
-    height: 2em;
-    top: -27px;
-    left: 23px;
+    width: 1.8em;
+    height: 1.8em;
+    top: -23px;
+    left: 12px;
     path {
       fill: var(--card-bg-color);
       // fill: green;

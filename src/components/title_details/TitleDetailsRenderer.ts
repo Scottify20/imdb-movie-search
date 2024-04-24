@@ -214,7 +214,7 @@ export class TitleDetailsRenderer {
 
     titleDetails?.classList.add('closed');
     titleDetailsBackdrop?.classList.add('closed');
-    document.body.classList.remove('scroll-disabled');
+    // document.body.classList.remove('scroll-disabled');
 
     setTimeout(() => {
       titleDetailsContainer?.remove();

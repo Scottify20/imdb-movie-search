@@ -2,8 +2,9 @@
 @import 'src/components/mobile_sidebar_menu/MobileSidebarMenu';
 @import 'src/components/header/search_bar/SearchBar';
 @import 'src/components/header/nav/Nav';
-@import 'src/components/result_card_container/ResultCardsGroup';
-@import 'src/components/result_card_container/result_card/ResultCard';
+@import 'src/components/search_results_container/SearchResultsContainer';
+@import 'src/components/search_results_container/result_card_container/ResultCardsGroup';
+@import 'src/components/search_results_container/result_card_container/result_card/ResultCard';
 @import 'src/components/footer/Footer';
 @import 'src/scss_globals/Globals';
 @import 'src/components/title_details/TitleDetails';
