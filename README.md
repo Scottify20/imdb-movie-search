@@ -9,7 +9,7 @@ A web app to browse information about Movies, TV Series, and more in the [OMDB A
   
 ## Live Preview
 
-[OMDB Titles Search](https://omdb-titles-browser.vercel.app/ 'OMDB Titles Search: Live Preview')
+[OMDB Titles Browser](https://omdb-titles-browser.vercel.app/ 'OMDB Titles Browser: Live Preview')
 
 ## Features
 
