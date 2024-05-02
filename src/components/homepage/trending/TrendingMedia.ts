@@ -7,6 +7,15 @@ import {
   tmdbTimeWindowTypes,
 } from '../../../utils/tmdb/TmdbFetch';
 import { TmdbMovieResult2, TmdbSeriesResult2 } from '../../../utils/tmdb/TmdbFetchTrending';
+import { TitleDetailsRenderer } from '../../title_details/TitleDetailsRenderer';
+
+interface StoredTrendingMedia {
+  moviesDay: TmdbMovieResult2[];
+  moviesWeek: TmdbMovieResult2[];
+  seriesDay: TmdbSeriesResult2[];
+  seriesWeek: TmdbSeriesResult2[];
+  timeLastUpdated: number;
+}
 
 export class TrendingMedia {
   private static IsOn = false;
@@ -28,12 +37,14 @@ export class TrendingMedia {
   }
 
   private static async render() {
-    await this.fetchTrendingMedia();
-    this.insertSeriesContainer();
-    this.insertSeriesCardsAndBindData();
-    this.seriesCardsContainer = document.getElementById(
-      'homepage-trending__series__cards-container'
-    ) as HTMLElement;
+    const localTrendingMedia = this.storedTrendingMediaFromLocalStorage();
+    // console.log(localTrendingMedia);
+    ////////////////////////////////////////////////////////////////////////////////
+    if (localTrendingMedia?.timeLastUpdated === 1) {
+      this.getLocallyStoredTrendingMedia(localTrendingMedia);
+    } else {
+      await this.fetchTrendingMedia();
+    }
 
     this.insertMoviesContainer();
     this.insertMovieCardsAndBindData();
@@ -41,7 +52,15 @@ export class TrendingMedia {
       'homepage-trending__movies__cards-container'
     ) as HTMLElement;
 
+    this.insertSeriesContainer();
+    this.insertSeriesCardsAndBindData();
+    this.seriesCardsContainer = document.getElementById(
+      'homepage-trending__series__cards-container'
+    ) as HTMLElement;
+
+    this.startCardClickListeners();
     this.startTimeWindowToggle();
+
     this.overrideScrollingToHorizontalOnHover();
   }
 
@@ -52,6 +71,30 @@ export class TrendingMedia {
     this.resetScroll();
   }
 
+  private static startCardClickListeners() {
+    document.addEventListener('click', (event) => {
+      // console.log(event.target);
+      const target = event.target as HTMLElement;
+
+      if (target.classList.contains('trending-card-container')) {
+        // console.log(target.getAttribute('data-imdb-id'));
+        TitleDetailsRenderer.viewTitle(target.getAttribute('data-imdb-id') as string);
+      }
+    });
+  }
+
+  private static getLocallyStoredTrendingMedia(localTrendingMedia: StoredTrendingMedia) {
+    const moviesDay = localTrendingMedia.moviesDay;
+    const moviesWeek = localTrendingMedia.moviesWeek;
+    const seriesDay = localTrendingMedia.seriesDay;
+    const seriesWeek = localTrendingMedia.seriesWeek;
+
+    this.trendingMoviesDay = moviesDay;
+    this.trendingMoviesWeek = moviesWeek;
+    this.trendingSeriesDay = seriesDay;
+    this.trendingSeriesWeek = seriesWeek;
+  }
+
   private static async fetchTrendingMedia() {
     const [moviesDay, moviesWeek, seriesDay, seriesWeek] = await Promise.all([
       FetchTrendingTitles.fetchTrending('movies', 'day'),
@@ -60,24 +103,60 @@ export class TrendingMedia {
       FetchTrendingTitles.fetchTrending('series', 'week'),
     ]);
 
+    let trendingMedia: StoredTrendingMedia = {
+      moviesDay: [],
+      moviesWeek: [],
+      seriesDay: [],
+      seriesWeek: [],
+      timeLastUpdated: new Date().getTime(),
+    };
+
     if (moviesDay.results[0].id === 404.0) {
     } else {
       this.trendingMoviesDay = moviesDay.results as TmdbMovieResult2[];
+      trendingMedia.moviesDay = this.trendingMoviesDay;
     }
 
     if (moviesWeek.results[0].id === 404.0) {
     } else {
       this.trendingMoviesWeek = moviesWeek.results as TmdbMovieResult2[];
+      trendingMedia.moviesWeek = this.trendingMoviesWeek;
     }
 
     if (seriesDay.results[0].id === 404.0) {
     } else {
       this.trendingSeriesDay = seriesDay.results as TmdbSeriesResult2[];
+      trendingMedia.seriesDay = this.trendingSeriesDay;
     }
 
     if (seriesWeek.results[0].id === 404.0) {
     } else {
       this.trendingSeriesWeek = seriesWeek.results as TmdbSeriesResult2[];
+      trendingMedia.seriesWeek = this.trendingSeriesWeek;
+    }
+    trendingMedia.timeLastUpdated = new Date().getTime();
+    this.storeTrendingMediaToLocalStorage(trendingMedia);
+  }
+
+  private static storeTrendingMediaToLocalStorage(trendingMedia: StoredTrendingMedia) {
+    localStorage.setItem('trendingMedia', JSON.stringify(trendingMedia));
+  }
+
+  private static storedTrendingMediaFromLocalStorage(): StoredTrendingMedia | undefined {
+    const trendingMedia = localStorage.getItem('trendingMedia');
+    if (trendingMedia) {
+      const trendingMediaObj = JSON.parse(trendingMedia) as StoredTrendingMedia;
+
+      // console.log(trendingMediaObj);
+
+      const presentDate = new Date();
+      const timeDifference = presentDate.getTime() - trendingMediaObj.timeLastUpdated;
+      const maxHours = 3;
+
+      if (timeDifference < maxHours * 60 * 60 * 1000) {
+        console.log('less than 3 hours');
+        return trendingMediaObj;
+      }
     }
   }
 
@@ -157,6 +236,7 @@ export class TrendingMedia {
 
       bindedTemplate = bindedTemplate
         .replace('[MOVIE-ID]', movie.id.toString())
+        .replace('[IMDB-ID]', movie.imdbId)
         .replace('[POSTER-PATH]', movie.poster_path)
         .replace('[POSTER-ALT]', `A poster image of a TV Series entitled: ${movie.title}`)
         .replace('[TITLE]', movie.title)
@@ -189,6 +269,7 @@ export class TrendingMedia {
 
       bindedTemplate = bindedTemplate
         .replace('[MOVIE-ID]', series.id.toString())
+        .replace('[IMDB-ID]', series.imdbId)
         .replace('[POSTER-PATH]', series.poster_path)
         .replace('[POSTER-ALT]', `A poster image of a TV Series entitled: ${series.name}`)
         .replace('[TITLE]', series.name)
@@ -326,7 +407,7 @@ export class TrendingMedia {
   `;
 
   private static templateCard = /*html*/ `
-  <div class="trending-card-container" id="trending-movie--[MOVIE-ID]" role="button" tabindex="0">
+  <div class="trending-card-container" id="trending-movie--[MOVIE-ID]" data-imdb-id="[IMDB-ID]" role="button" tabindex="0">
   <img
     src="https://image.tmdb.org/t/p/w342[POSTER-PATH]"
     alt="[POSTER-ALT]"

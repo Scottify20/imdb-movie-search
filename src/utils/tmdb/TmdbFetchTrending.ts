@@ -75,6 +75,7 @@ export interface TmdbMovieResult extends TmdbMovieOrSeriesResult {
 }
 
 export interface TmdbMovieResult2 {
+  imdbId: string;
   adult: boolean;
   backdrop_path: string;
   id: number;
@@ -93,6 +94,7 @@ export interface TmdbMovieResult2 {
 }
 
 export interface TmdbSeriesResult2 {
+  imdbId: string;
   adult: boolean;
   backdrop_path: string;
   id: number;

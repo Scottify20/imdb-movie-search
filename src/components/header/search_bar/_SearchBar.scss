@@ -7,9 +7,14 @@
   border-radius: 999px;
   position: relative;
   min-width: 70px;
-  width: 100%;
   height: 100%;
   transition: all ease-in-out 0.2s;
+
+  // width: 250px;
+  width: 100%;
+  display: none;
+  width: 100%;
+  max-width: 100%;
 
   &:hover {
     filter: drop-shadow(0 0 3px rgba(0, 0, 0, 0.288));
@@ -64,7 +69,6 @@
 
   .nav__search-bar {
     position: absolute;
-    width: 100%;
     height: 100%;
     user-select: none;
     background-color: var(--search-box-bg-color);
@@ -75,6 +79,7 @@
     border-radius: 5em;
     border: var(--nav-search-bar-cont-outline-if-search-bar-focused);
     transition: all ease-in-out 0.2s;
+    right: 0;
 
     &:hover {
       background-color: var(--nav-search-bar-hover-color);
@@ -89,6 +94,20 @@
       font-weight: 400;
     }
   }
+}
+
+@keyframes NavExpand {
+  0% {
+    width: 100%;
+  }
+
+  100% {
+    width: calc(var(--navbar-width-new) - 80px);
+  }
+}
+
+.nav__search-bar.expanded {
+  animation: NavExpand 0.5s ease forwards;
 }
 
 /* removes (x) Clear button when typing at search bar */

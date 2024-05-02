@@ -63,25 +63,31 @@ body {
   margin: 0 auto;
   min-height: 100vh;
   min-width: 280px;
+  width: 100%;
   display: flex;
   flex-flow: column nowrap;
   background-color: var(--body-bg-color);
 }
 
+// for touch screens
 body.scroll-disabled,
-body.scroll-disabled header nav {
+body.scroll-disabled main {
   overflow: hidden;
   scrollbar-width: none;
 }
 
+// for devices with hover support
 @media (hover: hover) {
-  /* CSS code for browsers that support hover and have a WebKit/Blink engine */
+  // for browsers that support hover and have a WebKit/Blink engine
   @supports (-webkit-font-smoothing: antialiased) {
-    body.scroll-disabled,
-    body.scroll-disabled header nav {
-      padding-right: 15px;
+    body.scroll-disabled main,
+    body.scroll-disabled {
       overflow: hidden;
       scrollbar-width: none;
+    }
+
+    body.scroll-disabled main {
+      transform: translateX(-8.25px);
     }
   }
 }

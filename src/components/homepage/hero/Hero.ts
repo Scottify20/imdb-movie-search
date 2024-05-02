@@ -5,6 +5,7 @@ import {
   FetchTrendingTitles,
   TrendingFetchResult,
 } from '../../../utils/proxy_api/FetchTrendingtTitles';
+import { TitleDetailsRenderer } from '../../title_details/TitleDetailsRenderer';
 
 export class Hero {
   private static IsOn = false;
@@ -27,6 +28,7 @@ export class Hero {
 
     this.startScrollButtonsController();
     this.startPageIndicatorObserver();
+    this.startCardsClickListener();
   }
 
   private static async fetchMovies() {
@@ -47,6 +49,30 @@ export class Hero {
     }
   }
 
+  private static startCardsClickListener() {
+    const heroContainer = document.getElementById('homepage__hero');
+
+    heroContainer?.addEventListener('click', (e) => {
+      const target = e.target as HTMLElement;
+
+      console.log(target);
+
+      if (target.classList.contains('homepage-hero-hero')) {
+        TitleDetailsRenderer.viewTitle(target.getAttribute('data-imdb-id') as string);
+      }
+
+      if (target.classList.contains('homepage-hero__title')) {
+        TitleDetailsRenderer.viewTitle(target.getAttribute('data-imdb-id') as string);
+      }
+
+      if (target.classList.contains('homepage-hero__play-trailer-btn')) {
+      }
+
+      if (target.classList.contains('homepage-hero__poster')) {
+      }
+    });
+  }
+
   private static insertHeroContainer() {
     insertHTMLInsideElementById(this.templateHero, 'main-element', 'afterbegin');
   }
@@ -59,6 +85,7 @@ export class Hero {
 
       bindedTemplate = bindedTemplate
         .replace('[CARD-NUMBER]', cardIndex.toString())
+        .replace(/\[IMDB-ID]/g, movie.imdbId)
         .replace('[TITLE]', movie.title)
         .replace('[YEAR]', movie.release_date.substring(0, 4))
         .replace('[GENRE]', TmdbMovieGenreIds[movie.genre_ids[0].toString()])
@@ -193,7 +220,7 @@ export class Hero {
 </section>
  `;
 
-  private static templateHeroCard = /*html*/ `<div id="homepage-hero__card--[CARD-NUMBER]" class="homepage-hero-hero">
+  private static templateHeroCard = /*html*/ `<div id="homepage-hero__card--[CARD-NUMBER]" class="homepage-hero-hero" data-imdb-id="[IMDB-ID]">
  <img
    src="https://image.tmdb.org/t/p/w1280[BACKDROP-PATH]"
    alt="[BACKDROP-ALT]"
@@ -208,7 +235,7 @@ export class Hero {
      role="button"
      tabindex="0"
    />
-   <h4 class="homepage-hero__title" role="button" tabindex="0">[TITLE]</h4>
+   <h4 class="homepage-hero__title active--underline" role="button" tabindex="0" data-imdb-id="[IMDB-ID]">[TITLE]</h4>
    <p class="homepage-hero__year-and-genre"><span class="homepage-hero__year">[YEAR]<span> • <span class="homepage-hero__genre">[GENRE]</span></p>
    <div class="homepage-hero__play-trailer-btn" role="button" tabindex="0">
      <img class="play-trailer-button-img-bg" src="https://image.tmdb.org/t/p/w92[POSTER-PATH]" alt="">
