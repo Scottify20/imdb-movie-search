@@ -90,13 +90,23 @@
   border-radius: 1rem;
   overflow: clip;
 
+  transition: all ease-in-out 0.15s;
+
+  &:active {
+    filter: brightness(40%);
+  }
+
   img.homepage-hero__backdrop {
     width: 100%;
     aspect-ratio: 16/9;
+    pointer-events: none;
   }
 
   .homepage-hero-hero-details-and-poster {
-    margin-top: -60px;
+    pointer-events: none;
+
+    z-index: 1;
+    margin-top: -66px;
     padding: var(--homepage-card-padding);
     display: grid;
     grid-template-areas:
@@ -106,9 +116,11 @@
       'ps tr';
     grid-template-columns: auto 1fr;
     grid-template-rows: 1fr auto;
-    column-gap: 0.75rem;
+    column-gap: 0.7rem;
 
     .homepage-hero__poster {
+      pointer-events: all;
+
       cursor: zoom-in;
       grid-area: ps;
       width: 100px;
@@ -119,11 +131,13 @@
       filter: drop-shadow(0 0 3px rgba(0, 0, 0, 0.3));
     }
     .homepage-hero__title {
+      pointer-events: all;
+
       font-size: 1.25rem;
       grid-area: tt;
       font-weight: 600;
       color: white;
-      padding: 0.5em 0;
+      padding: 0.35em 0;
     }
 
     .homepage-hero__year-and-genre {
@@ -134,6 +148,8 @@
     }
 
     .homepage-hero__play-trailer-btn {
+      pointer-events: all;
+
       cursor: pointer;
       filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.2));
       position: relative;

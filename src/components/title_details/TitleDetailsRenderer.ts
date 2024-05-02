@@ -7,6 +7,7 @@ import {
   elementFromHTMLString,
 } from '../../utils/GlobalUtils';
 import { TitleDetailsSkeletonLoader } from './skeleton_loader/TitleDetailsSkeletonLoader';
+import { SearchResultsContainer } from '../search_results_container/SearchResultsContainer';
 
 export class TitleDetailsRenderer {
   static [key: string]: any; // static index signature
@@ -214,7 +215,12 @@ export class TitleDetailsRenderer {
 
     titleDetails?.classList.add('closed');
     titleDetailsBackdrop?.classList.add('closed');
-    // document.body.classList.remove('scroll-disabled');
+
+    if (!SearchResultsContainer.isShown) {
+      setTimeout(() => {
+        document.body.classList.remove('scroll-disabled');
+      }, 500);
+    }
 
     setTimeout(() => {
       titleDetailsContainer?.remove();

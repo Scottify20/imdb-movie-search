@@ -388,12 +388,7 @@ span.medium {
   .title-details__title-and-close-btn-container {
     .title-details__close-btn {
       position: unset;
-      // display: none;
     }
-
-    // .title-details__title {
-    //   margin-right: -0.7em;
-    // }
   }
 
   .title-details__hero {
@@ -428,7 +423,6 @@ span.medium {
       margin: 0;
     }
     .genre-container {
-      // justify-content: center;
       grid-area: gnr;
       margin: 0 0;
     }

@@ -2,7 +2,7 @@
   --navbar-height: 3.5rem;
   --navbar-gap: 1em;
   --navbar-width: calc((4 * var(--card-width)) + (3 * var(--card-group-gap)));
-  --navbar-width-new: calc((4 * var(--card-width)) + (3 * var(--card-group-gap)));
+  --navbar-width-new: calc((4 * var(--card-width)) + (3 * var(--card-group-gap)) - 25px);
 }
 
 .nav:has(.nav-search-bar:focus) {
@@ -10,31 +10,40 @@
 }
 
 .nav {
+  background-color: var(--header-bg-color);
   position: relative;
   height: var(--navbar-height);
-  background-color: var(--header-bg-color);
   display: flex;
   flex-flow: row nowrap;
   justify-content: center;
   align-items: center;
+  width: calc(100vw + 9px);
 
-  .nav__txt-link-btn {
-    color: var(--nav-items-color);
-    user-select: none;
-    font-size: 1.2rem;
-    font-weight: 700;
-    padding: 0.3em 0.6em;
-    margin: 0 -0.6em;
-    transition: all ease-in-out 0.15s;
-    border-radius: 2em;
+  .nav__subcontainer {
+    position: relative;
+    margin-right: 25px;
+    display: flex;
+    flex-flow: row nowrap;
+    width: 100%;
+    max-width: var(--navbar-width-new);
+    .nav__txt-link-btn {
+      color: var(--nav-items-color);
+      user-select: none;
+      font-size: 1.2rem;
+      font-weight: 700;
+      padding: 0.3em 0.6em;
+      margin: 0 -0.6em;
+      transition: all ease-in-out 0.15s;
+      border-radius: 2em;
 
-    &:hover {
-      background-color: var(--nav-items-color);
-      color: var(--light-text-color);
-    }
+      &:hover {
+        background-color: var(--nav-items-color);
+        color: var(--light-text-color);
+      }
 
-    &:focus {
-      border: none;
+      &:focus {
+        border: none;
+      }
     }
   }
 }
@@ -42,44 +51,20 @@
 .nav__left-items-container {
   left: 0;
   z-index: 2;
-  position: absolute;
+  position: relative;
   flex-grow: 1;
   display: flex;
   flex-flow: row nowrap;
   justify-content: flex-start;
   align-items: center;
-}
-
-.nav__right-items-container {
-  right: 0;
-  z-index: 1;
-  position: absolute;
-  flex-grow: 1;
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: flex-end;
-  align-items: center;
-}
-
-.nav__center-items-container {
-  height: 70%;
-  /////////////////////////////////////////////////////////////////
-  width: 100%;
-  max-width: var(--navbar-width-new);
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: center;
-  align-items: center;
   gap: var(--navbar-gap);
-  position: relative;
-
-  padding: 0 1rem;
 
   .nav__mobile-menu-hamburger-menu-container {
     position: relative;
     height: 1.75em;
     width: 2em;
     margin-left: 5px;
+    // margin-top: 0.15rem;
 
     & svg {
       transition: transform ease-out 0.15s;
@@ -114,23 +99,18 @@
       }
     }
   }
+}
 
-  .exit-search-results-container-btn {
-    border: transparent;
-    background-color: transparent;
-
-    svg {
-      width: 23px;
-      transform: rotate(90deg);
-      margin-bottom: -1px;
-      path {
-      }
-    }
-
-    &.hidden {
-      display: none;
-    }
-  }
+.nav__right-items-container {
+  right: 0;
+  position: relative;
+  z-index: 1;
+  flex-grow: 1;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-end;
+  align-items: center;
+  gap: var(--navbar-gap);
 
   .github-src-btn {
     & svg path {
@@ -149,6 +129,38 @@
 
     &:hover svg path {
       fill: var(--nav-items-hover-color);
+    }
+  }
+}
+
+.nav__center-items-container {
+  height: 70%;
+  /////////////////////////////////////////////////////////////////
+  width: 100%;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+  gap: var(--navbar-gap);
+  position: relative;
+
+  padding: 0 1rem;
+
+  .exit-search-results-container-btn {
+    border: 1px solid red;
+    border: transparent;
+    background-color: transparent;
+
+    svg {
+      width: 23px;
+      transform: rotate(90deg);
+      margin-bottom: -1px;
+      path {
+      }
+    }
+
+    &.hidden {
+      display: none;
     }
   }
 }
@@ -190,6 +202,15 @@
   }
 }
 
+@media only screen and (max-width: 960px) {
+  :root {
+    --navbar-width-new: 100vw;
+  }
+  .nav__subcontainer {
+    padding: 0 1rem;
+  }
+}
+
 @media only screen and (max-width: 768px) {
   :root {
     --navbar-width: calc((2 * var(--card-width)) + (1 * var(--card-group-gap)));
@@ -217,9 +238,9 @@
   }
 }
 
-@media only screen and (max-width: 475px) {
-  :root {
-    --navbar-width: calc(100% - 2em);
+@media only screen and (max-width: 425px) {
+  .nav__subcontainer {
+    padding: 0 0.75rem;
   }
 }
 

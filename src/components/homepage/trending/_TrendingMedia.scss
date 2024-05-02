@@ -1,9 +1,10 @@
 .homepage-trending__movies-container {
   overflow: clip;
+  margin-top: 0.5rem;
 }
 
 .homepage-trending__movies__title-and-toggle-container {
-  padding-bottom: 1rem;
+  padding-bottom: 0.75rem;
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
@@ -91,7 +92,7 @@
 .homepage-trending__movies__cards-subcontainer {
   min-width: 100%;
   padding: var(--homepage-card-padding);
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.25rem;
   border-radius: 1rem;
   background-color: var(--fg-color);
   display: inline-flex;
@@ -106,12 +107,22 @@
   width: 140px;
   flex: 0;
 
+  transition: all ease-in-out 0.15s;
+  transform: scale(1);
+
+  &:active {
+    filter: brightness(50%);
+    transform: scale(0.88);
+  }
+
   .trending-card__poster {
+    pointer-events: none;
     width: 140px;
     border-radius: 9px;
   }
 
   .trending-card__title-and-year-genre-container {
+    pointer-events: none;
     line-height: 1.25;
     display: flex;
     flex-flow: column nowrap;
