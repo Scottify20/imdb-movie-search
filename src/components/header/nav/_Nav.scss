@@ -11,7 +11,6 @@
 
 .nav {
   background-color: var(--header-bg-color);
-  position: relative;
   height: var(--navbar-height);
   display: flex;
   flex-flow: row nowrap;
@@ -26,84 +25,104 @@
     flex-flow: row nowrap;
     width: 100%;
     max-width: var(--navbar-width-new);
-    .nav__txt-link-btn {
-      color: var(--nav-items-color);
-      user-select: none;
-      font-size: 1.2rem;
-      font-weight: 700;
-      padding: 0.3em 0.6em;
-      margin: 0 -0.6em;
-      transition: all ease-in-out 0.15s;
-      border-radius: 2em;
+  }
+}
 
-      &:hover {
-        background-color: var(--nav-items-color);
-        color: var(--light-text-color);
-      }
+.nav__txt-link-btn {
+  color: var(--nav-items-color);
+  user-select: none;
+  font-size: 1.2rem;
+  font-weight: 700;
+  padding: 0.3em 0.6em;
+  margin: 0 -0.6em;
+  transition: all ease-in-out 0.15s;
+  border-radius: 2em;
 
-      &:focus {
-        border: none;
-      }
+  &:hover {
+    background-color: var(--nav-items-color);
+    color: var(--light-text-color);
+  }
+
+  &:focus {
+    border: none;
+  }
+}
+.nav__mobile-menu-hamburger-menu-container {
+  position: relative;
+  height: 1.75em;
+  width: 2em;
+  margin-left: 5px;
+  // margin-top: 0.15rem;
+
+  & svg {
+    transition: transform ease-out 0.15s;
+  }
+
+  &:active svg {
+    transform: scale(0.7);
+  }
+
+  svg.hamburger-menu-icon {
+    left: 50%;
+    top: 50%;
+    margin-left: -15px;
+    margin-top: -8px;
+    width: 24px;
+    position: absolute;
+    pointer-events: none;
+
+    path {
+      fill: var(--nav-items-color);
+    }
+  }
+
+  input.nav__mobile-menu-cb-toggle {
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+    appearance: none;
+    &:active ~ svg path,
+    &:hover ~ svg path {
+      fill: var(--nav-items-hover-color);
     }
   }
 }
 
+.github-src-btn {
+  & svg path {
+    fill: var(--nav-items-color);
+  }
+
+  &:hover svg path {
+    fill: var(--nav-items-hover-color);
+  }
+}
+
+.favourites-btn {
+  & svg path {
+    fill: var(--nav-items-color);
+  }
+
+  &:hover svg path {
+    fill: var(--nav-items-hover-color);
+  }
+}
+
 .nav__left-items-container {
+  position: absolute;
   left: 0;
   z-index: 2;
-  position: relative;
   flex-grow: 1;
   display: flex;
   flex-flow: row nowrap;
   justify-content: flex-start;
   align-items: center;
   gap: var(--navbar-gap);
-
-  .nav__mobile-menu-hamburger-menu-container {
-    position: relative;
-    height: 1.75em;
-    width: 2em;
-    margin-left: 5px;
-    // margin-top: 0.15rem;
-
-    & svg {
-      transition: transform ease-out 0.15s;
-    }
-
-    &:active svg {
-      transform: scale(0.7);
-    }
-
-    svg.hamburger-menu-icon {
-      left: 50%;
-      top: 50%;
-      margin-left: -15px;
-      margin-top: -8px;
-      width: 24px;
-      position: absolute;
-      pointer-events: none;
-
-      path {
-        fill: var(--nav-items-color);
-      }
-    }
-
-    input.nav__mobile-menu-cb-toggle {
-      cursor: pointer;
-      width: 100%;
-      height: 100%;
-      appearance: none;
-      &:active ~ svg path,
-      &:hover ~ svg path {
-        fill: var(--nav-items-hover-color);
-      }
-    }
-  }
 }
 
 .nav__right-items-container {
   right: 0;
-  position: relative;
+  position: absolute;
   z-index: 1;
   flex-grow: 1;
   display: flex;
@@ -111,26 +130,6 @@
   justify-content: flex-end;
   align-items: center;
   gap: var(--navbar-gap);
-
-  .github-src-btn {
-    & svg path {
-      fill: var(--nav-items-color);
-    }
-
-    &:hover svg path {
-      fill: var(--nav-items-hover-color);
-    }
-  }
-
-  .favourites-btn {
-    & svg path {
-      fill: var(--nav-items-color);
-    }
-
-    &:hover svg path {
-      fill: var(--nav-items-hover-color);
-    }
-  }
 }
 
 .nav__center-items-container {
