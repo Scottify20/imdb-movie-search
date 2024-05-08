@@ -55,7 +55,7 @@ export class Hero {
     heroContainer?.addEventListener('click', (e) => {
       const target = e.target as HTMLElement;
 
-      console.log(target);
+      // console.log(target);
 
       if (target.classList.contains('homepage-hero-hero')) {
         TitleDetailsRenderer.viewTitle(target.getAttribute('data-imdb-id') as string);

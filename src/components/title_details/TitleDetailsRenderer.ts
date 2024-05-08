@@ -201,7 +201,7 @@ export class TitleDetailsRenderer {
     const titleDetailsWindow = document.getElementById('title-details');
     document.addEventListener('keydown', (event) => {
       if (event.key === 'Escape' && titleDetailsWindow) {
-        console.log('escape pressed');
+        // console.log('escape pressed');
         this.hideDialogAndBackdrop();
       }
     });
@@ -216,15 +216,15 @@ export class TitleDetailsRenderer {
     titleDetails?.classList.add('closed');
     titleDetailsBackdrop?.classList.add('closed');
 
-    if (!SearchResultsContainer.isShown) {
-      setTimeout(() => {
-        document.body.classList.remove('scroll-disabled');
-      }, 500);
-    }
-
     setTimeout(() => {
       titleDetailsContainer?.remove();
       titleDetailsBackdrop?.remove();
+
+      // console.log(SearchResultsContainer.isShown);
+
+      if (!SearchResultsContainer.isShown) {
+        document.body.classList.remove('scroll-disabled');
+      }
     }, 400);
   }
 

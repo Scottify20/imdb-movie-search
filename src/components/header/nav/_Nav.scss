@@ -5,10 +5,6 @@
   --navbar-width-new: calc((4 * var(--card-width)) + (3 * var(--card-group-gap)) - 25px);
 }
 
-.nav:has(.nav-search-bar:focus) {
-  opacity: 98%;
-}
-
 .nav {
   background-color: var(--header-bg-color);
   height: var(--navbar-height);
@@ -19,12 +15,20 @@
   width: calc(100vw + 9px);
 
   .nav__subcontainer {
+    margin-right: 10px;
     position: relative;
-    margin-right: 25px;
     display: flex;
     flex-flow: row nowrap;
     width: 100%;
     max-width: var(--navbar-width-new);
+  }
+}
+
+@media (hover: hover) {
+  @supports (-webkit-font-smoothing: antialiased) {
+    .nav .nav__subcontainer {
+      margin-right: 25px;
+    }
   }
 }
 
@@ -51,8 +55,8 @@
   position: relative;
   height: 1.75em;
   width: 2em;
-  margin-left: 5px;
-  // margin-top: 0.15rem;
+  margin-top: -0.2rem;
+  margin-right: -6px;
 
   & svg {
     transition: transform ease-out 0.15s;
@@ -66,8 +70,8 @@
     left: 50%;
     top: 50%;
     margin-left: -15px;
-    margin-top: -8px;
-    width: 24px;
+    margin-top: -7px;
+    width: 26px;
     position: absolute;
     pointer-events: none;
 
@@ -109,10 +113,10 @@
 }
 
 .nav__left-items-container {
-  position: absolute;
-  left: 0;
+  // position: relative;
+  // left: 0;
   z-index: 2;
-  flex-grow: 1;
+  // flex-grow: 1;
   display: flex;
   flex-flow: row nowrap;
   justify-content: flex-start;
@@ -122,7 +126,7 @@
 
 .nav__right-items-container {
   right: 0;
-  position: absolute;
+  position: relative;
   z-index: 1;
   flex-grow: 1;
   display: flex;
@@ -144,54 +148,6 @@
   position: relative;
 
   padding: 0 1rem;
-
-  .exit-search-results-container-btn {
-    border: 1px solid red;
-    border: transparent;
-    background-color: transparent;
-
-    svg {
-      width: 23px;
-      transform: rotate(90deg);
-      margin-bottom: -1px;
-      path {
-      }
-    }
-
-    &.hidden {
-      display: none;
-    }
-  }
-}
-
-@keyframes HideNavItemOnSearchBarFocus {
-  0% {
-    opacity: 100%;
-  }
-
-  100% {
-    opacity: 0;
-    display: none;
-  }
-}
-
-@keyframes ShowNavItemOnSearchBarFocus {
-  0% {
-    opacity: 0%;
-    display: none;
-  }
-
-  100% {
-    opacity: 100%;
-  }
-}
-
-.nav__center-items-container .nav__items-hidden-on-search-bar-focus {
-  animation: HideNavItemOnSearchBarFocus 0.5s ease-in-out forwards;
-}
-
-.nav__center-items-container .nav__items-shown-on-search-bar-focus {
-  animation: ShowNavItemOnSearchBarFocus 0.5s ease-in-out forwards;
 }
 
 // --------------nav bar

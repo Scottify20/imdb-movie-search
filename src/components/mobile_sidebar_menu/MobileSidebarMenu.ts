@@ -62,12 +62,12 @@ export function mobileSidebarLogic(isOn: boolean) {
 
       //initial positioning after the toggle is triggered
       if (window.innerWidth >= 500) {
-        childElement.style.left = Math.round(parentPositionInitial.x - 18).toString() + 'px';
+        childElement.style.left = Math.round(parentPositionInitial.x - 14).toString() + 'px';
       }
       window.addEventListener('resize', () => {
         const parentPosition = getGlobalPositionById('nav__hamburger-menu-container');
         if (window.innerWidth >= 500) {
-          childElement.style.left = Math.round(parentPosition.x - 18).toString() + 'px';
+          childElement.style.left = Math.round(parentPosition.x - 14).toString() + 'px';
         }
       });
     }

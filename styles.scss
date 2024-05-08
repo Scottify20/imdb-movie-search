@@ -13,6 +13,7 @@
 @import 'src/components/homepage/hero/Hero';
 @import 'src/components/homepage/trending/TrendingMedia';
 @import 'src/components/homepage/Homepage';
+@import 'src/components/header/search_button/SearchButton';
 
 * {
   margin: 0;
@@ -51,6 +52,9 @@ html {
   --nav-items-color: #413b17;
   --nav-items-hover-color: #73682c;
   --nav-text-item-hover-background-color: var(--nav-items-color);
+
+  --main-padding: 1rem;
+  --main-gap: 1.25rem;
 }
 
 a {
@@ -69,44 +73,57 @@ body {
   background-color: var(--body-bg-color);
 }
 
-// for touch screens
-body.scroll-disabled,
-body.scroll-disabled main {
-  overflow: hidden;
-  scrollbar-width: none;
-}
-
-// for devices with hover support
-@media (hover: hover) {
-  // for browsers that support hover and have a WebKit/Blink engine
-  @supports (-webkit-font-smoothing: antialiased) {
-    body.scroll-disabled main,
-    body.scroll-disabled {
-      overflow: hidden;
-      scrollbar-width: none;
-    }
-
-    body.scroll-disabled main {
-      transform: translateX(-8.25px);
-    }
-  }
-}
-
 main {
   max-width: calc((4 * var(--card-width)) + (3 * var(--card-group-gap)));
   margin: 0 auto;
   margin-top: var(--navbar-height);
   width: 100%;
-  padding: 1rem;
+  padding: var(--main-padding);
   flex-grow: 1;
   display: flex;
   flex-flow: column nowrap;
-  gap: 1.25rem;
+  gap: var(--main-gap);
+}
+
+@media only screen and (max-width: 945px) {
+  // for devices with hover support
+  @media (hover: hover) {
+    // for browsers that support hover and have a WebKit/Blink engine
+    @supports (-webkit-font-smoothing: antialiased) {
+      body.scroll-disabled main,
+      body.scroll-disabled {
+        overflow: hidden;
+        // scrollbar-width: none;
+      }
+
+      body.scroll-disabled main {
+        padding-right: calc(16.5px + var(--main-padding));
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 945px) {
+  // for devices with hover support
+  @media (hover: hover) {
+    // for browsers that support hover and have a WebKit/Blink engine
+    @supports (-webkit-font-smoothing: antialiased) {
+      body.scroll-disabled main {
+        transform: translateX(-9px);
+      }
+    }
+  }
 }
 
 @media only screen and (max-width: 425px) {
-  main {
-    padding: 0.75rem;
-    gap: 1rem;
+  :root {
+    --main-padding: 0.75rem;
+    --main-gap: 1rem;
   }
+}
+
+// for touch screens
+body.scroll-disabled,
+body.scroll-disabled main {
+  overflow: hidden;
 }

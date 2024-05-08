@@ -120,50 +120,6 @@
                 ></path>
               </svg>
             </div>
-          </div>
-          <div class="nav__center-items-container">
-            <a id="home-logo-btn" href="/" class="nav__txt-link-btn">OmdbTB</a>
-            <button
-              id="exit-search-results-container-btn"
-              class="back-btn exit-search-results-container-btn hidden"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" width="20px" viewBox="0 0 99.63 58.37">
-                <path
-                  d="M49.2,58.37A7.22,7.22,0,0,1,43.65,56L2.38,13.92a7.68,7.68,0,0,1,0-11.11c3.18-3.17,7.94-3.17,10.32,0L49.2,39.32,86.5,2.81c3.18-3.17,7.94-4,10.32-.79,3.17,3.18,4,7.94.79,11.11l-.79.79L54.76,56.78C54,57.57,51.58,58.37,49.2,58.37Z"
-                />
-              </svg>
-            </button>
-            <form class="nav__search-bar-container">
-              <input
-                id="nav-search-bar"
-                class="nav__search-bar"
-                type="search"
-                placeholder="Search Here"
-                minlength="3"
-                aria-label="A searchbar for searching movies, TV series, and more."
-              />
-              <div class="nav__search-button-container">
-                <input
-                  id="nav__search-bar-submit-btn"
-                  class="nav__search-bar-submit-btn cursor--pointer"
-                  type="submit"
-                  value="search"
-                />
-                <svg
-                  id="nav__search-bar-search-icon"
-                  class="nav__search-bar-search-icon"
-                  height="16"
-                  width="16"
-                  viewBox="0 0 512 512"
-                >
-                  <path
-                    d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"
-                  />
-                </svg>
-              </div>
-            </form>
-          </div>
-          <div class="nav__right-items-container spec-up-1">
             <a id="favourites-btn" class="favourites-btn" href="#" name="favourites-button">
               <svg xmlns="http://www.w3.org/2000/svg" width="28px" viewBox="0 -13 97 100">
                 <g transform="scale(1.1)">
@@ -173,6 +129,18 @@
                 </g>
               </svg>
             </a>
+          </div>
+          <div class="nav__center-items-container">
+            <a id="home-logo-btn" href="/" class="nav__txt-link-btn">OmdbTB</a>
+          </div>
+          <div class="nav__right-items-container spec-up-1">
+            <button id="search-btn" class="search-btn">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" viewBox="0 0 512 512">
+                <path
+                  d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"
+                />
+              </svg>
+            </button>
             <a
               id="github-src-btn"
               class="github-src-btn"
@@ -194,7 +162,50 @@
         </nav>
       </nav>
     </header>
-    <div class="search-results-container hidden" id="search-results-container">
+    <div class="search-results-container" id="search-results-container">
+      <div class="search-results__header">
+        <div class="search-results__header-container">
+          <button
+            id="exit-search-results-container-btn"
+            class="back-btn exit-search-results-container-btn hidden"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="20px" viewBox="0 0 99.63 58.37">
+              <path
+                d="M49.2,58.37A7.22,7.22,0,0,1,43.65,56L2.38,13.92a7.68,7.68,0,0,1,0-11.11c3.18-3.17,7.94-3.17,10.32,0L49.2,39.32,86.5,2.81c3.18-3.17,7.94-4,10.32-.79,3.17,3.18,4,7.94.79,11.11l-.79.79L54.76,56.78C54,57.57,51.58,58.37,49.2,58.37Z"
+              />
+            </svg>
+          </button>
+          <form class="nav__search-bar-container">
+            <input
+              id="nav-search-bar"
+              class="nav__search-bar"
+              type="search"
+              placeholder="Search Here"
+              minlength="3"
+              aria-label="A searchbar for searching movies, TV series, and more."
+            />
+            <div class="nav__search-button-container">
+              <input
+                id="nav__search-bar-submit-btn"
+                class="nav__search-bar-submit-btn cursor--pointer"
+                type="submit"
+                value="search"
+              />
+              <svg
+                id="nav__search-bar-search-icon"
+                class="nav__search-bar-search-icon"
+                height="16"
+                width="16"
+                viewBox="0 0 512 512"
+              >
+                <path
+                  d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"
+                />
+              </svg>
+            </div>
+          </form>
+        </div>
+      </div>
       <section class="card-group" id="card-group"></section>
       <div id="loading" class="loading-container"></div>
       <div class="intesection-observee"></div>
