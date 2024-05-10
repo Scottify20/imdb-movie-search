@@ -103,13 +103,25 @@ main {
   }
 }
 
+// @media only screen and (min-width: 1230px) {
+//   // for devices with hover support
+//   @media (hover: hover) {
+//     // for browsers that support hover and have a WebKit/Blink engine
+//     @supports (-webkit-font-smoothing: antialiased) {
+//       body.scroll-disabled main {
+//         transform: translateX(-8px);
+//       }
+//     }
+//   }
+// }
+
 @media only screen and (min-width: 945px) {
   // for devices with hover support
   @media (hover: hover) {
     // for browsers that support hover and have a WebKit/Blink engine
     @supports (-webkit-font-smoothing: antialiased) {
       body.scroll-disabled main {
-        transform: translateX(-9px);
+        transform: translateX(-8px);
       }
     }
   }
@@ -126,4 +138,19 @@ main {
 body.scroll-disabled,
 body.scroll-disabled main {
   overflow: hidden;
+}
+
+.btn-click-animation-and-cursor {
+  scale: 1;
+  transition: scale ease-in-out 0.15s;
+  cursor: pointer;
+
+  &:hover,
+  &:active {
+    filter: brightness(150%);
+  }
+
+  &:active {
+    scale: 0.8;
+  }
 }

@@ -141,13 +141,10 @@ export class Hero {
 
     leftButton?.addEventListener('click', () => {
       if (this.heroPage === 0) {
-        // console.log('max left');
         // jump to card 5
         this.heroPage = 4;
-        // console.log(this.heroPage);
         heroCardsContainer.style.scrollBehavior = 'auto';
         heroCardsContainer.scrollLeft = heroCardWidth() * this.heroPage;
-        // this.setPageIndicator();
         heroCardsContainer.style.scrollBehavior = 'smooth';
         return;
       }
@@ -160,14 +157,10 @@ export class Hero {
 
     rightButton?.addEventListener('click', () => {
       if (this.heroPage === 4) {
-        // console.log('max right');
-
         // jump to card 1
         this.heroPage = 0;
-        // console.log(this.heroPage);
         heroCardsContainer.style.scrollBehavior = 'auto';
         heroCardsContainer.scrollLeft = 0;
-        // this.setPageIndicator();
         heroCardsContainer.style.scrollBehavior = 'smooth';
         return;
       }
@@ -175,8 +168,6 @@ export class Hero {
       // move to right
       this.heroPage += 1;
       heroCardsContainer.scrollLeft = heroCardWidth() * this.heroPage;
-      // this.setPageIndicator();
-      // console.log(this.heroPage);
     });
   }
 
@@ -237,7 +228,7 @@ export class Hero {
    />
    <h4 class="homepage-hero__title active--underline" role="button" tabindex="0" data-imdb-id="[IMDB-ID]">[TITLE]</h4>
    <p class="homepage-hero__year-and-genre"><span class="homepage-hero__year">[YEAR]<span> • <span class="homepage-hero__genre">[GENRE]</span></p>
-   <div class="homepage-hero__play-trailer-btn" role="button" tabindex="0">
+        <div class="homepage-hero__play-trailer-btn btn-click-animation-and-cursor" role="button" tabindex="0">
      <img class="play-trailer-button-img-bg" src="https://image.tmdb.org/t/p/w92[POSTER-PATH]" alt="">
      <p class="play-trailer-txt">Play Trailer</p>
      <svg width="14px" class="play-icon"xmlns="http://www.w3.org/2000/svg" viewBox="0 0 84.18 93.81"><path d="M78.64,37.3l-62-35.8A11.09,11.09,0,0,0,0,11.1V82.71A11.08,11.08,0,0,0,16.63,92.3l62-35.8A11.09,11.09,0,0,0,78.64,37.3Z"/></svg>

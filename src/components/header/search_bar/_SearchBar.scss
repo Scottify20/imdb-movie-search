@@ -65,6 +65,7 @@
 
   .nav__search-bar {
     position: absolute;
+    width: 100%;
     height: 100%;
     user-select: none;
     background-color: var(--search-box-bg-color);
@@ -73,7 +74,7 @@
     font-weight: 600;
     color: var(--nav-items-color);
     border-radius: 5em;
-    border: var(--nav-search-bar-cont-outline-if-search-bar-focused);
+    border: none;
     transition: all ease-in-out 0.2s;
     right: 0;
 

@@ -92,9 +92,9 @@
 
   transition: all ease-in-out 0.15s;
 
-  &:active {
-    filter: brightness(40%);
-  }
+  // &:active {
+  //   filter: brightness(40%);
+  // }
 
   img.homepage-hero__backdrop {
     width: 100%;

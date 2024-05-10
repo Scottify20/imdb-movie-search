@@ -105,15 +105,10 @@ export function mobileSidebarLogic(isOn: boolean) {
 
     // disable scrolling of content below menu when menu is shown
     function toggleBodyScrolling() {
-      const titleDetailsContainer =
-        document.getElementById('title-details__container') || undefined;
       if (mobileMenuToggle.checked && window.innerWidth < 500) {
         // console.log('body scrolling disabled');
         document.body.classList.add('scroll-disabled');
-      } else if (
-        !titleDetailsContainer &&
-        SearchResultsContainer.searchResultsContainer.classList.contains('hidden')
-      ) {
+      } else {
         // console.log('body scrolling enabled');
         document.body.classList.remove('scroll-disabled');
       }

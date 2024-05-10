@@ -59,11 +59,12 @@
   margin-right: -6px;
 
   & svg {
-    transition: transform ease-out 0.15s;
+    transform: scale(1);
+    transition: transform ease-in-out 0.15s;
   }
 
   &:active svg {
-    transform: scale(0.7);
+    transform: scale(0.8);
   }
 
   svg.hamburger-menu-icon {
@@ -92,13 +93,37 @@
   }
 }
 
+.home-logo-btn {
+  // border: 1px solid red;
+  position: relative;
+  // margin-right: 45px;
+  padding-right: 60px;
+
+  &:hover::after {
+    color: var(--nav-items-color);
+  }
+
+  &::after {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--nav-items-color);
+    background-color: rgba(255, 255, 255, 0.781);
+    padding: 0.25em 0.5em;
+    border-radius: 1rem;
+    position: absolute;
+    content: 'Beta';
+    width: auto;
+    height: auto;
+    top: 0;
+    right: 0;
+    margin-top: 4.5px;
+    margin-right: 6px;
+  }
+}
+
 .github-src-btn {
   & svg path {
     fill: var(--nav-items-color);
-  }
-
-  &:hover svg path {
-    fill: var(--nav-items-hover-color);
   }
 }
 
@@ -113,10 +138,7 @@
 }
 
 .nav__left-items-container {
-  // position: relative;
-  // left: 0;
   z-index: 2;
-  // flex-grow: 1;
   display: flex;
   flex-flow: row nowrap;
   justify-content: flex-start;
@@ -138,7 +160,6 @@
 
 .nav__center-items-container {
   height: 70%;
-  /////////////////////////////////////////////////////////////////
   width: 100%;
   display: flex;
   flex-flow: row nowrap;
@@ -172,7 +193,6 @@
   }
 
   .nav__center-items-container {
-    // gap: calc(var(--navbar-gap) / 2);
     .github-src-btn,
     .favourites-btn {
       display: none;
@@ -203,7 +223,8 @@
   :root {
     --navbar-height: 3rem;
   }
-  .favourites-btn {
+  .favourites-btn,
+  .github-src-btn {
     display: none;
   }
 }
