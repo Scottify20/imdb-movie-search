@@ -95,7 +95,6 @@
 
 .home-logo-btn {
   // border: 1px solid red;
-  position: relative;
   // margin-right: 45px;
   padding-right: 60px;
 
@@ -103,15 +102,16 @@
     color: var(--nav-items-color);
   }
 
+  position: relative;
   &::after {
+    position: absolute;
+    content: 'Beta';
     font-size: 15px;
     font-weight: 600;
     color: var(--nav-items-color);
     background-color: rgba(255, 255, 255, 0.781);
     padding: 0.25em 0.5em;
     border-radius: 1rem;
-    position: absolute;
-    content: 'Beta';
     width: auto;
     height: auto;
     top: 0;
@@ -130,10 +130,6 @@
 .favourites-btn {
   & svg path {
     fill: var(--nav-items-color);
-  }
-
-  &:hover svg path {
-    fill: var(--nav-items-hover-color);
   }
 }
 

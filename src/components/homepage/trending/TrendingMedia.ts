@@ -333,7 +333,7 @@ export class TrendingMedia {
   private static templateTrendingMoviesSection = /*html*/ `
   <section class="homepage-trending__movies-container" id="homepage-trending__movies-container">
         <div class="homepage-trending__movies__title-and-toggle-container">
-          <h3 class="homepage-trending__movies__title">Trending Movies</h3>
+          <h3 class="homepage-trending__movies__title">Movies</h3>
           <div class="homepage-trending__movies__dw-toggle">
             <input
               checked
@@ -371,7 +371,7 @@ export class TrendingMedia {
   private static templateTrendingSeriesSection = /*html*/ `
   <section class="homepage-trending__movies-container" id="homepage-trending__series-container">
         <div class="homepage-trending__movies__title-and-toggle-container">
-          <h3 class="homepage-trending__movies__title">Trending TV Series</h3>
+          <h3 class="homepage-trending__movies__title">TV Series</h3>
           <div class="homepage-trending__movies__dw-toggle">
             <input
               checked
