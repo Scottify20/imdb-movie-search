@@ -209,19 +209,19 @@
   }
 }
 
-@media only screen and (max-width: 425px) {
+@media only screen and (max-width: 426px) {
   .nav__subcontainer {
     padding: 0 0.75rem;
+  }
+  .favourites-btn,
+  .github-src-btn {
+    display: none;
   }
 }
 
 @media only screen and (max-width: 360px) {
   :root {
     --navbar-height: 3rem;
-  }
-  .favourites-btn,
-  .github-src-btn {
-    display: none;
   }
 }
 

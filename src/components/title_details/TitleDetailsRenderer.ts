@@ -8,6 +8,7 @@ import {
 } from '../../utils/GlobalUtils';
 import { TitleDetailsSkeletonLoader } from './skeleton_loader/TitleDetailsSkeletonLoader';
 import { SearchResultsContainer } from '../search_results_container/SearchResultsContainer';
+import { TmdbPropsToPass } from '../homepage/trending/TrendingMedia';
 
 export class TitleDetailsRenderer {
   static [key: string]: any; // static index signature
@@ -19,7 +20,7 @@ export class TitleDetailsRenderer {
     TitleDetailsRenderer._IsOn = isOn;
   }
 
-  static async viewTitle(imdbId: string) {
+  static async viewTitle(imdbId: string, tmdbProps?: TmdbPropsToPass) {
     if (this._IsOn) {
       if (this._viewingAlreadyActive) {
         return;
@@ -38,7 +39,14 @@ export class TitleDetailsRenderer {
 
       TitleDetailsSkeletonLoader.show();
 
-      this._titleData = (await OmdbTitleDetailsFetch.getTitleData(imdbId)) as TitlePropsParsed;
+      if (tmdbProps) {
+        this._titleData = (await OmdbTitleDetailsFetch.getTitleData(
+          imdbId,
+          tmdbProps
+        )) as TitlePropsParsed;
+      } else {
+        this._titleData = (await OmdbTitleDetailsFetch.getTitleData(imdbId)) as TitlePropsParsed;
+      }
 
       // console.log(this._titleData);
       setTimeout(() => {

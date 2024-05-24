@@ -17,6 +17,13 @@ interface StoredTrendingMedia {
   timeLastUpdated: number;
 }
 
+// The properties of the title to pass to the view Title Window
+export interface TmdbPropsToPass {
+  tmdbTitle: string;
+  description: string;
+  posterURL: string;
+}
+
 export class TrendingMedia {
   private static IsOn = false;
   private static TrendingTimeWindow: tmdbTimeWindowTypes = 'day';
@@ -75,10 +82,25 @@ export class TrendingMedia {
     document.addEventListener('click', (event) => {
       // console.log(event.target);
       const target = event.target as HTMLElement;
+      let props: TmdbPropsToPass = { tmdbTitle: '', description: '', posterURL: '' };
 
       if (target.classList.contains('trending-card-container')) {
-        // console.log(target.getAttribute('data-imdb-id'));
-        TitleDetailsRenderer.viewTitle(target.getAttribute('data-imdb-id') as string);
+        // propsfs / fse;
+
+        const imdbId = target.getAttribute('data-imdb-id') as string;
+        const tmdbTitle = target.getAttribute('data-tmdb-title') as string;
+        const desc = target.getAttribute('data-tmdb-desc') as string;
+        const posterUrl = target.getAttribute('data-poster-path') as string;
+
+        const tmdbProps: TmdbPropsToPass = {
+          tmdbTitle: tmdbTitle,
+          description: desc,
+          posterURL: posterUrl,
+        };
+
+        // console.log(tmdbProps);
+
+        TitleDetailsRenderer.viewTitle(imdbId, tmdbProps);
       }
     });
   }
@@ -237,11 +259,12 @@ export class TrendingMedia {
       bindedTemplate = bindedTemplate
         .replace('[MOVIE-ID]', movie.id.toString())
         .replace('[IMDB-ID]', movie.imdbId)
-        .replace('[POSTER-PATH]', movie.poster_path)
-        .replace('[POSTER-ALT]', `A poster image of a TV Series entitled: ${movie.title}`)
-        .replace('[TITLE]', movie.title)
+        .replace(/\[POSTER-PATH\]/g, movie.poster_path)
+        .replace(/\[POSTER-ALT\]/g, `A poster image of a TV Series entitled: ${movie.title}`)
+        .replace(/\[TITLE\]/g, movie.title)
         .replace('[YEAR]', movie.release_date.substring(0, 4))
-        .replace('[GENRE]', TmdbMovieGenreIds[movie.genre_ids[0].toString()]);
+        .replace('[GENRE]', TmdbMovieGenreIds[movie.genre_ids[0].toString()])
+        .replace('[DESCRIPTION]', movie.overview);
 
       if (cardIndex > 5) {
         insertHTMLInsideElementById(
@@ -270,11 +293,12 @@ export class TrendingMedia {
       bindedTemplate = bindedTemplate
         .replace('[MOVIE-ID]', series.id.toString())
         .replace('[IMDB-ID]', series.imdbId)
-        .replace('[POSTER-PATH]', series.poster_path)
+        .replace(/\[POSTER-PATH\]/g, series.poster_path)
         .replace('[POSTER-ALT]', `A poster image of a TV Series entitled: ${series.name}`)
-        .replace('[TITLE]', series.name)
+        .replace(/\[TITLE\]/g, series.name)
         .replace('[YEAR]', series.first_air_date.substring(0, 4))
-        .replace('[GENRE]', TmdbSeriesGenreIds[series.genre_ids[0].toString()]);
+        .replace('[GENRE]', TmdbSeriesGenreIds[series.genre_ids[0].toString()])
+        .replace('[DESCRIPTION]', series.overview);
 
       // if (cardIndex > 5) {
       //   insertHTMLInsideElementById(
@@ -407,7 +431,7 @@ export class TrendingMedia {
   `;
 
   private static templateCard = /*html*/ `
-  <div class="trending-card-container" id="trending-movie--[MOVIE-ID]" data-imdb-id="[IMDB-ID]" role="button" tabindex="0">
+  <div class="trending-card-container" id="trending-movie--[MOVIE-ID]" data-tmdb-desc="[DESCRIPTION]" data-tmdb-title="[TITLE]" data-poster-path="https://image.tmdb.org/t/p/w500[POSTER-PATH]" data-imdb-id="[IMDB-ID]" role="button" tabindex="0">
   <img
     src="https://image.tmdb.org/t/p/w342[POSTER-PATH]"
     alt="[POSTER-ALT]"

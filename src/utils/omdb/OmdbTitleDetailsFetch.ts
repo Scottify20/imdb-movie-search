@@ -1,3 +1,4 @@
+import { TmdbPropsToPass } from '../../components/homepage/trending/TrendingMedia';
 import { OmdbFetch } from './OmdbFetch';
 
 type omdbTitlePlotLength = 'short' | 'full';
@@ -38,6 +39,7 @@ export class OmdbTitleDetailsFetch extends OmdbFetch {
 
   static async getTitleData(
     imdbID: string,
+    tmdbProps?: TmdbPropsToPass,
     plotLength?: omdbTitlePlotLength,
     type?: OmdbTitleType,
     season?: string,
@@ -58,17 +60,34 @@ export class OmdbTitleDetailsFetch extends OmdbFetch {
     }
 
     try {
-      const searchResult = (await OmdbTitleDetailsFetch.processSearch(
+      let searchResult = (await OmdbTitleDetailsFetch.processSearch(
         this.fetchTitleDetailsParamsObj
       )) as TitlePropsParsed;
 
+      if (tmdbProps) {
+        searchResult = this._resultWithTmdbProps(searchResult, tmdbProps);
+      }
       // stores the results to the collection
       this.storeToTitleDetailsCollection(searchResult);
       // console.log(searchResult);
+
       return searchResult;
     } catch {
       console.log('Fetch Title Details Error');
     }
+  }
+
+  private static _resultWithTmdbProps(searchResult: TitlePropsParsed, tmdbProps?: TmdbPropsToPass) {
+    if (tmdbProps) {
+      searchResult.Title = tmdbProps.tmdbTitle;
+      searchResult.Poster = tmdbProps.posterURL;
+
+      // if the tmdb description is longer than 270 characters the omdb description will be used instead
+      if (tmdbProps.description.length < 270) {
+        searchResult.Plot = tmdbProps.description;
+      }
+    }
+    return searchResult;
   }
 
   static async processSearch(params: FetchTitleDetailsParamsObj) {

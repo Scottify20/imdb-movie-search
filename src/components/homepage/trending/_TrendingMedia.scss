@@ -16,11 +16,11 @@
 
     position: relative;
     &::after {
-      font-size: 15px;
+      font-size: 14px;
       font-weight: 600;
       color: var(--nav-items-color);
-      background-color: rgba(255, 255, 255, 0.656);
-      padding: 0.25em 0.5em;
+      background-color: rgba(255, 255, 255, 0.525);
+      padding: 0.25em 0.6em 0.3em 0.5em;
       border-radius: 1rem;
       position: absolute;
       content: 'Trending';
@@ -28,7 +28,7 @@
       height: auto;
       top: 50%;
       margin-top: -13px;
-      right: -90px;
+      right: -82px;
     }
   }
 
@@ -71,6 +71,7 @@
         border-radius: 4em;
 
         color: rgba(255, 255, 255, 0.8);
+        font-weight: 500;
         position: absolute;
         top: 0;
         left: 0;

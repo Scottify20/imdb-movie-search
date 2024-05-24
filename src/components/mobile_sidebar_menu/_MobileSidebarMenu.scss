@@ -132,7 +132,7 @@
   }
 }
 //// when width is leed than 768px
-@media only screen and (max-width: 767px) {
+@media only screen and (max-width: 425px) {
   .nav__mobile-menu-container.shown .nav__links-container {
     .links__view-source-code,
     .links__favourites {

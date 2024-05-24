@@ -85,7 +85,7 @@ export class Hero {
 
       bindedTemplate = bindedTemplate
         .replace('[CARD-NUMBER]', cardIndex.toString())
-        .replace(/\[IMDB-ID]/g, movie.imdbId)
+        .replace(/\[IMDB-ID\]/g, movie.imdbId)
         .replace('[TITLE]', movie.title)
         .replace('[YEAR]', movie.release_date.substring(0, 4))
         .replace('[GENRE]', TmdbMovieGenreIds[movie.genre_ids[0].toString()])
