@@ -6,6 +6,7 @@ import {
   TrendingFetchResult,
 } from '../../../utils/proxy_api/FetchTrendingtTitles';
 import { TitleDetailsRenderer } from '../../title_details/TitleDetailsRenderer';
+import { TmdbPropsToPass } from '../trending/TrendingMedia';
 
 export class Hero {
   private static IsOn = false;
@@ -28,7 +29,7 @@ export class Hero {
 
     this.startScrollButtonsController();
     this.startPageIndicatorObserver();
-    this.startCardsClickListener();
+    this.startHeroCardsClickListener();
   }
 
   private static async fetchMovies() {
@@ -49,7 +50,7 @@ export class Hero {
     }
   }
 
-  private static startCardsClickListener() {
+  private static startHeroCardsClickListener() {
     const heroContainer = document.getElementById('homepage__hero');
 
     heroContainer?.addEventListener('click', (e) => {
@@ -57,12 +58,27 @@ export class Hero {
 
       // console.log(target);
 
-      if (target.classList.contains('homepage-hero-hero')) {
-        TitleDetailsRenderer.viewTitle(target.getAttribute('data-imdb-id') as string);
-      }
+      if (
+        target.classList.contains('homepage-hero-hero') ||
+        target.classList.contains('homepage-hero__title')
+      ) {
+        const imdbId = target.getAttribute('data-imdb-id') as string;
 
-      if (target.classList.contains('homepage-hero__title')) {
-        TitleDetailsRenderer.viewTitle(target.getAttribute('data-imdb-id') as string);
+        const heroCard = document.getElementsByClassName(
+          `homepage-hero-card-${imdbId}`
+        )[0] as HTMLElement;
+
+        const tmdbTitle = heroCard.getAttribute('data-tmdb-title') as string;
+        const desc = heroCard.getAttribute('data-tmdb-desc') as string;
+        const posterUrl = heroCard.getAttribute('data-poster-path') as string;
+
+        const tmdbProps: TmdbPropsToPass = {
+          tmdbTitle: tmdbTitle,
+          description: desc,
+          posterURL: posterUrl,
+        };
+
+        TitleDetailsRenderer.viewTitle(imdbId, tmdbProps);
       }
 
       if (target.classList.contains('homepage-hero__play-trailer-btn')) {
@@ -86,13 +102,14 @@ export class Hero {
       bindedTemplate = bindedTemplate
         .replace('[CARD-NUMBER]', cardIndex.toString())
         .replace(/\[IMDB-ID\]/g, movie.imdbId)
-        .replace('[TITLE]', movie.title)
+        .replace(/\[TITLE\]/g, movie.title)
         .replace('[YEAR]', movie.release_date.substring(0, 4))
         .replace('[GENRE]', TmdbMovieGenreIds[movie.genre_ids[0].toString()])
         .replace(/\[POSTER-PATH\]/g, movie.poster_path)
         .replace(/\[POSTER-ALT\]/g, `A poster image of a movie entitled: ${movie.title}`)
         .replace('[BACKDROP-PATH]', movie.backdrop_path)
-        .replace('[BACKDROP-ALT]', `A backdrop image of a movie entitled: ${movie.title}`);
+        .replace('[BACKDROP-ALT]', `A backdrop image of a movie entitled: ${movie.title}`)
+        .replace('[DESCRIPTION]', movie.overview);
 
       insertHTMLInsideElementById(bindedTemplate, 'homepage-hero-cards-container');
 
@@ -211,7 +228,7 @@ export class Hero {
 </section>
  `;
 
-  private static templateHeroCard = /*html*/ `<div id="homepage-hero__card--[CARD-NUMBER]" class="homepage-hero-hero" data-imdb-id="[IMDB-ID]">
+  private static templateHeroCard = /*html*/ `<div id="homepage-hero__card--[CARD-NUMBER]" class="homepage-hero-hero homepage-hero-card-[IMDB-ID]" data-imdb-id="[IMDB-ID]" data-tmdb-title="[TITLE]" data-tmdb-desc="[DESCRIPTION]" data-poster-path="https://image.tmdb.org/t/p/w500[POSTER-PATH]">
  <img
    src="https://image.tmdb.org/t/p/w1280[BACKDROP-PATH]"
    alt="[BACKDROP-ALT]"
