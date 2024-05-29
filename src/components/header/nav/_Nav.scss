@@ -187,19 +187,24 @@
   :root {
     --navbar-width: calc((2 * var(--card-width)) + (1 * var(--card-group-gap)));
   }
-
-  .nav__center-items-container {
-    .github-src-btn,
-    .favourites-btn {
-      display: none;
-    }
-  }
 }
 
 @media only screen and (max-width: 499px) {
   :root {
     --navbar-height: 3.25rem;
     --navbar-width: calc(100% - 2em);
+  }
+
+  // .nav__center-items-container {
+  //   .github-src-btn,
+  //   .favourites-btn {
+  //     display: none;
+  //   }
+  // }
+
+  .favourites-btn,
+  .github-src-btn {
+    display: none;
   }
 }
 
@@ -212,10 +217,6 @@
 @media only screen and (max-width: 426px) {
   .nav__subcontainer {
     padding: 0 0.75rem;
-  }
-  .favourites-btn,
-  .github-src-btn {
-    display: none;
   }
 }
 
