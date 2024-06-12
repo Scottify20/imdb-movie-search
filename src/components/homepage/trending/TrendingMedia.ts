@@ -45,8 +45,6 @@ export class TrendingMedia {
 
   private static async render() {
     const localTrendingMedia = this.storedTrendingMediaFromLocalStorage();
-    // console.log(localTrendingMedia);
-    ////////////////////////////////////////////////////////////////////////////////
     if (localTrendingMedia?.timeLastUpdated === 1) {
       this.getLocallyStoredTrendingMedia(localTrendingMedia);
     } else {
@@ -58,17 +56,19 @@ export class TrendingMedia {
     this.movieCardsContainer = document.getElementById(
       'homepage-trending__movies__cards-container'
     ) as HTMLElement;
+    this.scrollButtonsVisibilityController('trending-movie');
 
     this.insertSeriesContainer();
     this.insertSeriesCardsAndBindData();
     this.seriesCardsContainer = document.getElementById(
       'homepage-trending__series__cards-container'
     ) as HTMLElement;
+    this.scrollButtonsVisibilityController('trending-series');
 
     this.startCardClickListeners();
     this.startTimeWindowToggle();
-
-    this.overrideScrollingToHorizontalOnHover();
+    this.moviesScrollButtonsListener();
+    this.seriesScrollButtonsListener();
   }
 
   private static reRender() {
@@ -76,17 +76,16 @@ export class TrendingMedia {
     this.insertMovieCardsAndBindData();
     this.insertSeriesCardsAndBindData();
     this.resetScroll();
+    this.scrollButtonsVisibilityController('trending-movie');
+    this.scrollButtonsVisibilityController('trending-series');
   }
 
   private static startCardClickListeners() {
     document.addEventListener('click', (event) => {
-      // console.log(event.target);
       const target = event.target as HTMLElement;
       let props: TmdbPropsToPass = { tmdbTitle: '', description: '', posterURL: '' };
 
       if (target.classList.contains('trending-card-container')) {
-        // propsfs / fse;
-
         const imdbId = target.getAttribute('data-imdb-id') as string;
         const tmdbTitle = target.getAttribute('data-tmdb-title') as string;
         const desc = target.getAttribute('data-tmdb-desc') as string;
@@ -208,32 +207,6 @@ export class TrendingMedia {
     }
   }
 
-  private static overrideScrollingToHorizontalOnHover() {
-    this.movieCardsContainer.addEventListener('wheel', (e) => {
-      if (e.deltaY > 0) {
-        // console.log(e.deltaY);
-        this.movieCardsContainer.scrollLeft += e.deltaY * 3;
-        e.preventDefault();
-      } else if (e.deltaY < 0) {
-        // console.log(e.deltaY);
-        this.movieCardsContainer.scrollLeft += e.deltaY * 3;
-        e.preventDefault();
-      }
-    });
-
-    this.seriesCardsContainer.addEventListener('wheel', (e) => {
-      if (e.deltaY > 0) {
-        // console.log(e.deltaY);
-        this.seriesCardsContainer.scrollLeft += e.deltaY * 3;
-        e.preventDefault();
-      } else if (e.deltaY < 0) {
-        // console.log(e.deltaY);
-        this.seriesCardsContainer.scrollLeft += e.deltaY * 3;
-        e.preventDefault();
-      }
-    });
-  }
-
   private static insertSeriesContainer() {
     insertHTMLInsideElementById(this.templateTrendingSeriesSection, 'homepage__hero', 'afterend');
   }
@@ -266,6 +239,15 @@ export class TrendingMedia {
         .replace('[GENRE]', TmdbMovieGenreIds[movie.genre_ids[0].toString()])
         .replace('[DESCRIPTION]', movie.overview);
 
+      if (cardIndex === 6) {
+        bindedTemplate = bindedTemplate.replace('[CARD-INDEX]', 'first');
+      } else if (cardIndex === trendingMovies.length) {
+        bindedTemplate = bindedTemplate.replace('[CARD-INDEX]', 'last');
+      } else {
+        bindedTemplate = bindedTemplate.replace('[CARD-INDEX]', (cardIndex - 5).toString());
+      }
+
+      /// only cards 6 and higher are inserted
       if (cardIndex > 5) {
         insertHTMLInsideElementById(
           bindedTemplate,
@@ -285,7 +267,7 @@ export class TrendingMedia {
       trendingSeries = [...this.trendingSeriesWeek];
     }
 
-    // let cardIndex = 1;
+    let cardIndex = 1;
 
     trendingSeries.forEach((series) => {
       let bindedTemplate = String(this.templateCard);
@@ -300,16 +282,17 @@ export class TrendingMedia {
         .replace('[GENRE]', TmdbSeriesGenreIds[series.genre_ids[0].toString()])
         .replace('[DESCRIPTION]', series.overview);
 
-      // if (cardIndex > 5) {
-      //   insertHTMLInsideElementById(
-      //     bindedTemplate,
-      //     'homepage-trending__series__cards-subcontainer'
-      //   );
-      // }
+      if (cardIndex === 1) {
+        bindedTemplate = bindedTemplate.replace('[CARD-INDEX]', 'first');
+      } else if (cardIndex === trendingSeries.length) {
+        bindedTemplate = bindedTemplate.replace('[CARD-INDEX]', 'last');
+      } else {
+        bindedTemplate = bindedTemplate.replace('[CARD-INDEX]', cardIndex.toString());
+      }
 
       insertHTMLInsideElementById(bindedTemplate, 'homepage-trending__series__cards-subcontainer');
 
-      // cardIndex++;
+      cardIndex++;
     });
   }
 
@@ -354,8 +337,206 @@ export class TrendingMedia {
     });
   }
 
+  private static scrollButtonsVisibilityController(category: 'trending-movie' | 'trending-series') {
+    let cardsContainer = document.getElementById(
+      'random-id-string-to-bypass-assignment-checks'
+    ) as HTMLElement;
+    let LeftButton: HTMLElement;
+    let RightButton: HTMLElement;
+    let firstCard = document.getElementById(
+      'random-id-string-to-bypass-assignment-checks'
+    ) as HTMLElement;
+    let lastCard = document.getElementById(
+      'random-id-string-to-bypass-assignment-checks'
+    ) as HTMLElement;
+
+    if (category === 'trending-movie') {
+      cardsContainer = document.getElementById(
+        'homepage-trending__movies__cards-subcontainer'
+      ) as HTMLElement;
+      LeftButton = document.getElementById(
+        'homepage-trending-movies__scroll-left-btn'
+      ) as HTMLElement;
+      RightButton = document.getElementById(
+        'homepage-trending-movies__scroll-right-btn'
+      ) as HTMLElement;
+
+      firstCard = cardsContainer.firstElementChild as HTMLElement;
+      lastCard = cardsContainer.lastElementChild as HTMLElement;
+
+      const movieObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.target.getAttribute('data-card-index') === 'first') {
+              LeftButton.classList.toggle('hide', entry.isIntersecting);
+            } else if (entry.target.getAttribute('data-card-index') === 'last') {
+              RightButton.classList.toggle('hide', entry.isIntersecting);
+            }
+          });
+        },
+        { threshold: 1 }
+      );
+
+      movieObserver.observe(firstCard);
+      movieObserver.observe(lastCard);
+    }
+
+    if (category === 'trending-series') {
+      cardsContainer = document.getElementById(
+        'homepage-trending__series__cards-subcontainer'
+      ) as HTMLElement;
+
+      LeftButton = document.getElementById(
+        'homepage-trending-series__scroll-left-btn'
+      ) as HTMLElement;
+
+      RightButton = document.getElementById(
+        'homepage-trending-series__scroll-right-btn'
+      ) as HTMLElement;
+
+      firstCard = cardsContainer.firstElementChild as HTMLElement;
+      lastCard = cardsContainer.lastElementChild as HTMLElement;
+
+      const seriesObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.target.getAttribute('data-card-index') === 'first') {
+              LeftButton.classList.toggle('hide', entry.isIntersecting);
+            } else if (entry.target.getAttribute('data-card-index') === 'last') {
+              RightButton.classList.toggle('hide', entry.isIntersecting);
+            }
+          });
+        },
+        { threshold: 1 }
+      );
+
+      seriesObserver.observe(firstCard);
+      seriesObserver.observe(lastCard);
+    }
+  }
+
+  private static moviesScrollButtonsListener() {
+    const trendingMovies = document.getElementById(
+      'homepage-trending__movies__cards-container'
+    ) as HTMLElement;
+    const movieLeft = document.getElementById(
+      'homepage-trending-movies__scroll-left-btn'
+    ) as HTMLElement;
+
+    const movieRight = document.getElementById(
+      'homepage-trending-movies__scroll-right-btn'
+    ) as HTMLElement;
+
+    const unclippedContainer = document.getElementById(
+      'homepage-trending__movies__cards-subcontainer'
+    ) as HTMLElement;
+
+    const scrollContentWidth =
+      this.getVisibleCardNumbers * this.getCardWidth + this.getVisibleCardNumbers * this.getCardGap;
+
+    movieLeft.addEventListener('click', () => {
+      if (trendingMovies.scrollLeft <= scrollContentWidth) {
+        trendingMovies.scrollLeft = 0;
+      } else {
+        trendingMovies.scrollLeft = trendingMovies.scrollLeft -= scrollContentWidth;
+      }
+    });
+
+    movieRight.addEventListener('click', () => {
+      if (trendingMovies.scrollLeft > trendingMovies.scrollLeft + scrollContentWidth) {
+        trendingMovies.scrollLeft = unclippedContainer.offsetWidth;
+      } else {
+        trendingMovies.scrollLeft = trendingMovies.scrollLeft += scrollContentWidth;
+      }
+    });
+  }
+
+  private static seriesScrollButtonsListener() {
+    const trendingSeries = document.getElementById(
+      'homepage-trending__series__cards-container'
+    ) as HTMLElement;
+    const movieLeft = document.getElementById(
+      'homepage-trending-series__scroll-left-btn'
+    ) as HTMLElement;
+
+    const movieRight = document.getElementById(
+      'homepage-trending-series__scroll-right-btn'
+    ) as HTMLElement;
+
+    const unclippedContainer = document.getElementById(
+      'homepage-trending__series__cards-subcontainer'
+    ) as HTMLElement;
+
+    const scrollContentWidth =
+      this.getVisibleCardNumbers * this.getCardWidth + this.getVisibleCardNumbers * this.getCardGap;
+
+    movieLeft.addEventListener('click', () => {
+      if (trendingSeries.scrollLeft <= scrollContentWidth) {
+        trendingSeries.scrollLeft = 0;
+      } else {
+        trendingSeries.scrollLeft = trendingSeries.scrollLeft -= scrollContentWidth;
+      }
+    });
+
+    movieRight.addEventListener('click', () => {
+      if (trendingSeries.scrollLeft > trendingSeries.scrollLeft + scrollContentWidth) {
+        trendingSeries.scrollLeft = unclippedContainer.offsetWidth;
+      } else {
+        trendingSeries.scrollLeft = trendingSeries.scrollLeft += scrollContentWidth;
+      }
+    });
+  }
+
+  private static get getVisibleCardNumbers(): number {
+    const container = document.getElementById(
+      'homepage-trending__movies__cards-container'
+    ) as HTMLElement;
+    let containerWidth = container.offsetWidth;
+    let cardGap = 16; //1rem
+    let cardWidth = 150; // 150px
+
+    // based of the css windows width layout breakpoints on the trending sections
+    // if container width is more than 768px, card width and gap will be assigned to 20px and 175px
+    if (window.innerWidth > 768) {
+      cardGap = 20; // 1.25rem
+      cardWidth = 175; // 175px
+
+      // No of Cards = (Cw + Cg) / (9.75 * Cg)
+      const Nc = (containerWidth + cardGap) / (9.75 * cardGap);
+      // console.log(Math.floor(Nc));
+      // return Nc;
+      return Math.floor(Nc);
+    }
+    // if container width is less than or equal to 768px, card width and gap will remain as 16px and 150px
+
+    // No of Cards = (Cw + Cg) / (10.375 * Cg)
+    const Nc = (containerWidth + cardGap) / (10.375 * cardGap);
+    // console.log(Math.floor(Nc));
+    // return Nc;
+    return Math.floor(Nc);
+  }
+
+  private static get getCardWidth(): number {
+    return window.innerWidth > 768 ? 175 : 150;
+  }
+
+  private static get getCardGap(): number {
+    return window.innerWidth > 768 ? 20 : 16;
+  }
+
   private static templateTrendingMoviesSection = /*html*/ `
   <section class="homepage-trending__movies-container" id="homepage-trending__movies-container">
+  <div class="homepage-trending__scroll-buttons-container">
+  <button id="homepage-trending-movies__scroll-left-btn" aria-label="Scroll Left" type="button" class="homepage-trending__scroll-button homepage-trending__scroll-left-btn" tabindex="0">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 13 7.44">
+      <path id="arrow_down_expanded" data-name="arrow down expanded" class="cls-1" d="M6.44,7.44a1,1,0,0,1-.71-.29L.29,1.71A1,1,0,0,1,1.71.29L6.45,5,11.3.29a1,1,0,1,1,1.4,1.42L7.14,7.16A1,1,0,0,1,6.44,7.44Z"/>
+    </svg></button>
+
+  <button id="homepage-trending-movies__scroll-right-btn" aria-label="Scroll Right" type="button" class="homepage-trending__scroll-button homepage-trending__scroll-right-btn" tabindex="0">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 13 7.44">
+      <path id="arrow_down_expanded" data-name="arrow down expanded" class="cls-1" d="M6.44,7.44a1,1,0,0,1-.71-.29L.29,1.71A1,1,0,0,1,1.71.29L6.45,5,11.3.29a1,1,0,1,1,1.4,1.42L7.14,7.16A1,1,0,0,1,6.44,7.44Z"/>
+    </svg></button>
+</div>
         <div class="homepage-trending__movies__title-and-toggle-container">
           <h3 class="homepage-trending__movies__title">Movies</h3>
           <div class="homepage-trending__movies__dw-toggle">
@@ -367,7 +548,7 @@ export class TrendingMedia {
               id="movies-day-radio"
               value="1"
               dw-toggle-data-sync="1"
-              aria-label="Switch to Daily Trending Movies"
+              aria-label="Show Daily Trending Movies"
               tabindex="0"
             />
 
@@ -378,7 +559,7 @@ export class TrendingMedia {
               id="movies-week-radio"
               value="2"
               dw-toggle-data-sync="2"
-              aria-label="Switch to Weekly Trending Movies"
+              aria-label="Show Weekly Trending Movies"
               tabindex="0"
             />
             
@@ -394,6 +575,17 @@ export class TrendingMedia {
 
   private static templateTrendingSeriesSection = /*html*/ `
   <section class="homepage-trending__movies-container" id="homepage-trending__series-container">
+  <div class="homepage-trending__scroll-buttons-container">
+  <button id="homepage-trending-series__scroll-left-btn" aria-label="Scroll Left" type="button" class="homepage-trending__scroll-button homepage-trending__scroll-left-btn" tabindex="0">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 13 7.44">
+      <path id="arrow_down_expanded" data-name="arrow down expanded" class="cls-1" d="M6.44,7.44a1,1,0,0,1-.71-.29L.29,1.71A1,1,0,0,1,1.71.29L6.45,5,11.3.29a1,1,0,1,1,1.4,1.42L7.14,7.16A1,1,0,0,1,6.44,7.44Z"/>
+    </svg></button>
+
+  <button id="homepage-trending-series__scroll-right-btn" aria-label="Scroll Right" type="button" class="homepage-trending__scroll-button homepage-trending__scroll-right-btn" tabindex="0">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 13 7.44">
+      <path id="arrow_down_expanded" data-name="arrow down expanded" class="cls-1" d="M6.44,7.44a1,1,0,0,1-.71-.29L.29,1.71A1,1,0,0,1,1.71.29L6.45,5,11.3.29a1,1,0,1,1,1.4,1.42L7.14,7.16A1,1,0,0,1,6.44,7.44Z"/>
+    </svg></button>
+  </div>
         <div class="homepage-trending__movies__title-and-toggle-container">
           <h3 class="homepage-trending__movies__title">TV Series</h3>
           <div class="homepage-trending__movies__dw-toggle">
@@ -405,7 +597,7 @@ export class TrendingMedia {
               id="series-day-radio"
               value="1"
               dw-toggle-data-sync="1"
-              aria-label="Switch to Daily Trending TV Series"
+              aria-label="Show Daily Trending TV Series"
               tabindex="0"
             />
             <label class="trending-toggle-label" for="series-day-radio">Today</label>
@@ -416,7 +608,7 @@ export class TrendingMedia {
               id="series-week-radio"
               value="2"
               dw-toggle-data-sync="2"
-              aria-label="Switch to Weekly Trending TV Series"
+              aria-label="Show Weekly Trending TV Series"
               tabindex="0"
             />
             <label class="trending-toggle-label" for="series-week-radio">This Week</label>
@@ -431,7 +623,7 @@ export class TrendingMedia {
   `;
 
   private static templateCard = /*html*/ `
-  <div class="trending-card-container" id="trending-movie--[MOVIE-ID]" data-tmdb-desc="[DESCRIPTION]" data-tmdb-title="[TITLE]" data-poster-path="https://image.tmdb.org/t/p/w500[POSTER-PATH]" data-imdb-id="[IMDB-ID]" role="button" tabindex="0">
+  <div class="trending-card-container" id="trending-movie--[MOVIE-ID]" data-tmdb-desc="[DESCRIPTION]" data-tmdb-title="[TITLE]" data-poster-path="https://image.tmdb.org/t/p/w500[POSTER-PATH]" data-imdb-id="[IMDB-ID]" role="button" tabindex="0" data-card-index="[CARD-INDEX]">
   <img
     src="https://image.tmdb.org/t/p/w342[POSTER-PATH]"
     alt="[POSTER-ALT]"
