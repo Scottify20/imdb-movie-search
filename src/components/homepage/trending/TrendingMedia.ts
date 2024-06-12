@@ -434,9 +434,7 @@ export class TrendingMedia {
     let scrollContentWidth: number;
 
     movieLeft.addEventListener('click', () => {
-      scrollContentWidth =
-        this.getVisibleCardNumbers * this.getCardWidth +
-        this.getVisibleCardNumbers * this.getCardGap;
+      scrollContentWidth = this.getTrendingMediaVisibleContentWidth;
 
       if (trendingMovies.scrollLeft <= scrollContentWidth) {
         trendingMovies.scrollLeft = 0;
@@ -446,9 +444,7 @@ export class TrendingMedia {
     });
 
     movieRight.addEventListener('click', () => {
-      scrollContentWidth =
-        this.getVisibleCardNumbers * this.getCardWidth +
-        this.getVisibleCardNumbers * this.getCardGap;
+      scrollContentWidth = this.getTrendingMediaVisibleContentWidth;
 
       if (trendingMovies.scrollLeft > trendingMovies.scrollLeft + scrollContentWidth) {
         trendingMovies.scrollLeft = unclippedContainer.offsetWidth;
@@ -477,9 +473,7 @@ export class TrendingMedia {
     let scrollContentWidth: number;
 
     movieLeft.addEventListener('click', () => {
-      scrollContentWidth =
-        this.getVisibleCardNumbers * this.getCardWidth +
-        this.getVisibleCardNumbers * this.getCardGap;
+      scrollContentWidth = this.getTrendingMediaVisibleContentWidth;
 
       if (trendingSeries.scrollLeft <= scrollContentWidth) {
         trendingSeries.scrollLeft = 0;
@@ -489,9 +483,7 @@ export class TrendingMedia {
     });
 
     movieRight.addEventListener('click', () => {
-      scrollContentWidth =
-        this.getVisibleCardNumbers * this.getCardWidth +
-        this.getVisibleCardNumbers * this.getCardGap;
+      scrollContentWidth = this.getTrendingMediaVisibleContentWidth;
 
       if (trendingSeries.scrollLeft > trendingSeries.scrollLeft + scrollContentWidth) {
         trendingSeries.scrollLeft = unclippedContainer.offsetWidth;
@@ -499,6 +491,12 @@ export class TrendingMedia {
         trendingSeries.scrollLeft = trendingSeries.scrollLeft += scrollContentWidth;
       }
     });
+  }
+
+  private static get getTrendingMediaVisibleContentWidth(): number {
+    return (
+      this.getVisibleCardNumbers * this.getCardWidth + this.getVisibleCardNumbers * this.getCardGap
+    );
   }
 
   private static get getVisibleCardNumbers(): number {
@@ -519,7 +517,7 @@ export class TrendingMedia {
       const Nc = (containerWidth + cardGap) / (9.75 * cardGap);
       // console.log(Math.floor(Nc));
       // return Nc;
-      return Math.floor(Nc);
+      return Math.floor(Nc) - 1;
     }
     // if container width is less than or equal to 768px, card width and gap will remain as 16px and 150px
 
@@ -527,7 +525,7 @@ export class TrendingMedia {
     const Nc = (containerWidth + cardGap) / (10.375 * cardGap);
     // console.log(Math.floor(Nc));
     // return Nc;
-    return Math.floor(Nc);
+    return Math.floor(Nc) - 1;
   }
 
   private static get getCardWidth(): number {
