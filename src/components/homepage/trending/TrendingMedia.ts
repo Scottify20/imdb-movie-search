@@ -431,10 +431,13 @@ export class TrendingMedia {
       'homepage-trending__movies__cards-subcontainer'
     ) as HTMLElement;
 
-    const scrollContentWidth =
-      this.getVisibleCardNumbers * this.getCardWidth + this.getVisibleCardNumbers * this.getCardGap;
+    let scrollContentWidth: number;
 
     movieLeft.addEventListener('click', () => {
+      scrollContentWidth =
+        this.getVisibleCardNumbers * this.getCardWidth +
+        this.getVisibleCardNumbers * this.getCardGap;
+
       if (trendingMovies.scrollLeft <= scrollContentWidth) {
         trendingMovies.scrollLeft = 0;
       } else {
@@ -443,6 +446,10 @@ export class TrendingMedia {
     });
 
     movieRight.addEventListener('click', () => {
+      scrollContentWidth =
+        this.getVisibleCardNumbers * this.getCardWidth +
+        this.getVisibleCardNumbers * this.getCardGap;
+
       if (trendingMovies.scrollLeft > trendingMovies.scrollLeft + scrollContentWidth) {
         trendingMovies.scrollLeft = unclippedContainer.offsetWidth;
       } else {
@@ -467,10 +474,13 @@ export class TrendingMedia {
       'homepage-trending__series__cards-subcontainer'
     ) as HTMLElement;
 
-    const scrollContentWidth =
-      this.getVisibleCardNumbers * this.getCardWidth + this.getVisibleCardNumbers * this.getCardGap;
+    let scrollContentWidth: number;
 
     movieLeft.addEventListener('click', () => {
+      scrollContentWidth =
+        this.getVisibleCardNumbers * this.getCardWidth +
+        this.getVisibleCardNumbers * this.getCardGap;
+
       if (trendingSeries.scrollLeft <= scrollContentWidth) {
         trendingSeries.scrollLeft = 0;
       } else {
@@ -479,6 +489,10 @@ export class TrendingMedia {
     });
 
     movieRight.addEventListener('click', () => {
+      scrollContentWidth =
+        this.getVisibleCardNumbers * this.getCardWidth +
+        this.getVisibleCardNumbers * this.getCardGap;
+
       if (trendingSeries.scrollLeft > trendingSeries.scrollLeft + scrollContentWidth) {
         trendingSeries.scrollLeft = unclippedContainer.offsetWidth;
       } else {
