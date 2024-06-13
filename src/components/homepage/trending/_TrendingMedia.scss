@@ -284,21 +284,24 @@
 }
 
 @media (hover: none) {
+  .homepage-trending__movies-container {
+    &:hover .homepage-trending__scroll-buttons-container {
+      opacity: 0;
+    }
+  }
+
   .homepage-trending__movies__cards-container {
     scroll-behavior: auto;
     scroll-snap-type: none;
-  }
-
-  .trending-card-container {
-    scroll-snap-stop: normal;
-  }
-
-  .homepage-trending__movies__cards-container {
     scrollbar-color: auto auto;
   }
 
   .homepage-trending__movies__cards-subcontainer {
     margin-bottom: 0.75rem;
+  }
+
+  .trending-card-container {
+    scroll-snap-stop: normal;
   }
 }
 
