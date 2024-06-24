@@ -1,8 +1,22 @@
-import { TmdbFetch, tmdbTimeWindowTypes } from './TmdbFetch';
+import { TmdbFetch, tmdbTimeWindowTypes, TmdbProxyApiResponse, TmdbFetchParams } from './TmdbFetch';
 
 export class TmdbFetchTrending extends TmdbFetch {
+  protected fetchParams: TmdbFetchParams = {
+    path: {
+      from: 'trending',
+      type: 'movie',
+      timeWindow: 'day',
+    },
+
+    query: {
+      language: 'en-US',
+      page: '1',
+    },
+  };
+
   public async fetchTrendingMovies(timeWindow: tmdbTimeWindowTypes, page: number = 1) {
     const fetchInstance = new TmdbFetchTrending();
+
     fetchInstance.setFrom('trending');
     fetchInstance.setTitleType('movie');
     fetchInstance.setTimeWindow(timeWindow);
@@ -27,10 +41,6 @@ export class TmdbFetchTrending extends TmdbFetch {
   //   fetchInstance.setPage(page);
   //   const result = await fetchInstance.fetchTmdb();
   // }
-}
-
-interface TmdbProxyApiResponse<T> {
-  results: T[];
 }
 
 interface TmdbTrendingResponse {

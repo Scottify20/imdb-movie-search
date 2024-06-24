@@ -105,7 +105,10 @@ export function mobileSidebarLogic(isOn: boolean) {
 
     // disable scrolling of content below menu when menu is shown
     function toggleBodyScrolling() {
-      if (mobileMenuToggle.checked && window.innerWidth < 500) {
+      const container = document.getElementById('youtube-trailer-embed-container');
+      if (container) {
+        return;
+      } else if (mobileMenuToggle.checked && window.innerWidth < 500) {
         // console.log('body scrolling disabled');
         document.body.classList.add('scroll-disabled');
       } else {

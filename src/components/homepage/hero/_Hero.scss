@@ -165,6 +165,10 @@
       flex-flow: row nowrap;
       gap: 0.75em;
 
+      & * {
+        pointer-events: none;
+      }
+
       .play-trailer-button-img-bg {
         position: absolute;
         top: -100%;

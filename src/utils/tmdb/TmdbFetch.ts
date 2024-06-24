@@ -1,7 +1,10 @@
 export interface TmdbResponse {}
 
-export class TmdbFetch {
-  private static baseUrl = process.env.TMDB_API_PROXY_BASE_URL || `http://localhost:8000/api/tmdb`;
+export abstract class TmdbFetch {
+  protected abstract fetchParams: TmdbFetchParams;
+
+  protected static baseUrl =
+    process.env.TMDB_API_PROXY_BASE_URL || `http://localhost:8000/api/tmdb`;
 
   protected async fetchTmdb(): Promise<undefined | any> {
     try {
@@ -12,25 +15,12 @@ export class TmdbFetch {
       } else {
         console.log('tmdb fetch not OK');
       }
-      console.log(data);
+      // console.log(data);
       return data;
     } catch {
       console.log('Fetch from TMDB failed', 'from reject by fetch promise');
     }
   }
-
-  private fetchParams: TmdbTrendingParams = {
-    path: {
-      from: 'trending',
-      type: 'movie',
-      timeWindow: 'day',
-    },
-
-    query: {
-      language: 'en-US',
-      page: '1',
-    },
-  };
 
   protected setTitleType(type: tmdbEntityTypes) {
     this.fetchParams.path.type = type;
@@ -47,7 +37,15 @@ export class TmdbFetch {
     this.fetchParams.path.from = from;
   }
 
-  get requestUrl(): string {
+  protected setTmdbId(tmdbId: number) {
+    this.fetchParams.path.tmdbId = tmdbId;
+  }
+
+  protected setLanguage(langCode: string) {
+    this.fetchParams.query.language = langCode;
+  }
+
+  private get requestUrl(): string {
     const params = this.fetchParams;
 
     const pathParamsString = (): string => {
@@ -89,18 +87,24 @@ export class TmdbFetch {
 
 // const sampleRequestUrl = 'https://api.themoviedb.org/3/movie/popular?language=en-US&page=1';
 
+export interface TmdbProxyApiResponse<T> {
+  results: T[];
+}
+
 export type tmdbEntityTypes = 'tv' | 'movie' | 'person';
+
+export type tmdbTitleTypes = 'tv' | 'movie';
 export type tmdbTimeWindowTypes = 'day' | 'week';
 export type tmdbFromTypes = 'trending';
 
-type TmdbTrendingParams = {
+export interface TmdbFetchParams {
   path: {
-    [key: string]: string;
+    [key: string]: string | number;
   };
   query: {
-    [key: string]: string;
+    [key: string]: string | number;
   };
-};
+}
 
 type TmdbHomePageTrendingResult = {
   page: number;

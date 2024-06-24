@@ -13,6 +13,7 @@ import { TrendingMedia } from './src/components/homepage/trending/TrendingMedia'
 import { SearchResultsContainer } from './src/components/search_results_container/SearchResultsContainer';
 import { FetchTrendingTitles } from './src/utils/proxy_api/FetchTrendingtTitles';
 import { SearchButtonController } from './src/components/header/search_button/SearchButtonController';
+import { TrailerEmbed } from './src/components/homepage/trailer_embed/TrailerEmbed';
 
 inject(); // enable vercel analytics
 // OmdbSearchLogic(true); //enables the search feature
@@ -29,3 +30,4 @@ new Hero(true);
 new TrendingMedia(true);
 new SearchResultsContainer(true);
 new SearchButtonController(true);
+new TrailerEmbed(true);

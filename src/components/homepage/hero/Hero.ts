@@ -7,6 +7,8 @@ import {
 } from '../../../utils/proxy_api/FetchTrendingtTitles';
 import { TitleDetailsRenderer } from '../../title_details/TitleDetailsRenderer';
 import { TmdbPropsToPass } from '../trending/TrendingMedia';
+import { TrailerEmbed } from '../trailer_embed/TrailerEmbed';
+import { TmdbFetchVideoProps, TmdbFetchVideos } from '../../../utils/tmdb/TmdbFetchVideos';
 
 export class Hero {
   private static IsOn = false;
@@ -30,6 +32,8 @@ export class Hero {
     this.startScrollButtonsController();
     this.startPageIndicatorObserver();
     this.startHeroCardsClickListener();
+
+    // console.log(this.MovieList);
   }
 
   private static async fetchMovies() {
@@ -50,7 +54,7 @@ export class Hero {
     }
   }
 
-  private static startHeroCardsClickListener() {
+  private static async startHeroCardsClickListener() {
     const heroContainer = document.getElementById('homepage__hero');
 
     heroContainer?.addEventListener('click', (e) => {
@@ -82,11 +86,44 @@ export class Hero {
       }
 
       if (target.classList.contains('homepage-hero__play-trailer-btn')) {
+        this.trailerButtonController(target);
       }
-
       if (target.classList.contains('homepage-hero__poster')) {
       }
     });
+  }
+
+  private static async trailerButtonController(button: HTMLElement) {
+    const tmdbId = parseInt(button.getAttribute('data-tmdb-id') as string);
+    const trailerKey = await TmdbFetchVideos.fetchYoutubeTrailerPriorityKey(tmdbId, 'movie');
+
+    if (trailerKey) {
+      TrailerEmbed.render(trailerKey);
+    } else {
+      const trailers = (await TmdbFetchVideos.fetchVideos(
+        tmdbId,
+        'movie'
+      )) as TmdbFetchVideoProps[];
+      try {
+        const trailerKeyFallback = trailers[0].key;
+        TrailerEmbed.render(trailerKeyFallback);
+        console.log('using fallback first video');
+      } catch {
+        ////////////////////
+        console.log('no video found');
+        this.disablePlayTrailerButton(`hero-play-trailer-btn-${tmdbId}`);
+      }
+    }
+  }
+
+  private static animatePlayTrailerButton(buttonId: string) {
+    const button = document.getElementById(buttonId) as HTMLInputElement;
+  }
+
+  private static disablePlayTrailerButton(buttonId: string) {
+    const button = document.getElementById(buttonId) as HTMLInputElement;
+    button.classList.add('button-disabled');
+    button.style.pointerEvents = 'none';
   }
 
   private static insertHeroContainer() {
@@ -102,6 +139,7 @@ export class Hero {
       bindedTemplate = bindedTemplate
         .replace('[CARD-NUMBER]', cardIndex.toString())
         .replace(/\[IMDB-ID\]/g, movie.imdbId)
+        .replace(/\[TMDB-ID\]/g, movie.id.toString())
         .replace(/\[TITLE\]/g, movie.title)
         .replace('[YEAR]', movie.release_date.substring(0, 4))
         .replace('[GENRE]', TmdbMovieGenreIds[movie.genre_ids[0].toString()])
@@ -244,11 +282,13 @@ export class Hero {
      tabindex="0"
    />
    <h4 class="homepage-hero__title active--underline" role="button" tabindex="0" data-imdb-id="[IMDB-ID]">[TITLE]</h4>
-   <p class="homepage-hero__year-and-genre"><span class="homepage-hero__year">[YEAR]<span> • <span class="homepage-hero__genre">[GENRE]</span></p>
-        <div class="homepage-hero__play-trailer-btn btn-click-animation-and-cursor" role="button" tabindex="0">
-     <img class="play-trailer-button-img-bg" src="https://image.tmdb.org/t/p/w92[POSTER-PATH]" alt="">
-     <p class="play-trailer-txt">Play Trailer</p>
-     <svg width="14px" class="play-icon"xmlns="http://www.w3.org/2000/svg" viewBox="0 0 84.18 93.81"><path d="M78.64,37.3l-62-35.8A11.09,11.09,0,0,0,0,11.1V82.71A11.08,11.08,0,0,0,16.63,92.3l62-35.8A11.09,11.09,0,0,0,78.64,37.3Z"/></svg>
+   <p class="homepage-hero__year-and-genre">
+    <span class="homepage-hero__year">[YEAR]<span> • <span class="homepage-hero__genre">[GENRE]</span>
+   </p>
+    <div class="homepage-hero__play-trailer-btn btn-click-animation-and-cursor" id="hero-play-trailer-btn-[TMDB-ID]" role="button" tabindex="0" data-tmdb-id="[TMDB-ID]">
+      <img class="play-trailer-button-img-bg" src="https://image.tmdb.org/t/p/w92[POSTER-PATH]" alt="">
+      <p class="play-trailer-txt">Play Trailer</p>
+      <svg width="14px" class="play-icon"xmlns="http://www.w3.org/2000/svg" viewBox="0 0 84.18 93.81"><path d="M78.64,37.3l-62-35.8A11.09,11.09,0,0,0,0,11.1V82.71A11.08,11.08,0,0,0,16.63,92.3l62-35.8A11.09,11.09,0,0,0,78.64,37.3Z"/></svg>
    </div>
  </div>
 </div>`;
