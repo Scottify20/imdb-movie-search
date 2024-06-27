@@ -93,9 +93,9 @@
 
   transition: all ease-in-out 0.15s;
 
-  // &:active {
-  //   filter: brightness(40%);
-  // }
+  &:active:not(:has(.homepage-hero__play-trailer-btn:active)) {
+    filter: brightness(70%);
+  }
 
   img.homepage-hero__backdrop {
     width: 100%;
@@ -138,7 +138,8 @@
       grid-area: tt;
       font-weight: 600;
       color: white;
-      padding: 0.35em 0;
+      padding: 0.3em 0;
+      // padding-top: -0.35em;
     }
 
     .homepage-hero__year-and-genre {
@@ -158,6 +159,7 @@
       width: min-content;
       padding: 0.5rem 0.75rem;
       border-radius: 0.75rem;
+      border: 0;
       grid-area: tr;
       margin-top: 0.75rem;
 
@@ -267,7 +269,7 @@
       }
       .homepage-hero__title {
         font-size: 1.8rem;
-        padding: 0.2em 0;
+        // padding: 0.2em 0;
       }
       .homepage-hero__year-and-genre {
         font-size: 1.1rem;
@@ -308,6 +310,7 @@
         margin-top: -70px;
         .homepage-hero__title {
           font-size: 1.1rem;
+          margin-top: -2em;
         }
 
         .homepage-hero__year-and-genre {
@@ -327,6 +330,15 @@
           .play-icon {
             width: 12px;
           }
+        }
+      }
+
+      .homepage-hero-hero-details-and-poster {
+        .homepage-hero__title {
+          font-size: 1rem;
+          min-height: 1.25em;
+          max-height: 1.65em;
+          overflow-y: hidden;
         }
       }
     }

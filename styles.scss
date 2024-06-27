@@ -86,20 +86,18 @@ main {
   gap: var(--main-gap);
 }
 
-@media only screen and (max-width: 945px) {
-  // for devices with hover support
-  @media (hover: hover) {
-    // for browsers that support hover and have a WebKit/Blink engine
-    @supports (-webkit-font-smoothing: antialiased) {
-      body.scroll-disabled main,
-      body.scroll-disabled {
-        overflow: hidden;
-        // scrollbar-width: none;
-      }
+// for browsers that support hover and have a Blink engine (chromium)
+@media only screen and (max-width: 945px) and (hover: hover) {
+  @supports (not (hanging-punctuation: first)) and (-webkit-font-smoothing: antialiased) and
+    (not (-moz-appearance: none)) {
+    body.scroll-disabled main,
+    body.scroll-disabled {
+      overflow: hidden;
+      // scrollbar-width: none;
+    }
 
-      body.scroll-disabled main {
-        padding-right: calc(16.5px + var(--main-padding));
-      }
+    body.scroll-disabled main {
+      padding-right: calc(16.5px + var(--main-padding));
     }
   }
 }
@@ -116,14 +114,12 @@ main {
 //   }
 // }
 
-@media only screen and (min-width: 945px) {
-  // for devices with hover support
-  @media (hover: hover) {
-    // for browsers that support hover and have a WebKit/Blink engine
-    @supports (-webkit-font-smoothing: antialiased) {
-      body.scroll-disabled main {
-        transform: translateX(-8px);
-      }
+// for browsers that support hover and have a Blink engine (chromium)
+@media only screen and (min-width: 945px) and (hover: hover) {
+  @supports (not (hanging-punctuation: first)) and (-webkit-font-smoothing: antialiased) and
+    (not (-moz-appearance: none)) {
+    body.scroll-disabled main {
+      transform: translateX(-8px);
     }
   }
 }

@@ -1,7 +1,6 @@
 import { insertHTMLInsideElementById } from '../../../utils/GlobalUtils';
 import { FetchTrendingTitles } from '../../../utils/proxy_api/FetchTrendingtTitles';
 import {
-  TmdbFetch,
   TmdbMovieGenreIds,
   TmdbSeriesGenreIds,
   tmdbTimeWindowTypes,
@@ -44,13 +43,7 @@ export class TrendingMedia {
   }
 
   private static async render() {
-    const localTrendingMedia = this.storedTrendingMediaFromLocalStorage();
-    if (localTrendingMedia?.timeLastUpdated === 1) {
-      this.getLocallyStoredTrendingMedia(localTrendingMedia);
-    } else {
-      await this.fetchTrendingMedia();
-    }
-
+    await this.fetchTrendingMedia();
     this.insertMoviesContainer();
     this.insertMovieCardsAndBindData();
     this.movieCardsContainer = document.getElementById(
@@ -154,30 +147,6 @@ export class TrendingMedia {
     } else {
       this.trendingSeriesWeek = seriesWeek.results as TmdbSeriesResult2[];
       trendingMedia.seriesWeek = this.trendingSeriesWeek;
-    }
-    trendingMedia.timeLastUpdated = new Date().getTime();
-    this.storeTrendingMediaToLocalStorage(trendingMedia);
-  }
-
-  private static storeTrendingMediaToLocalStorage(trendingMedia: StoredTrendingMedia) {
-    localStorage.setItem('trendingMedia', JSON.stringify(trendingMedia));
-  }
-
-  private static storedTrendingMediaFromLocalStorage(): StoredTrendingMedia | undefined {
-    const trendingMedia = localStorage.getItem('trendingMedia');
-    if (trendingMedia) {
-      const trendingMediaObj = JSON.parse(trendingMedia) as StoredTrendingMedia;
-
-      // console.log(trendingMediaObj);
-
-      const presentDate = new Date();
-      const timeDifference = presentDate.getTime() - trendingMediaObj.timeLastUpdated;
-      const maxHours = 3;
-
-      if (timeDifference < maxHours * 60 * 60 * 1000) {
-        console.log('less than 3 hours');
-        return trendingMediaObj;
-      }
     }
   }
 

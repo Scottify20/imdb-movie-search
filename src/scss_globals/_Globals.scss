@@ -34,6 +34,13 @@
     filter: invert(0.3);
   }
 
+  *.hover--darken {
+    transition: all ease-in-out 0.2s;
+  }
+  *:hover.hover--darken {
+    filter: brightness(70%) !important;
+  }
+
   span.nowrap {
     display: block;
   }

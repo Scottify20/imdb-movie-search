@@ -630,7 +630,7 @@ export class TitleDetailsRenderer {
   private static templateTitleDetailsBackdrop = /*html*/ `<div id="title-details__backdrop" class="title-details__backdrop hidden"></div>`;
 
   private static templateHero = /*html*/ `
-  <div class="title-details__hero title-details__section-container">
+  <div class="title-details__hero">
     <div class="title-details__title-and-close-btn-container">
       <h2 id="title-data--title" class="title-details__title">Title</h2>
       <button type="button" tabindex="0" name="close-title-details-window" id="title-details__close-btn" class="title-details__close-btn">
