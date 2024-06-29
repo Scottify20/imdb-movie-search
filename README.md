@@ -7,7 +7,7 @@ A web app to browse information about Movies, TV Series, and more in the [OMDB A
 
 - As of March 13, 2024, to protect my TMDB API keys and tokens, I implemented an Express.js proxy server. This server acts as a middleman, fetching data from the APIs and relaying it to this web app.
 
-- This project is tested with BrowserStack.
+This project is tested with BrowserStack.
   
 ## Live Preview
 
