@@ -2,8 +2,8 @@
   position: fixed;
   display: grid;
   z-index: 1000;
+  right: -105vw;
   top: 0;
-  right: -105%;
 
   width: 100vw;
   height: 100%;
@@ -12,8 +12,6 @@
   overflow-y: auto;
 
   transition: all 0.25s ease-in-out;
-
-  padding-top: var(--navbar-height);
 
   &.shown {
     animation: SlideInFromRightResultsContainer 0.35s ease-in-out forwards;
@@ -25,14 +23,12 @@
 }
 
 .search-results-container .search-results__header {
-  top: 0;
-  position: fixed;
   z-index: 100;
   width: 100%;
   height: var(--navbar-height);
   background-color: var(--header-bg-color);
   gap: var(--navbar-gap);
-  padding: 0 var(--navbar-gap);
+  padding: 0 0 0 var(--navbar-gap);
 
   display: flex;
   place-content: center;
@@ -59,7 +55,7 @@
 
 @keyframes SlideInFromRightResultsContainer {
   0% {
-    right: -105%;
+    right: -105vw;
     display: unset;
   }
 
@@ -74,7 +70,7 @@
   }
 
   100% {
-    right: -105%;
+    right: -105vw;
   }
 }
 

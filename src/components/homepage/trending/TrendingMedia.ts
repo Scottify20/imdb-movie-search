@@ -44,19 +44,22 @@ export class TrendingMedia {
 
   private static async render() {
     await this.fetchTrendingMedia();
-    this.insertMoviesContainer();
-    this.insertMovieCardsAndBindData();
-    this.movieCardsContainer = document.getElementById(
-      'homepage-trending__movies__cards-container'
-    ) as HTMLElement;
-    this.scrollButtonsVisibilityController('trending-movie');
-
     this.insertSeriesContainer();
-    this.insertSeriesCardsAndBindData();
     this.seriesCardsContainer = document.getElementById(
       'homepage-trending__series__cards-container'
     ) as HTMLElement;
-    this.scrollButtonsVisibilityController('trending-series');
+    this.insertSeriesCardsAndBindData();
+
+    this.insertMoviesContainer();
+    this.movieCardsContainer = document.getElementById(
+      'homepage-trending__movies__cards-container'
+    ) as HTMLElement;
+    this.insertMovieCardsAndBindData();
+
+    setTimeout(() => {
+      this.scrollButtonsVisibilityController('trending-movie');
+      this.scrollButtonsVisibilityController('trending-series');
+    }, 50);
 
     this.startCardClickListeners();
     this.startTimeWindowToggle();
@@ -117,36 +120,24 @@ export class TrendingMedia {
       FetchTrendingTitles.fetchTrending('series', 'week'),
     ]);
 
-    let trendingMedia: StoredTrendingMedia = {
-      moviesDay: [],
-      moviesWeek: [],
-      seriesDay: [],
-      seriesWeek: [],
-      timeLastUpdated: new Date().getTime(),
-    };
-
     if (moviesDay.results[0].id === 404.0) {
     } else {
       this.trendingMoviesDay = moviesDay.results as TmdbMovieResult2[];
-      trendingMedia.moviesDay = this.trendingMoviesDay;
     }
 
     if (moviesWeek.results[0].id === 404.0) {
     } else {
       this.trendingMoviesWeek = moviesWeek.results as TmdbMovieResult2[];
-      trendingMedia.moviesWeek = this.trendingMoviesWeek;
     }
 
     if (seriesDay.results[0].id === 404.0) {
     } else {
       this.trendingSeriesDay = seriesDay.results as TmdbSeriesResult2[];
-      trendingMedia.seriesDay = this.trendingSeriesDay;
     }
 
     if (seriesWeek.results[0].id === 404.0) {
     } else {
       this.trendingSeriesWeek = seriesWeek.results as TmdbSeriesResult2[];
-      trendingMedia.seriesWeek = this.trendingSeriesWeek;
     }
   }
 
@@ -403,7 +394,7 @@ export class TrendingMedia {
     let scrollContentWidth: number;
 
     movieLeft.addEventListener('click', () => {
-      scrollContentWidth = this.getTrendingMediaVisibleContentWidth;
+      scrollContentWidth = this.getTrendingMediaVisibleContentWidth('toLeft');
 
       if (trendingMovies.scrollLeft <= scrollContentWidth) {
         trendingMovies.scrollLeft = 0;
@@ -413,7 +404,7 @@ export class TrendingMedia {
     });
 
     movieRight.addEventListener('click', () => {
-      scrollContentWidth = this.getTrendingMediaVisibleContentWidth;
+      scrollContentWidth = this.getTrendingMediaVisibleContentWidth('toRight');
 
       if (trendingMovies.scrollLeft > trendingMovies.scrollLeft + scrollContentWidth) {
         trendingMovies.scrollLeft = unclippedContainer.offsetWidth;
@@ -427,11 +418,11 @@ export class TrendingMedia {
     const trendingSeries = document.getElementById(
       'homepage-trending__series__cards-container'
     ) as HTMLElement;
-    const movieLeft = document.getElementById(
+    const seriesLeft = document.getElementById(
       'homepage-trending-series__scroll-left-btn'
     ) as HTMLElement;
 
-    const movieRight = document.getElementById(
+    const seriesRight = document.getElementById(
       'homepage-trending-series__scroll-right-btn'
     ) as HTMLElement;
 
@@ -441,8 +432,8 @@ export class TrendingMedia {
 
     let scrollContentWidth: number;
 
-    movieLeft.addEventListener('click', () => {
-      scrollContentWidth = this.getTrendingMediaVisibleContentWidth;
+    seriesLeft.addEventListener('click', () => {
+      scrollContentWidth = this.getTrendingMediaVisibleContentWidth('toLeft');
 
       if (trendingSeries.scrollLeft <= scrollContentWidth) {
         trendingSeries.scrollLeft = 0;
@@ -451,8 +442,8 @@ export class TrendingMedia {
       }
     });
 
-    movieRight.addEventListener('click', () => {
-      scrollContentWidth = this.getTrendingMediaVisibleContentWidth;
+    seriesRight.addEventListener('click', () => {
+      scrollContentWidth = this.getTrendingMediaVisibleContentWidth('toRight');
 
       if (trendingSeries.scrollLeft > trendingSeries.scrollLeft + scrollContentWidth) {
         trendingSeries.scrollLeft = unclippedContainer.offsetWidth;
@@ -462,10 +453,18 @@ export class TrendingMedia {
     });
   }
 
-  private static get getTrendingMediaVisibleContentWidth(): number {
-    return (
-      this.getVisibleCardNumbers * this.getCardWidth + this.getVisibleCardNumbers * this.getCardGap
-    );
+  private static getTrendingMediaVisibleContentWidth(direction?: 'toLeft' | 'toRight'): number {
+    if (!direction || direction === 'toRight') {
+      return (
+        this.getVisibleCardNumbers * this.getCardWidth +
+        (this.getVisibleCardNumbers - 1) * this.getCardGap
+      );
+    } else {
+      return (
+        (this.getVisibleCardNumbers - 0.3) * this.getCardWidth +
+        (this.getVisibleCardNumbers - 1) * this.getCardGap
+      );
+    }
   }
 
   private static get getVisibleCardNumbers(): number {
@@ -474,31 +473,31 @@ export class TrendingMedia {
     ) as HTMLElement;
     let containerWidth = container.offsetWidth;
     let cardGap = 16; //1rem
-    let cardWidth = 150; // 150px
 
-    // based of the css windows width layout breakpoints on the trending sections
-    // if container width is more than 768px, card width and gap will be assigned to 20px and 175px
     if (window.innerWidth > 768) {
       cardGap = 20; // 1.25rem
-      cardWidth = 175; // 175px
-
-      // No of Cards = (Cw + Cg) / (9.75 * Cg)
-      const Nc = (containerWidth + cardGap) / (9.75 * cardGap);
+      const Nc = (containerWidth - cardGap * 4) / ((this.getCardWidth / cardGap) * cardGap);
       // console.log(Math.floor(Nc));
-      // return Nc;
-      return Math.floor(Nc) - 1;
+      return Math.floor(Nc);
     }
-    // if container width is less than or equal to 768px, card width and gap will remain as 16px and 150px
 
-    // No of Cards = (Cw + Cg) / (10.375 * Cg)
-    const Nc = (containerWidth + cardGap) / (10.375 * cardGap);
-    // console.log(Math.floor(Nc));
+    if (window.innerWidth > 500) {
+      cardGap = 16; // 1.25rem
+      const Nc = (containerWidth - cardGap * 2.75) / ((this.getCardWidth / cardGap) * cardGap);
+      // console.log(Math.floor(Nc));
+      return Math.floor(Nc);
+    }
+
+    const Nc = (containerWidth - cardGap * 4) / (10.375 * cardGap);
     // return Nc;
-    return Math.floor(Nc) - 1;
+    // console.log(Math.floor(Nc) + 1);
+    return Math.floor(Nc) + 1;
   }
 
   private static get getCardWidth(): number {
-    return window.innerWidth > 768 ? 175 : 150;
+    const card = document.getElementsByClassName('trending-card-container')[0] as HTMLElement;
+    // console.log(card.offsetWidth);
+    return card.offsetWidth;
   }
 
   private static get getCardGap(): number {
@@ -611,7 +610,7 @@ export class TrendingMedia {
     class="trending-card__poster"
   />
   <div class="trending-card__title-and-year-genre-container">
-    <h4 class="trending-card__title">[TITLE]</h4>
+  <h4 class="trending-card__title">[TITLE]</h4>
     <p class="trending-card-year-and-genre">[YEAR] • [GENRE]</p>
   </div>
 </div>

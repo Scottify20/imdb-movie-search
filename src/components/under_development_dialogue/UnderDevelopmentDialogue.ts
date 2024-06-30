@@ -1,4 +1,7 @@
 import { SvgStrings } from '../../assets/svg-strings/SvgStrings';
+const bodyScrollLock = require('body-scroll-lock-upgrade');
+const disableBodyScroll = bodyScrollLock.disableBodyScroll;
+const enableBodyScroll = bodyScrollLock.enableBodyScroll;
 
 export class UnderDevelopmentDialogue {
   private static IsOn = false;
@@ -20,6 +23,7 @@ export class UnderDevelopmentDialogue {
   }
 
   static renderDialogAndBackdrop() {
+    disableBodyScroll();
     document.body.classList.add('scroll-disabled');
     document.body.insertAdjacentHTML('afterbegin', this.dialogBackdropTemplate);
     document.body.insertAdjacentHTML('afterbegin', this.dialogTemplate);
@@ -46,6 +50,7 @@ export class UnderDevelopmentDialogue {
   }
 
   static hideDialogAndBackdrop() {
+    enableBodyScroll();
     document.body.classList.remove('scroll-disabled');
     const dialogContainer = document.getElementById('under-development__container');
     const backdrop = document.getElementById('under-development__backdrop');

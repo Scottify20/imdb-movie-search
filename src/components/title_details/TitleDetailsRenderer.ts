@@ -1,6 +1,10 @@
 import { SvgStrings } from '../../assets/svg-strings/SvgStrings';
 import { TitlePropsParsed, OmdbTitleDetailsFetch } from '../../utils/omdb/OmdbTitleDetailsFetch';
 
+const bodyScrollLock = require('body-scroll-lock-upgrade');
+const disableBodyScroll = bodyScrollLock.disableBodyScroll;
+const enableBodyScroll = bodyScrollLock.enableBodyScroll;
+
 import {
   insertHTMLInsideElementById,
   elementByIdExists,
@@ -50,11 +54,12 @@ export class TitleDetailsRenderer {
 
       // console.log(this._titleData);
       setTimeout(() => {
-        TitleDetailsSkeletonLoader.fadeOut();
         this.renderTitleDetailsWindow();
+        TitleDetailsSkeletonLoader.showSkeletonForFadeout();
         this.bindData();
         this.startCloseButtonController();
         this.showParentElementsAfterDataBinding();
+        TitleDetailsSkeletonLoader.fadeOut();
         this.escapeButtonToCloseListener();
         // this.setFocusToTitleDetailsWindow();
         this.closeButtonAndBackdropListener();
@@ -225,14 +230,19 @@ export class TitleDetailsRenderer {
     titleDetailsBackdrop?.classList.add('closed');
 
     setTimeout(() => {
+      const dialog = document.getElementById('title-details__container') as HTMLDialogElement;
+
       titleDetailsContainer?.remove();
       titleDetailsBackdrop?.remove();
 
       // console.log(SearchResultsContainer.isShown);
 
-      if (!SearchResultsContainer.isShown) {
-        document.body.classList.remove('scroll-disabled');
-      }
+      // if (!SearchResultsContainer.isShown) {
+      enableBodyScroll(dialog);
+      document.body.style.overflow = 'auto';
+
+      document.body.classList.remove('scroll-disabled');
+      // }
     }, 400);
   }
 
@@ -263,11 +273,14 @@ export class TitleDetailsRenderer {
   }
 
   private static renderTitleDetailsWindow() {
-    // disable scrolling of content under the title detais window
-
-    document.body.classList.add('scroll-disabled');
-    // insert the parent container (the parent container of the window) to the body
     document.body.insertAdjacentHTML('afterbegin', this.templateTitleDetailsContainer);
+
+    // document.body.style.overflow = 'hidden';
+    const dialog = document.getElementById('title-details__container') as HTMLDialogElement;
+    disableBodyScroll(dialog);
+    document.body.classList.add('scroll-disabled');
+    dialog.showModal();
+
     // insert backdrop to body
     document.body.insertAdjacentHTML('afterbegin', this.templateTitleDetailsBackdrop);
 
@@ -275,6 +288,8 @@ export class TitleDetailsRenderer {
     insertHTMLInsideElementById(this.templateTitleDetails, 'title-details__container');
     // hero section
     insertHTMLInsideElementById(this.templateHero, 'title-details');
+
+    insertHTMLInsideElementById(this.templateSectionsContainer, 'title-details');
 
     // metatada subsection
     if (elementByIdExists('title-details__metadata-container')) {
@@ -322,7 +337,7 @@ export class TitleDetailsRenderer {
 
     if (this.propNotNull('Ratings')) {
       // ratings section container
-      insertHTMLInsideElementById(this.templateSectionRatings, 'title-details');
+      insertHTMLInsideElementById(this.templateSectionRatings, 'title-details__sections-container');
       if (this.ratingExists('Internet Movie Database')) {
         // imdb rating
         insertHTMLInsideElementById(
@@ -348,30 +363,36 @@ export class TitleDetailsRenderer {
 
     if (this.propNotNull('totalSeasons')) {
       // seasons
-      insertHTMLInsideElementById(this.templateSectionSeasons, 'title-details');
+      insertHTMLInsideElementById(this.templateSectionSeasons, 'title-details__sections-container');
     }
     if (this.propNotNull('Actors')) {
       // cast
-      insertHTMLInsideElementById(this.templateSectionCast, 'title-details');
+      insertHTMLInsideElementById(this.templateSectionCast, 'title-details__sections-container');
     }
     if (this.propNotNull('Director')) {
       // directors
-      insertHTMLInsideElementById(this.templateSectionDirectors, 'title-details');
+      insertHTMLInsideElementById(
+        this.templateSectionDirectors,
+        'title-details__sections-container'
+      );
     }
     if (this.propNotNull('Writer')) {
       // writers
-      insertHTMLInsideElementById(this.templateSectionWriters, 'title-details');
+      insertHTMLInsideElementById(this.templateSectionWriters, 'title-details__sections-container');
     }
     if (this.propNotNull('Awards')) {
       // Awards
-      insertHTMLInsideElementById(this.templateSectionAwards, 'title-details');
+      insertHTMLInsideElementById(this.templateSectionAwards, 'title-details__sections-container');
     }
 
     // the other info section (contains the sections 'Language', 'Country', 'Released', 'DVD', 'BoxOffice')
     if (this.propNotNull('Language', 'Country', 'Released', 'DVD', 'BoxOffice')) {
       // at least one of the subsections in the other info section is not null or N/A
       // Other info container
-      insertHTMLInsideElementById(this.templateSectionOtherInfo, 'title-details');
+      insertHTMLInsideElementById(
+        this.templateSectionOtherInfo,
+        'title-details__sections-container'
+      );
 
       if (this.propNotNull('Language')) {
         // insert language on other info
@@ -623,9 +644,13 @@ export class TitleDetailsRenderer {
     },
   ];
 
-  private static templateTitleDetailsContainer = /*html*/ `<div id="title-details__container" class="title-details__container hidden"></div>`;
+  private static templateTitleDetailsContainer = /*html*/ `<dialog id="title-details__container" class="title-details__container hidden"></dialog>`;
 
-  private static templateTitleDetails = /*html*/ `<div id="title-details" class="title-details"></div>`;
+  private static templateTitleDetails = /*html*/ `<div id="title-details" class="title-details">
+  </div>`;
+
+  private static templateSectionsContainer = /*html*/ `
+  <div class="title-details__sections-container" id="title-details__sections-container"></div>`;
 
   private static templateTitleDetailsBackdrop = /*html*/ `<div id="title-details__backdrop" class="title-details__backdrop hidden"></div>`;
 

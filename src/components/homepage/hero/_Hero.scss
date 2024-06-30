@@ -155,7 +155,6 @@
       cursor: pointer;
       filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.2));
       position: relative;
-      overflow: clip;
       width: min-content;
       padding: 0.5rem 0.75rem;
       border-radius: 0.75rem;
@@ -166,6 +165,10 @@
       display: flex;
       flex-flow: row nowrap;
       gap: 0.75em;
+
+      overflow: hidden;
+
+      z-index: 1;
 
       & * {
         pointer-events: none;
@@ -299,6 +302,15 @@
         width: 100%;
         aspect-ratio: 16/9;
       }
+
+      .homepage-hero-hero-details-and-poster {
+        .homepage-hero__title {
+          margin-top: -1.8em;
+          min-height: 1.25em;
+          max-height: 1.65em;
+          overflow-y: hidden;
+        }
+      }
     }
   }
 }
@@ -311,6 +323,9 @@
         .homepage-hero__title {
           font-size: 1.1rem;
           margin-top: -2em;
+          min-height: 1.25em;
+          max-height: 1.65em;
+          overflow-y: hidden;
         }
 
         .homepage-hero__year-and-genre {
@@ -330,15 +345,6 @@
           .play-icon {
             width: 12px;
           }
-        }
-      }
-
-      .homepage-hero-hero-details-and-poster {
-        .homepage-hero__title {
-          font-size: 1rem;
-          min-height: 1.25em;
-          max-height: 1.65em;
-          overflow-y: hidden;
         }
       }
     }

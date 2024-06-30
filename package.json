@@ -28,6 +28,7 @@
   },
   "dependencies": {
     "@vercel/analytics": "^1.2.2",
-    "@vercel/speed-insights": "^1.0.10"
+    "@vercel/speed-insights": "^1.0.10",
+    "body-scroll-lock-upgrade": "^1.1.0"
   }
 }

@@ -1,7 +1,7 @@
 :root {
   --title-details-popup-width: 95vw;
   --title-details-popup-max-width: 750px;
-  --title-details-popup-height: calc(100vh - 5vw);
+  // --title-details-popup-height: calc(100vh - 5vw);
   --title-details-global-padding-and-gap: 1em;
   --close-button-width: 5em;
 
@@ -92,24 +92,22 @@ span.medium {
 }
 
 .title-details__container {
-  color: white;
-  position: fixed;
   z-index: 10000;
-  overflow-y: auto;
-
+  color: white;
+  border: none;
   height: 100%;
   width: 100%;
-  pointer-events: none;
+  background: transparent;
 }
 
 .title-details__backdrop {
   z-index: 9999;
   position: fixed;
+  top: 0;
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.93);
 }
-
 // for hiding these elements
 .title-details__container.hidden,
 .title-details__backdrop.hidden {
@@ -122,13 +120,20 @@ span.medium {
   overflow: clip;
   display: flex;
   flex-flow: column nowrap;
-  gap: var(--title-details-global-padding-and-gap);
   z-index: 1;
   width: var(--title-details-popup-width);
   max-width: var(--title-details-popup-max-width);
 
-  background-color: var(--bg-color);
   margin: clamp(2.5vw, 2.5vw, 60px) auto;
+}
+
+.title-details__sections-container {
+  background-color: var(--bg-color);
+  gap: calc(var(--title-details-global-padding-and-gap) * 1);
+  display: flex;
+  flex-flow: column nowrap;
+  z-index: 1;
+  width: 100%;
 }
 
 .title-details__hero {
@@ -327,15 +332,6 @@ span.medium {
 }
 
 .title-details__section--top-cast {
-  // position: relative;
-  // .title-details__cast-shadow-scroll {
-  //   z-index: 1;
-  //   position: absolute;
-  //   right: 0;
-  //   width: 5%;
-  //   height: 100%;
-  //   background-image: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.312));
-  // }
   .title-details__cast-container {
     overflow-x: auto;
     display: flex;
@@ -382,9 +378,15 @@ span.medium {
   }
 }
 
+@media only screen and (hover: none) and (max-width: 768px) {
+  .title-details {
+    margin: clamp(2.5vw, 3vw, 60px) auto;
+  }
+}
+
 @media only screen and (min-width: 768px) {
   :root {
-    --title-details-global-padding-and-gap: 1.3em;
+    --title-details-global-padding-and-gap: 1.25em;
   }
 
   .title-details__title-and-close-btn-container {

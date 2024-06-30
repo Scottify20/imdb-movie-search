@@ -1,11 +1,22 @@
 body {
-  // Nav bvar show and hide on scroll
-  &.scroll-up header {
+  Nav bvar show and hide on scroll &.scroll-up header {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.332);
   }
   &.scroll-down header {
     transform: translateY(-100%);
   }
+
+  // &.scroll-up header {
+  //   box-shadow: 0 0 10px rgba(0, 0, 0, 0.332);
+  // }
+
+  // &.scroll-up header nav {
+  //   background-color: var(--body-bg-color);
+  // }
+
+  // &.scroll-down header nav {
+  //   background-color: var(--header-bg-color);
+  // }
 }
 
 header {

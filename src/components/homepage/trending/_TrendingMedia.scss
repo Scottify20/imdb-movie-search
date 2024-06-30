@@ -1,6 +1,6 @@
 .homepage-trending__movies-container {
   overflow: clip;
-  margin-top: 0.5rem;
+  margin-top: 1rem;
 
   position: relative;
   overflow-y: hidden;
@@ -31,7 +31,7 @@
       font-size: 14px;
       font-weight: 600;
       color: var(--nav-items-color);
-      background-color: rgba(255, 255, 255, 0.525);
+      background-color: rgba(255, 255, 255, 0.499);
       padding: 0.25em 0.6em 0.3em 0.5em;
       border-radius: 1rem;
       position: absolute;
@@ -39,19 +39,16 @@
       width: auto;
       height: auto;
       top: 50%;
-      margin-top: -13px;
-      right: -82px;
+      margin-top: -11px;
+      right: -83px;
     }
   }
 
   .homepage-trending__movies__dw-toggle {
     position: relative;
-    // right: 1em;
     padding-right: 0.3em;
-
     background-color: var(--fg-color);
     border-radius: 4rem;
-
     display: flex;
     flex-flow: row nowrap;
     gap: 0.1em;
@@ -70,11 +67,12 @@
 
       &.movie-day {
         width: 3.75em;
-        height: 2em;
+        height: 100%;
       }
 
       &.movie-week {
         width: 5.75em;
+        height: 100%;
       }
 
       &::after {
@@ -244,6 +242,96 @@
       font-size: 0.813rem;
       font-weight: 200;
       color: rgba(255, 255, 255, 0.8);
+    }
+  }
+}
+
+@supports (hanging-punctuation: first) and (-webkit-font-smoothing: antialiased) and
+  (not (-moz-appearance: none)) {
+  .homepage-trending__movies__title-and-toggle-container {
+    .homepage-trending__movies__title {
+      &::after {
+        top: 55%;
+        margin-top: -13px;
+        right: -86px;
+      }
+    }
+
+    .homepage-trending__movies__dw-toggle {
+      .trending-toggle-radio {
+        font-size: 0.875rem;
+        &.movie-day {
+          width: 4em;
+          height: 100%;
+        }
+
+        &.movie-week {
+          width: 6em;
+          height: 100%;
+        }
+
+        &::after {
+          padding: 0 0.195em 0 0.195em;
+          font-weight: 500;
+        }
+      }
+    }
+  }
+}
+
+// targetting safari for ios and ipados
+@media only screen and (hover: none) {
+  @supports (hanging-punctuation: first) and (-webkit-font-smoothing: antialiased) and
+    (not (-moz-appearance: none)) {
+    .homepage-trending__movies__title-and-toggle-container {
+      .homepage-trending__movies__title {
+        &::after {
+          font-size: 0.875rem;
+          right: -88px;
+        }
+      }
+
+      .homepage-trending__movies__dw-toggle {
+        .trending-toggle-radio {
+          &.movie-day {
+            width: 3.75em;
+            height: 100%;
+          }
+
+          &.movie-week {
+            width: 5.75em;
+            height: 100%;
+          }
+
+          &::after {
+            padding: 0 0.195em 0 0.195em;
+            font-weight: 500;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .trending-card-container {
+    width: 120px;
+
+    .trending-card__poster {
+      width: 120px;
+    }
+
+    .trending-card__title-and-year-genre-container {
+      margin-top: 0.25em;
+
+      .trending-card__title {
+        font-size: 0.9rem;
+        font-weight: 500;
+      }
+      .trending-card-year-and-genre {
+        font-size: 0.8rem;
+        font-weight: 200;
+      }
     }
   }
 }

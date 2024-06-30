@@ -12,8 +12,15 @@
 
   width: 100%;
 
+  overflow: clip;
   &:hover {
     filter: drop-shadow(0 0 3px rgba(0, 0, 0, 0.288));
+  }
+
+  .nav__search-bar {
+    border-radius: 999px;
+    border: 0;
+    outline: 0;
   }
 
   .nav__search-button-container {

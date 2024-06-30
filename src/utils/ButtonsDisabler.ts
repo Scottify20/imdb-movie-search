@@ -18,10 +18,10 @@ const ButtonsDisabler = (isOn: boolean) => {
 };
 
 class DisableButtons {
-  private static buttonList: Element[] = [];
+  public static buttonList: Element[] = [];
 
   private static disableButtons() {
-    this.buttonList.forEach((button) => {
+    DisableButtons.buttonList.forEach((button) => {
       if (!this.isButtonAlreadyDisabled(button)) {
         button.classList.add('button-disabled');
       }

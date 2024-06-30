@@ -1,3 +1,7 @@
+const bodyScrollLock = require('body-scroll-lock-upgrade');
+const disableBodyScroll = bodyScrollLock.disableBodyScroll;
+const enableBodyScroll = bodyScrollLock.enableBodyScroll;
+
 export class TrailerEmbed {
   private static IsOn = false;
 
@@ -9,6 +13,7 @@ export class TrailerEmbed {
   public static render(trailerKey: string) {
     if (TrailerEmbed.IsOn) {
       document.body.classList.add('scroll-disabled');
+      disableBodyScroll();
 
       let bindedTemplate = String(this.templateTrailerEmbed);
       bindedTemplate = bindedTemplate.replace('[VIDEO-KEY]', trailerKey);
@@ -23,6 +28,7 @@ export class TrailerEmbed {
 
   private static close() {
     document.body.classList.remove('scroll-disabled');
+    enableBodyScroll();
 
     const embedWindow = document.getElementById('youtube-trailer-embed-container');
 

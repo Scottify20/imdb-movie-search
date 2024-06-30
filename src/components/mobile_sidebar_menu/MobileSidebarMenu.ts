@@ -2,6 +2,10 @@ import { anchorToElementById, getGlobalPositionById } from '../../utils/GlobalUt
 import { SearchBarController } from '../header/search_bar/SearchBarController';
 import { SearchResultsContainer } from '../search_results_container/SearchResultsContainer';
 
+const bodyScrollLock = require('body-scroll-lock-upgrade');
+const disableBodyScroll = bodyScrollLock.disableBodyScroll;
+const enableBodyScroll = bodyScrollLock.enableBodyScroll;
+
 export function mobileSidebarLogic(isOn: boolean) {
   if (isOn) {
     const mobileMenuToggle = document.querySelector(
@@ -105,14 +109,20 @@ export function mobileSidebarLogic(isOn: boolean) {
 
     // disable scrolling of content below menu when menu is shown
     function toggleBodyScrolling() {
-      const container = document.getElementById('youtube-trailer-embed-container');
-      if (container) {
+      const trailerContainer = document.getElementById('youtube-trailer-embed-container');
+      const mobileMenuContainer = document.querySelector(
+        '#nav__mobile-menu-container'
+      ) as HTMLElement;
+
+      if (trailerContainer) {
         return;
       } else if (mobileMenuToggle.checked && window.innerWidth < 500) {
         // console.log('body scrolling disabled');
         document.body.classList.add('scroll-disabled');
+        disableBodyScroll(mobileMenuContainer);
       } else {
         // console.log('body scrolling enabled');
+        enableBodyScroll(mobileMenuContainer);
         document.body.classList.remove('scroll-disabled');
       }
     }

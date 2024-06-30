@@ -44,6 +44,7 @@
 .card__details-container {
   grid-row: 2 / 3;
   padding: 0.75em;
+  z-index: 1000;
 
   display: flex;
   flex-flow: column nowrap;
