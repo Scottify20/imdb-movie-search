@@ -55,3 +55,7 @@ export function anchorToElementById(
     }
   });
 }
+
+export function getDeviceWidth(): number {
+  return window.innerWidth;
+}

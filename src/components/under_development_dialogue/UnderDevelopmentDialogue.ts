@@ -23,10 +23,13 @@ export class UnderDevelopmentDialogue {
   }
 
   static renderDialogAndBackdrop() {
-    disableBodyScroll();
     document.body.classList.add('scroll-disabled');
     document.body.insertAdjacentHTML('afterbegin', this.dialogBackdropTemplate);
     document.body.insertAdjacentHTML('afterbegin', this.dialogTemplate);
+
+    const UDDialog = document.getElementById('under-development__container') as HTMLDialogElement;
+    UDDialog.showModal();
+    disableBodyScroll(UDDialog);
   }
 
   static cbAndProceedButtonListener() {
@@ -50,7 +53,7 @@ export class UnderDevelopmentDialogue {
   }
 
   static hideDialogAndBackdrop() {
-    enableBodyScroll();
+    enableBodyScroll(document.getElementById('under-development__container') as HTMLDialogElement);
     document.body.classList.remove('scroll-disabled');
     const dialogContainer = document.getElementById('under-development__container');
     const backdrop = document.getElementById('under-development__backdrop');
@@ -104,7 +107,7 @@ export class UnderDevelopmentDialogue {
   static dialogBackdropTemplate: string = `<div class="under_development__backdrop"></div>`;
 
   static dialogTemplate: string = /*html*/ `
-  <div id="under-development__container" class="under-development__container">
+  <dialog id="under-development__container" class="under-development__container">
     <div id="under-development__dialog" class="under-development__dialog">
 
       ${SvgStrings.warningBandTop}
@@ -117,7 +120,7 @@ export class UnderDevelopmentDialogue {
       ${SvgStrings.warningBandBottom}     
 
     </div>
-    </div>
+    </dialog>
     <div id="under-development__backdrop" class="under-development__backdrop">
   </div>`;
 }

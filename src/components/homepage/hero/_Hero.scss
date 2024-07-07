@@ -1,11 +1,10 @@
 :root {
-  --fg-color: #343435;
   --scroll-btn-height: 20px;
 }
 
 .homepage-hero__container {
   border-radius: 1rem;
-  overflow: clip;
+  overflow: hidden;
   position: relative;
 }
 
@@ -76,6 +75,7 @@
   flex-flow: row nowrap;
   gap: 1rem;
   overflow-x: auto;
+  // overflow-x: hidden;
   border-radius: 1rem;
   scrollbar-width: none;
   scroll-snap-type: x mandatory;
@@ -89,7 +89,7 @@
   min-width: 100%;
   background-color: var(--fg-color);
   border-radius: 1rem;
-  overflow: clip;
+  overflow: hidden;
 
   transition: all ease-in-out 0.15s;
 
@@ -371,6 +371,10 @@
     .homepage-hero__scroll-button {
     opacity: 100%;
     pointer-events: auto;
+  }
+
+  .homepage-hero-cards-container {
+    overflow-x: hidden;
   }
 }
 

@@ -22,6 +22,11 @@
   box-sizing: border-box;
 }
 
+*:active {
+  border: none;
+  outline: none;
+}
+
 html {
   // scroll-behavior: smooth;
 }
@@ -36,22 +41,25 @@ html {
   font-family: 'Inter', Arial, sans-serif;
 
   /* color variables */
+  --accent-color: #fce180;
   --card-font-color: white;
-  --bg-color: #262629;
-  --body-bg-color: #2b2b2d;
-  --card-bg-color: #434552;
-  --card-highlight-bg-color: rgb(92, 95, 110);
+  --bg-color: #2e2e33;
+  --fg-color: #2e2e33;
+  --card-bg-color: #2e2e33;
+  --body-bg-color: #1b1b1c;
+  --subtle-text-color: rgb(167, 167, 167);
+  --card-highlight-bg-color: rgb(79, 81, 94);
   --card-tag-bg-color: #ffffff0e;
   --footer-bg-color: #2a2a2a;
 
   --card-outline-color: transparent;
   --dark-text-color: #151515;
-  --header-bg-color: #edd085;
+  --header-bg-color: #2a2a2f;
   --search-box-bg-color: #ffffffbc;
   --light-text-color: #ffffff;
 
-  --nav-items-color: #413b17;
-  --nav-items-hover-color: #73682c;
+  --nav-items-color: #fce180;
+  --nav-items-hover-color: #fff3dd;
   --nav-text-item-hover-background-color: var(--nav-items-color);
 
   --main-padding: 1rem;
@@ -91,9 +99,13 @@ div.dialogs-parent-container {
 }
 
 dialog:-internal-dialog-in-top-layer,
-dialog:modal {
+dialog:-internal-modal,
+dialog:modal,
+dialog {
   max-width: 100% !important;
   max-height: 100% !important;
+  border: 0;
+  outline: 0;
 }
 
 // for browsers that support hover and have a Blink engine (chromium)
@@ -126,20 +138,5 @@ dialog:modal {
   :root {
     --main-padding: 0.75rem;
     --main-gap: 1rem;
-  }
-}
-
-.btn-click-animation-and-cursor {
-  scale: 1;
-  transition: scale ease-in-out 0.15s;
-  cursor: pointer;
-
-  &:hover,
-  &:active {
-    filter: brightness(150%);
-  }
-
-  &:active {
-    scale: 0.8;
   }
 }

@@ -1,5 +1,5 @@
 .homepage-trending__movies-container {
-  overflow: clip;
+  overflow: hidden;
   margin-top: 1rem;
 
   position: relative;
@@ -30,8 +30,8 @@
     &::after {
       font-size: 14px;
       font-weight: 600;
-      color: var(--nav-items-color);
-      background-color: rgba(255, 255, 255, 0.499);
+      color: var(--subtle-text-color);
+      background-color: var(--card-bg-color);
       padding: 0.25em 0.6em 0.3em 0.5em;
       border-radius: 1rem;
       position: absolute;
@@ -94,7 +94,7 @@
 
       &:checked::after {
         color: black;
-        background-color: var(--header-bg-color);
+        background-color: var(--accent-color);
       }
 
       &#movies-day-radio::after,
@@ -112,6 +112,7 @@
 
 .homepage-trending__movies__cards-container {
   overflow-x: auto;
+  // overflow-x: hidden;
   scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
   scroll-padding: var(--homepage-card-padding);
@@ -363,6 +364,7 @@
   .homepage-trending__movies__cards-container {
     scrollbar-color: transparent transparent;
     scrollbar-width: thin;
+    overflow-x: hidden;
     &:hover {
       // scrollbar-color: #87878c transparent;
       scrollbar-color: transparent transparent;
@@ -374,14 +376,15 @@
 @media (hover: none) {
   .homepage-trending__movies-container {
     &:hover .homepage-trending__scroll-buttons-container {
-      opacity: 0;
+      display: none;
     }
   }
 
   .homepage-trending__movies__cards-container {
     scroll-behavior: auto;
     scroll-snap-type: none;
-    scrollbar-color: auto auto;
+    // scrollbar-color: auto auto;
+    scrollbar-color: transparent transparent;
   }
 
   .homepage-trending__movies__cards-subcontainer {

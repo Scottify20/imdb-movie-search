@@ -23,6 +23,10 @@
     font-weight: 700;
   }
 
+  div[role='button'] {
+    cursor: pointer;
+  }
+
   /* underline and highlight on hover class */
   *:hover.hover--underline {
     text-decoration: underline solid white 1.5px;
@@ -39,6 +43,21 @@
   }
   *:hover.hover--darken {
     filter: brightness(70%) !important;
+  }
+
+  .btn-click-animation-and-cursor {
+    scale: 1;
+    transition: scale ease-in-out 0.15s;
+    cursor: pointer;
+
+    &:hover,
+    &:active {
+      filter: brightness(500%);
+    }
+
+    &:active {
+      scale: 0.8;
+    }
   }
 
   span.nowrap {

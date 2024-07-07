@@ -55,6 +55,10 @@ export class SearchBarController {
       this.cardGroupElement.innerHTML = '';
     }
 
+    const searchBox = document.getElementById('nav-search-bar') as HTMLInputElement;
+    // unfocus the search bar
+    searchBox.blur();
+
     LoadingAnimation.show();
     const searchResult = await GeneralTitleSearch.search();
     ResultCardsRenderer.renderResults(this.cardGroupElement, searchResult);

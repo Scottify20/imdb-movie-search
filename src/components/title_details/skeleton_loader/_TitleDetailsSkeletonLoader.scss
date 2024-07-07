@@ -100,6 +100,9 @@ p {
   height: 100%;
   width: 100%;
   pointer-events: none;
+  & {
+    pointer-events: none;
+  }
   background: transparent;
   border: none;
 }
@@ -124,9 +127,9 @@ p {
 }
 
 .skeleton {
-  pointer-events: all;
+  // opacity: 30%;
   border-radius: 1em;
-  overflow: clip;
+  overflow: hidden;
   display: flex;
   flex-flow: column nowrap;
   gap: var(--skeleton-global-padding-and-gap);
@@ -134,16 +137,60 @@ p {
   width: var(--skeleton-popup-width);
   max-width: var(--skeleton-popup-max-width);
 
-  background-color: var(--bg-color);
+  background-color: var(--body-bg-color);
   margin: clamp(2.5vw, 2.5vw, 60px) auto;
+}
+
+.skeleton__action-buttons-container {
+  display: flex;
+  flex-flow: row nowrap;
+  column-gap: var(--title-details-global-padding-and-gap);
+  font-size: 0.78rem;
+  height: 2.5em;
+
+  .skeleton-action-btn {
+    overflow: hidden;
+    padding: 1.5em 1.15em;
+    cursor: pointer;
+    z-index: 1;
+    outline: 1.75px solid rgba(255, 255, 255, 0.162);
+    outline-offset: -2.5px;
+    border-radius: 4em;
+
+    display: grid;
+    grid-template-columns: 1.25em 1fr;
+    place-content: center;
+    align-items: center;
+    gap: 0.75em;
+
+    // for skeleton loading
+    position: relative;
+    &::after {
+      z-index: 100;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      content: '';
+      background-color: #434347;
+      fill: #434347;
+    }
+
+    svg {
+      max-width: 1.25em;
+      width: 1.25em;
+      aspect-ratio: 1/1;
+
+      path {
+      }
+    }
+  }
 }
 
 .skeleton__hero {
   position: relative;
-  overflow: clip;
+  overflow: hidden;
   display: flex;
   flex-flow: column nowrap;
-  // row-gap: var(--skeleton-global-padding-and-gap);
   row-gap: 0;
 
   .hero-bg-blurred-container {
@@ -169,15 +216,15 @@ p {
 
   .skeleton__title {
     border-radius: 0.2em;
-    overflow: clip;
+    overflow: hidden;
     text-align: center;
     font-size: 1.25rem;
     font-weight: 600;
     color: rgb(237, 237, 237);
     position: relative;
-    padding: 0.1em 0;
+    padding: 0em 0;
 
-    margin-bottom: -0.2em;
+    margin-bottom: 0.1em;
     &::after {
       background-color: var(--skeleton-content-cover-color);
       border-radius: 0.2em;
@@ -201,16 +248,15 @@ p {
   justify-content: flex-start;
   gap: 0.75em;
   align-items: center;
-  margin-bottom: 0.5em;
 
   p {
     position: relative;
     color: #cccccc;
-    font-size: 1em;
+    font-size: 0.9em;
   }
 }
 .skeleton__poster {
-  width: 180px;
+  width: 190px;
   position: relative;
   z-index: 1;
   margin: 0 auto;
@@ -242,11 +288,12 @@ p {
   row-gap: 0.55rem;
 
   .skeleton--genre {
-    font-size: 12.5px;
+    font-size: 11px;
     padding: 0.3rem 0.6rem 0.3rem 0.6rem;
     border-radius: 5em;
     background-color: rgba(255, 255, 255, 0.1);
     position: relative;
+
     &::after {
       background-color: var(--skeleton-content-cover-color);
       border-radius: 1em;
@@ -267,6 +314,8 @@ p {
   text-justify: justify;
   text-align: justify;
   font-weight: 300;
+  height: calc(var(--max-lines) * 1em * var(--line-height));
+  overflow: hidden;
 }
 
 .skeleton__section-container {
@@ -387,13 +436,20 @@ p {
   }
 }
 
-@media only screen and (hover: none) and (max-width: 768px) {
+@media only screen and (max-width: 767.5px) {
+  .skeleton__action-buttons-container {
+    justify-self: center;
+    margin-bottom: var(--title-details-global-padding-and-gap);
+  }
+}
+
+@media only screen and (hover: none) and (max-width: 767.5px) {
   .skeleton {
     margin: clamp(2.5vw, 3vw, 60px) auto;
   }
 }
 
-@media only screen and (min-width: 768px) {
+@media only screen and (min-width: 767.5px) {
   :root {
     --skeleton-global-padding-and-gap: 1.3em;
   }
@@ -419,6 +475,7 @@ p {
   }
 
   .skeleton__hero {
+    margin-left: -0.1em;
     column-gap: var(--skeleton-global-padding-and-gap);
     display: grid;
     margin-bottom: calc(-1 * var(--title-details-global-padding-and-gap));
@@ -431,8 +488,10 @@ p {
       'pstr tbtn tbtn'
       'pstr mtd mtd'
       'pstr gnr gnr'
-      'pstr plt plt';
-    grid-template-rows: minmax(0px, auto) auto auto 1fr;
+      'pstr plt plt'
+      'pstr act act';
+    // grid-template-rows: minmax(0px, auto) auto auto 1fr;
+    grid-template-rows: minmax(0px, auto) auto auto auto 1fr;
 
     .skeleton__title-and-close-btn-container {
       grid-area: tbtn;
@@ -444,6 +503,7 @@ p {
     .skeleton__metadata-container {
       grid-area: mtd;
       margin: 0;
+      margin-bottom: -0.15em;
     }
 
     .skeleton__poster {
@@ -459,12 +519,13 @@ p {
     .skeleton__plot {
       grid-area: plt;
       text-align: left;
+      margin-bottom: 0.3em;
     }
   }
 }
 
 // max width
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 767.5px) {
   .skeleton__hero {
     row-gap: 0.5em;
     .skeleton__poster {
@@ -473,11 +534,15 @@ p {
     }
 
     .skeleton__title {
-      margin-bottom: 0.3em;
+      margin-bottom: 0.15em;
+      padding-bottom: 0.3em;
     }
 
-    .skeletons__metadata-container {
+    .skeleton__metadata-container {
       margin-bottom: 0.5em;
+      p {
+        padding: 0.1em;
+      }
     }
 
     .skeleton__poster {
@@ -487,7 +552,11 @@ p {
     }
 
     .genre-container {
-      margin-bottom: 0.75em;
+      margin-bottom: 0.55em;
+    }
+
+    .skeleton__plot {
+      margin-bottom: 0.4em;
     }
   }
 }
@@ -503,6 +572,50 @@ p {
   .skeleton__metadata-container {
     p {
       font-size: 0.9em;
+    }
+  }
+
+  .skeleton__hero {
+    .skeleton__action-buttons-container {
+      .skeleton-action-btn {
+        padding: 1.5em;
+        cursor: pointer;
+        z-index: 1;
+        color: rgb(255, 255, 255);
+        gap: 0;
+        width: 3.5em;
+        height: 3.5em;
+
+        &:active {
+          padding: 1.5em;
+        }
+        p {
+          display: none;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 424.5px) {
+  .skeleton__hero {
+    .skeleton__action-buttons-container {
+      .skeleton-action-btn {
+        padding: 1.5em;
+        cursor: pointer;
+        z-index: 1;
+        color: rgb(255, 255, 255);
+        gap: 0;
+        width: 3.5em;
+        height: 3.5em;
+
+        &:active {
+          padding: 1.5em;
+        }
+        p {
+          display: none;
+        }
+      }
     }
   }
 }

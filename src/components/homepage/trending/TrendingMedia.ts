@@ -4,6 +4,7 @@ import {
   TmdbMovieGenreIds,
   TmdbSeriesGenreIds,
   tmdbTimeWindowTypes,
+  tmdbTitleTypes,
 } from '../../../utils/tmdb/TmdbFetch';
 import { TmdbMovieResult2, TmdbSeriesResult2 } from '../../../utils/tmdb/TmdbFetchTrending';
 import { TitleDetailsRenderer } from '../../title_details/TitleDetailsRenderer';
@@ -21,6 +22,8 @@ export interface TmdbPropsToPass {
   tmdbTitle: string;
   description: string;
   posterURL: string;
+  tmdbID: string;
+  titleType: tmdbTitleTypes;
 }
 
 export class TrendingMedia {
@@ -79,37 +82,26 @@ export class TrendingMedia {
   private static startCardClickListeners() {
     document.addEventListener('click', (event) => {
       const target = event.target as HTMLElement;
-      let props: TmdbPropsToPass = { tmdbTitle: '', description: '', posterURL: '' };
 
       if (target.classList.contains('trending-card-container')) {
         const imdbId = target.getAttribute('data-imdb-id') as string;
         const tmdbTitle = target.getAttribute('data-tmdb-title') as string;
         const desc = target.getAttribute('data-tmdb-desc') as string;
         const posterUrl = target.getAttribute('data-poster-path') as string;
+        const tmdbID = target.getAttribute('data-tmdb-id') as string;
+        const titleType = target.getAttribute('data-title-type') as tmdbTitleTypes;
 
         const tmdbProps: TmdbPropsToPass = {
           tmdbTitle: tmdbTitle,
           description: desc,
           posterURL: posterUrl,
+          tmdbID: tmdbID,
+          titleType: titleType,
         };
-
-        // console.log(tmdbProps);
 
         TitleDetailsRenderer.viewTitle(imdbId, tmdbProps);
       }
     });
-  }
-
-  private static getLocallyStoredTrendingMedia(localTrendingMedia: StoredTrendingMedia) {
-    const moviesDay = localTrendingMedia.moviesDay;
-    const moviesWeek = localTrendingMedia.moviesWeek;
-    const seriesDay = localTrendingMedia.seriesDay;
-    const seriesWeek = localTrendingMedia.seriesWeek;
-
-    this.trendingMoviesDay = moviesDay;
-    this.trendingMoviesWeek = moviesWeek;
-    this.trendingSeriesDay = seriesDay;
-    this.trendingSeriesWeek = seriesWeek;
   }
 
   private static async fetchTrendingMedia() {
@@ -197,7 +189,9 @@ export class TrendingMedia {
         .replace(/\[TITLE\]/g, movie.title)
         .replace('[YEAR]', movie.release_date.substring(0, 4))
         .replace('[GENRE]', TmdbMovieGenreIds[movie.genre_ids[0].toString()])
-        .replace('[DESCRIPTION]', movie.overview);
+        .replace('[DESCRIPTION]', movie.overview)
+        .replace('[TITLE-TYPE]', 'movie')
+        .replace('[TMDB-ID]', movie.id.toString());
 
       if (cardIndex === 6) {
         bindedTemplate = bindedTemplate.replace('[CARD-INDEX]', 'first');
@@ -240,7 +234,9 @@ export class TrendingMedia {
         .replace(/\[TITLE\]/g, series.name)
         .replace('[YEAR]', series.first_air_date.substring(0, 4))
         .replace('[GENRE]', TmdbSeriesGenreIds[series.genre_ids[0].toString()])
-        .replace('[DESCRIPTION]', series.overview);
+        .replace('[DESCRIPTION]', series.overview)
+        .replace('[TITLE-TYPE]', 'tv')
+        .replace('[TMDB-ID]', series.id.toString());
 
       if (cardIndex === 1) {
         bindedTemplate = bindedTemplate.replace('[CARD-INDEX]', 'first');
@@ -603,7 +599,7 @@ export class TrendingMedia {
   `;
 
   private static templateCard = /*html*/ `
-  <div class="trending-card-container" id="trending-movie--[MOVIE-ID]" data-tmdb-desc="[DESCRIPTION]" data-tmdb-title="[TITLE]" data-poster-path="https://image.tmdb.org/t/p/w500[POSTER-PATH]" data-imdb-id="[IMDB-ID]" role="button" tabindex="0" data-card-index="[CARD-INDEX]">
+  <div class="trending-card-container hover--darken" id="trending-movie--[MOVIE-ID]" data-tmdb-desc="[DESCRIPTION]" data-tmdb-title="[TITLE]" data-poster-path="https://image.tmdb.org/t/p/w500[POSTER-PATH]" data-imdb-id="[IMDB-ID]" role="button" tabindex="0" data-card-index="[CARD-INDEX]" data-tmdb-id="[TMDB-ID]" data-title-type="[TITLE-TYPE]">
   <img
     src="https://image.tmdb.org/t/p/w342[POSTER-PATH]"
     alt="[POSTER-ALT]"

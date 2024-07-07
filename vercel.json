@@ -1,0 +1,8 @@
+{
+  "crons": [
+    {
+      "path": "/api/stored/trending-fetch",
+      "schedule": "30 8 * * *"
+    }
+  ]
+}

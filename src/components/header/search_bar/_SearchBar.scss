@@ -12,7 +12,7 @@
 
   width: 100%;
 
-  overflow: clip;
+  overflow: hidden;
   &:hover {
     filter: drop-shadow(0 0 3px rgba(0, 0, 0, 0.288));
   }
@@ -32,7 +32,7 @@
 
     .nav__search-bar-search-icon {
       position: absolute;
-      fill: rgba(255, 255, 255, 0.903);
+      fill: var(--card-bg-color);
       height: 100%;
       right: 0.85em;
       aspect-ratio: 1 / 1;
@@ -79,7 +79,7 @@
     padding: 0 1em;
     font-size: 1rem;
     font-weight: 600;
-    color: var(--nav-items-color);
+    color: var(--card-bg-color);
     border-radius: 5em;
     border: none;
     transition: all ease-in-out 0.2s;

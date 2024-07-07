@@ -6,8 +6,8 @@
   top: 0;
 
   width: 100vw;
-  height: 100%;
-  background-color: var(--bg-color);
+  height: 100dvh;
+  background-color: var(--body-bg-color);
   // background-color: rgba(0, 0, 0, 0.704);
   overflow-y: auto;
 
@@ -22,7 +22,8 @@
   }
 }
 
-.search-results-container .search-results__header {
+.search-results__header {
+  top: 0;
   z-index: 100;
   width: 100%;
   height: var(--navbar-height);
@@ -34,6 +35,7 @@
   place-content: center;
 
   .search-results__header-container {
+    top: 0;
     margin-right: 10px;
     width: 100%;
     max-width: var(--navbar-width-new);
@@ -82,6 +84,10 @@
     width: 23px;
     margin-top: 5%;
     transform: rotate(90deg);
+
+    & path {
+      fill: var(--nav-items-color);
+    }
   }
 }
 

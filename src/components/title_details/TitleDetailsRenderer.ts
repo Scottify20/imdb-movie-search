@@ -13,6 +13,9 @@ import {
 import { TitleDetailsSkeletonLoader } from './skeleton_loader/TitleDetailsSkeletonLoader';
 import { SearchResultsContainer } from '../search_results_container/SearchResultsContainer';
 import { TmdbPropsToPass } from '../homepage/trending/TrendingMedia';
+import { TrailerEmbed } from '../homepage/trailer_embed/TrailerEmbed';
+import { TmdbFetchVideoProps, TmdbFetchVideos } from '../../utils/tmdb/TmdbFetchVideos';
+import { tmdbTitleTypes } from '../../utils/tmdb/TmdbFetch';
 
 export class TitleDetailsRenderer {
   static [key: string]: any; // static index signature
@@ -37,7 +40,7 @@ export class TitleDetailsRenderer {
 
       // check if already in cache
       if (OmdbTitleDetailsFetch.istitleInCache(imdbId)) {
-        this.viewCachedTitle(imdbId);
+        this.viewCachedTitle(imdbId, tmdbProps);
         return;
       }
 
@@ -57,22 +60,45 @@ export class TitleDetailsRenderer {
         this.renderTitleDetailsWindow();
         TitleDetailsSkeletonLoader.showSkeletonForFadeout();
         this.bindData();
+
+        if (tmdbProps) {
+          this.bindActionButtonsData(tmdbProps);
+          this.actionButtonsListener(tmdbProps);
+        } else {
+          const tmdbEmptyProps: TmdbPropsToPass = {
+            tmdbTitle: '',
+            description: '',
+            posterURL: '',
+            tmdbID: 'no-id',
+            titleType: 'tv',
+          };
+          this.bindActionButtonsData(tmdbEmptyProps);
+        }
+
         this.startCloseButtonController();
         this.showParentElementsAfterDataBinding();
+        this.windowsOverflowingClassToggle();
         TitleDetailsSkeletonLoader.fadeOut();
         this.escapeButtonToCloseListener();
         // this.setFocusToTitleDetailsWindow();
         this.closeButtonAndBackdropListener();
       }, 500);
     }
+
+    this.ac;
   }
 
-  // private static async setFocusToTitleDetailsWindow() {
-  //   const titleDetailsWindow = document.getElementById('title-details') as HTMLElement;
-  //   titleDetailsWindow.focus();
-  // }
+  private static windowsOverflowingClassToggle() {
+    const titleDetails = document.getElementById('title-details') as HTMLElement;
+    const backdrop = document.getElementById('title-details__backdrop');
+    const isOverflowing = () => {
+      return titleDetails.offsetHeight > window.innerHeight - window.innerHeight * 0.05;
+    };
+    // console.log(titleDetails.offsetHeight, window.innerHeight - window.innerHeight * 0.05);
+    backdrop?.classList.toggle('overflowing', isOverflowing());
+  }
 
-  private static async viewCachedTitle(imdbId: string) {
+  private static async viewCachedTitle(imdbId: string, tmdbProps?: TmdbPropsToPass) {
     // console.log('title in cache');
     TitleDetailsRenderer._viewingAlreadyActive = true;
     setTimeout(() => {
@@ -82,11 +108,24 @@ export class TitleDetailsRenderer {
     this._titleData = OmdbTitleDetailsFetch.getCachedTitleData(imdbId);
     this.renderTitleDetailsWindow();
     this.bindData();
+    if (tmdbProps) {
+      this.bindActionButtonsData(tmdbProps);
+      this.actionButtonsListener(tmdbProps);
+    } else {
+      const tmdbEmptyProps: TmdbPropsToPass = {
+        tmdbTitle: '',
+        description: '',
+        posterURL: '',
+        tmdbID: 'no-id',
+        titleType: 'tv',
+      };
+      this.bindActionButtonsData(tmdbEmptyProps);
+    }
     this.startCloseButtonController();
     this.escapeButtonToCloseListener();
     this.closeButtonAndBackdropListener();
     this.showParentElementsAfterDataBinding();
-
+    this.windowsOverflowingClassToggle();
     const titleDetailsWindow = document.getElementById('title-details') as HTMLElement;
     const titleDetailsBackdrop = document.getElementById('title-details__backdrop') as HTMLElement;
     // to add the slide in animation
@@ -197,6 +236,56 @@ export class TitleDetailsRenderer {
     titleDetailsBackdrop?.classList.remove('hidden');
   }
 
+  private static bindActionButtonsData(tmdbProps: TmdbPropsToPass) {
+    const actionButtonsContainer = document.getElementById(
+      'title-details__action-buttons-container'
+    ) as HTMLElement;
+
+    if (tmdbProps.tmdbID === 'no-id') {
+      document
+        .getElementById('title-details-action--play-trailer')
+        ?.classList.add('button-disabled');
+    }
+
+    actionButtonsContainer.setAttribute('data-tmdb-id', tmdbProps.tmdbID);
+    actionButtonsContainer.setAttribute('data-title-type', tmdbProps.titleType);
+  }
+
+  private static async actionButtonsListener(tmdbProps: TmdbPropsToPass) {
+    const actionButtonsContainer = document.getElementById(
+      'title-details__action-buttons-container'
+    ) as HTMLElement;
+
+    actionButtonsContainer.addEventListener('click', async (event) => {
+      const target = event.target as HTMLElement;
+
+      if (target.classList.contains('title-details__play-trailer-btn')) {
+        const key = await TmdbFetchVideos.fetchYoutubeTrailerPriorityKey(
+          parseInt(tmdbProps.tmdbID),
+          tmdbProps.titleType
+        );
+
+        if (key) {
+          TrailerEmbed.render(key);
+        } else {
+          const trailers = (await TmdbFetchVideos.fetchVideos(
+            parseInt(tmdbProps.tmdbID),
+            'movie'
+          )) as TmdbFetchVideoProps[];
+          try {
+            const trailerKeyFallback = trailers[0].key;
+            TrailerEmbed.render(trailerKeyFallback);
+            console.log('using fallback first video');
+          } catch {
+            ////////////////////
+            console.log('no video found');
+            TrailerEmbed.disablePlayTrailerButton('title-details-action--play-trailer');
+          }
+        }
+      }
+    });
+  }
+
   private static closeButtonAndBackdropListener() {
     const closeButton = document.getElementById('title-details__close-btn');
     closeButton?.addEventListener('click', () => {
@@ -282,7 +371,7 @@ export class TitleDetailsRenderer {
     dialog.showModal();
 
     // insert backdrop to body
-    document.body.insertAdjacentHTML('afterbegin', this.templateTitleDetailsBackdrop);
+    // document.body.insertAdjacentHTML('afterbegin', this.templateTitleDetailsBackdrop);
 
     // insert the title details window to the parent container
     insertHTMLInsideElementById(this.templateTitleDetails, 'title-details__container');
@@ -646,13 +735,15 @@ export class TitleDetailsRenderer {
 
   private static templateTitleDetailsContainer = /*html*/ `<dialog id="title-details__container" class="title-details__container hidden"></dialog>`;
 
-  private static templateTitleDetails = /*html*/ `<div id="title-details" class="title-details">
+  private static templateTitleDetails = /*html*/ `
+  <div id="title-details__backdrop" class="title-details__backdrop hidden"></div>
+  <div id="title-details" class="title-details">
   </div>`;
 
   private static templateSectionsContainer = /*html*/ `
   <div class="title-details__sections-container" id="title-details__sections-container"></div>`;
 
-  private static templateTitleDetailsBackdrop = /*html*/ `<div id="title-details__backdrop" class="title-details__backdrop hidden"></div>`;
+  // private static templateTitleDetailsBackdrop = /*html*/ `<div id="title-details__backdrop" class="title-details__backdrop hidden"></div>`;
 
   private static templateHero = /*html*/ `
   <div class="title-details__hero">
@@ -677,6 +768,23 @@ export class TitleDetailsRenderer {
     onerror="this.onerror=null; this.classList.add('title-details__poster--not-available'); this.src='https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg'"
     >
 </div>
+<div class="title-details__action-buttons-container" id="title-details__action-buttons-container">
+<div id="title-details-action--play-trailer" role="button" class="btn-click-animation-and-cursor title-details__play-trailer-btn title-details-action-btn hover--darken active">
+<svg id="arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 80.81"><path d="M18.43,94.9A8.45,8.45,0,0,1,10,86.46V13.54a8.43,8.43,0,0,1,12.64-7.3L85.79,42.7h0a8.43,8.43,0,0,1,0,14.6L22.64,93.76A8.43,8.43,0,0,1,18.43,94.9Zm0-84.26A3,3,0,0,0,17,11a2.85,2.85,0,0,0-1.44,2.5V86.46A2.89,2.89,0,0,0,19.87,89L83,52.5a2.89,2.89,0,0,0,0-5L19.87,11A2.88,2.88,0,0,0,18.44,10.64Z" transform="translate(-10 -5.1) scale(0.9)"/></svg>
+    <p>Play Trailer</p>
+</div>
+<div id="title-details-action--add-to-list" role="button" class="btn-click-animation-and-cursor button-disabled title-details__add-to-list-btn title-details-action-btn hover--darken">
+    <svg id="add_to_list" data-name="add to list" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 97.9 60">
+      <path id="add_tos_list" data-name="add tos list" d="M99,76.58a3.25,3.25,0,0,1-3.25,3.25H79.54V96A3.25,3.25,0,0,1,73,96V79.83H56.89a3.25,3.25,0,0,1,0-6.5H73V57.17a3.25,3.25,0,0,1,6.5,0V73.33H95.7A3.24,3.24,0,0,1,99,76.58Zm-57.76,0a3.26,3.26,0,0,0-3.25-3.25H4.3a3.25,3.25,0,1,0,0,6.5H37.94A3.25,3.25,0,0,0,41.19,76.58Zm19-25.28a3.25,3.25,0,0,0-3.25-3.25H4.3a3.25,3.25,0,1,0,0,6.5H56.89A3.26,3.26,0,0,0,60.14,51.3ZM83.55,26a3.26,3.26,0,0,0-3.25-3.25H4.3a3.25,3.25,0,0,0,0,6.5h76A3.25,3.25,0,0,0,83.55,26Z" transform="translate(-1.05 -22.76)"/>
+    </svg>
+    <p>Add to List</p>
+</div>
+<div id="title-details-action--comment" role="button" class="btn-click-animation-and-cursor button-disabled title-details__comment-btn title-details-action-btn hover--darken">
+  <svg id="comment" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 97.98 98.02">
+      <path d="M33.06,99a9.17,9.17,0,0,1-4.39-1.19c-4.87-2.75-5.43-7.25-5.43-10.39V76H10.46A9.46,9.46,0,0,1,1,66.52V10.45A9.46,9.46,0,0,1,10.46,1H89.54A9.46,9.46,0,0,1,99,10.45V66.52A9.46,9.46,0,0,1,89.54,76H60.22C46.41,91.25,37.37,99,33.35,99h-.29ZM10.46,7.66a2.79,2.79,0,0,0-2.79,2.79V66.52a2.79,2.79,0,0,0,2.79,2.79H26.57a3.33,3.33,0,0,1,3.33,3.33V87.43c0,2.9.69,3.82,2.05,4.6a2.79,2.79,0,0,0,1.22.31c2.77-.78,14.18-12,23.09-21.92a3.32,3.32,0,0,1,2.48-1.11h30.8a2.79,2.79,0,0,0,2.79-2.79V10.45a2.79,2.79,0,0,0-2.79-2.79ZM76.78,30.57a3.33,3.33,0,0,0-3.33-3.33H26.56a3.33,3.33,0,1,0,0,6.66H73.45A3.33,3.33,0,0,0,76.78,30.57Zm0,16.43a3.33,3.33,0,0,0-3.33-3.33H26.56a3.33,3.33,0,0,0,0,6.66H73.45A3.33,3.33,0,0,0,76.78,47Z" transform="translate(-1.01 -0.99)"/>
+  </svg>
+  <p>Comment</p>
+</div>
     </div>`;
 
   private static templateSubsectionMetadataType = /* html */ `
@@ -697,11 +805,11 @@ export class TitleDetailsRenderer {
   `;
 
   private static templateSubsectionPlot = /* html */ `
-  <p id="title-data--plot" class="title-details__plot">Plot</p>
+  <p id="title-data--plot" class="title-details__plot plot__cutoff-text">Plot</p>
   `;
 
   private static templateSubsectionGenre = /*html*/ `
-    <div class="genre title-data--genre">Genre</div>`;
+    <div class="genre"><p class="title-data--genre">Genre</p></div>`;
 
   private static templateSectionRatings = /*html*/ `
     <div id="title-details__section-container" class="title-details__section-container title-details__section--ratings">

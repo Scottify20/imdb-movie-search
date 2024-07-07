@@ -83,9 +83,9 @@ export class OmdbTitleDetailsFetch extends OmdbFetch {
       searchResult.Poster = tmdbProps.posterURL;
 
       // if the tmdb description is longer than 270 characters the omdb description will be used instead
-      if (tmdbProps.description.length < 270) {
-        searchResult.Plot = tmdbProps.description;
-      }
+      // if (tmdbProps.description.length < 270) {
+      searchResult.Plot = tmdbProps.description;
+      // }
     }
     return searchResult;
   }

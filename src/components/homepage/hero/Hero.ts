@@ -75,12 +75,16 @@ export class Hero {
         const tmdbTitle = heroCard.getAttribute('data-tmdb-title') as string;
         const desc = heroCard.getAttribute('data-tmdb-desc') as string;
         const posterUrl = heroCard.getAttribute('data-poster-path') as string;
+        const tmdbID = target.getAttribute('data-tmdb-id') as string;
 
         const tmdbProps: TmdbPropsToPass = {
           tmdbTitle: tmdbTitle,
           description: desc,
           posterURL: posterUrl,
+          tmdbID: tmdbID,
+          titleType: 'movie',
         };
+        console.log(tmdbID);
 
         TitleDetailsRenderer.viewTitle(imdbId, tmdbProps);
       }
@@ -111,19 +115,13 @@ export class Hero {
       } catch {
         ////////////////////
         console.log('no video found');
-        this.disablePlayTrailerButton(`hero-play-trailer-btn-${tmdbId}`);
+        TrailerEmbed.disablePlayTrailerButton(`hero-play-trailer-btn-${tmdbId}`);
       }
     }
   }
 
   private static animatePlayTrailerButton(buttonId: string) {
     const button = document.getElementById(buttonId) as HTMLInputElement;
-  }
-
-  private static disablePlayTrailerButton(buttonId: string) {
-    const button = document.getElementById(buttonId) as HTMLInputElement;
-    button.classList.add('button-disabled');
-    button.style.pointerEvents = 'none';
   }
 
   private static insertHeroContainer() {
@@ -266,7 +264,7 @@ export class Hero {
 </section>
  `;
 
-  private static templateHeroCard = /*html*/ `<div id="homepage-hero__card--[CARD-NUMBER]" class="homepage-hero-hero homepage-hero-card-[IMDB-ID]" data-imdb-id="[IMDB-ID]" data-tmdb-title="[TITLE]" data-tmdb-desc="[DESCRIPTION]" data-poster-path="https://image.tmdb.org/t/p/w500[POSTER-PATH]">
+  private static templateHeroCard = /*html*/ `<div id="homepage-hero__card--[CARD-NUMBER]" class="homepage-hero-hero homepage-hero-card-[IMDB-ID]" data-imdb-id="[IMDB-ID]" data-tmdb-title="[TITLE]" data-tmdb-desc="[DESCRIPTION]" data-tmdb-id="[TMDB-ID]" data-poster-path="https://image.tmdb.org/t/p/w500[POSTER-PATH]">
  <img
    src="https://image.tmdb.org/t/p/w1280[BACKDROP-PATH]"
    alt="[BACKDROP-ALT]"
@@ -281,7 +279,7 @@ export class Hero {
      role="button"
      tabindex="0"
    />
-   <h4 class="homepage-hero__title active--underline hover--darken" role="button" tabindex="0" data-imdb-id="[IMDB-ID]">[TITLE]</h4>
+   <h4 class="homepage-hero__title active--underline hover--darken" role="button" tabindex="0" data-imdb-id="[IMDB-ID]" data-tmdb-id="[TMDB-ID]">[TITLE]</h4>
    <p class="homepage-hero__year-and-genre">
     <span class="homepage-hero__year">[YEAR]<span> • <span class="homepage-hero__genre">[GENRE]</span>
    </p>

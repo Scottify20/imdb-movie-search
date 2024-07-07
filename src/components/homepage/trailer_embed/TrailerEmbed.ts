@@ -7,42 +7,50 @@ export class TrailerEmbed {
 
   constructor(isOn: boolean) {
     TrailerEmbed.IsOn = isOn;
-    // TrailerEmbed.render();
   }
 
   public static render(trailerKey: string) {
     if (TrailerEmbed.IsOn) {
-      document.body.classList.add('scroll-disabled');
-      disableBodyScroll();
-
       let bindedTemplate = String(this.templateTrailerEmbed);
       bindedTemplate = bindedTemplate.replace('[VIDEO-KEY]', trailerKey);
 
       document.body.insertAdjacentHTML('afterbegin', bindedTemplate);
+
+      const trailerDialog = document.getElementById(
+        'youtube-trailer-embed-container'
+      ) as HTMLDialogElement;
+      trailerDialog.showModal();
+
+      document.body.classList.add('scroll-disabled');
+      disableBodyScroll(trailerDialog);
 
       this.embedCloseButtonListener();
       // this.backdropClickToCloseListener();
       this.escapeButtonToCloseListener();
     }
   }
+  public static disablePlayTrailerButton(buttonId: string) {
+    const button = document.getElementById(buttonId) as HTMLInputElement;
+    button.classList.add('button-disabled');
+    button.style.pointerEvents = 'none';
+  }
 
   private static close() {
     document.body.classList.remove('scroll-disabled');
-    enableBodyScroll();
-
     const embedWindow = document.getElementById('youtube-trailer-embed-container');
+    enableBodyScroll(embedWindow);
 
     if (embedWindow) {
       embedWindow.remove();
     }
   }
 
-  private static backdropClickToCloseListener() {
-    const backdrop = document.getElementById('youtube-trailer-embed-backdrop') as HTMLElement;
-    backdrop.addEventListener('click', () => {
-      this.close();
-    });
-  }
+  // private static backdropClickToCloseListener() {
+  //   const backdrop = document.getElementById('youtube-trailer-embed-backdrop') as HTMLElement;
+  //   backdrop.addEventListener('click', () => {
+  //     this.close();
+  //   });
+  // }
 
   private static embedCloseButtonListener() {
     const closeButton = document.getElementById('trailer-embed-close-button');
@@ -64,7 +72,7 @@ export class TrailerEmbed {
   }
 
   private static templateTrailerEmbed = /*html*/ `
-  <div class="youtube-trailer-embed-container" id="youtube-trailer-embed-container">
+  <dialog class="youtube-trailer-embed-container" id="youtube-trailer-embed-container">
   <button class="trailer-embed-close-button btn-click-animation-and-cursor" id="trailer-embed-close-button">
     <svg class="x-icon" viewBox="0 0 847 1058.8" xmlns="http://www.w3.org/2000/svg">
       <path
@@ -84,6 +92,6 @@ c-80.9-80.9,42-203.8,122.9-122.9L423.4,407.4z"
     referrerpolicy="strict-origin-when-cross-origin"
     allowfullscreen
   ></iframe>
-</div>
+</dialog>
     `;
 }
