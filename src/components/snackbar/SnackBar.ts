@@ -3,6 +3,8 @@ import { SvgStrings } from '../../assets/svg-strings/SvgStrings';
 export class Snackbar {
   constructor(messageTitle: string, messageDescription: string, timeoutInMS: number = 8000) {
     this.show(messageTitle, timeoutInMS, messageDescription);
+
+    console.log(messageTitle, messageDescription);
   }
 
   private insertSnackbarsContainer(): HTMLElement {
