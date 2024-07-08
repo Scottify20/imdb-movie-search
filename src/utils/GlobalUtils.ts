@@ -1,3 +1,8 @@
+// import { Snackbar } from '../components/snackbar/SnackBar';
+// import { OmdbFetch } from './omdb/OmdbFetch';
+// import { TmdbFetch } from './tmdb/TmdbFetch';
+// import { TmdbFetchTrending } from './tmdb/TmdbFetchTrending';
+
 type anchoringPosition = 'left' | 'right' | 'top' | 'bottom';
 type HTMLInsertPosition = 'afterbegin' | 'afterend' | 'beforebegin' | 'beforeend';
 
@@ -58,4 +63,19 @@ export function anchorToElementById(
 
 export function getDeviceWidth(): number {
   return window.innerWidth;
+}
+
+export function OSChecker(isOn: boolean) {
+  if (!isOn) {
+    return;
+  }
+  const userAgentString = navigator.userAgent;
+
+  if (userAgentString.includes('Windows')) {
+    document.body.classList.add('windows');
+  }
+
+  if (!userAgentString.includes('Android')) {
+    document.body.classList.add('not-android');
+  }
 }

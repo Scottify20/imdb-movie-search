@@ -1,3 +1,5 @@
+import { TitleDetailsRenderer } from '../title_details/TitleDetailsRenderer';
+
 const bodyScrollLock = require('body-scroll-lock-upgrade');
 const disableBodyScroll = bodyScrollLock.disableBodyScroll;
 const enableBodyScroll = bodyScrollLock.enableBodyScroll;
@@ -29,6 +31,8 @@ export class SearchResultsContainer {
       this.searchResultsContainer.classList.remove('shown');
       this.searchResultsContainer.classList.add('hidden');
       this.bodyScrollToggler('unlock');
+
+      enableBodyScroll(this.searchResultsContainer);
     });
 
     // event listener for search button
@@ -38,19 +42,17 @@ export class SearchResultsContainer {
       const searchBox = document.getElementById('nav-search-bar') as HTMLInputElement;
       searchBox.focus();
       this.bodyScrollToggler('lock');
+      disableBodyScroll(this.searchResultsContainer);
     });
   }
 
   private static bodyScrollToggler(mode: string) {
     // mode === lock | unlock
-    const searchResultsContainer = document.getElementById(
-      'search-results-container'
-    ) as HTMLElement;
     if (mode === 'lock') {
-      disableBodyScroll(searchResultsContainer);
+      disableBodyScroll(this.searchResultsContainer);
       document.body.classList.add('scroll-disabled');
     } else if (mode === 'unlock') {
-      enableBodyScroll(searchResultsContainer);
+      enableBodyScroll(this.searchResultsContainer);
       document.body.classList.remove('scroll-disabled');
     }
   }

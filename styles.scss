@@ -15,6 +15,7 @@
 @import 'src/components/homepage/Homepage';
 @import 'src/components/header/search_button/SearchButton';
 @import 'src/components/homepage/trailer_embed/TrailerEmbed';
+@import 'src/components/snackbar/SnackBar';
 
 * {
   margin: 0;
@@ -58,8 +59,8 @@ html {
   --search-box-bg-color: #ffffffbc;
   --light-text-color: #ffffff;
 
-  --nav-items-color: #fce180;
-  --nav-items-hover-color: #fff3dd;
+  --nav-items-color: #ffffff;
+  --nav-items-hover-color: var(--accent-color);
   --nav-text-item-hover-background-color: var(--nav-items-color);
 
   --main-padding: 1rem;
@@ -71,11 +72,11 @@ a {
 }
 
 body {
+  position: relative;
   min-width: 280px;
   display: flex;
   flex-flow: column nowrap;
   background-color: var(--body-bg-color);
-  position: relative;
 }
 
 main {
@@ -113,7 +114,7 @@ dialog {
   @media only screen and (hover: hover) {
     @supports (not (hanging-punctuation: first)) and (-webkit-font-smoothing: antialiased) and
       (not (-moz-appearance: none)) {
-      body.scroll-disabled main {
+      body.scroll-disabled.windows main {
         padding-right: calc(16.5px + var(--main-padding));
       }
     }
@@ -124,7 +125,7 @@ dialog {
 @media only screen and (min-width: 945px) and (hover: hover) {
   @supports (not (hanging-punctuation: first)) and (-webkit-font-smoothing: antialiased) and
     (not (-moz-appearance: none)) {
-    body.scroll-disabled main {
+    body.scroll-disabled.windows main {
       transform: translateX(-8px);
     }
   }

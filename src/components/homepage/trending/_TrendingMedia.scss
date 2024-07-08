@@ -361,7 +361,7 @@
 }
 
 @media (hover: hover) {
-  .homepage-trending__movies__cards-container {
+  body.not-android .homepage-trending__movies__cards-container {
     scrollbar-color: transparent transparent;
     scrollbar-width: thin;
     overflow-x: hidden;

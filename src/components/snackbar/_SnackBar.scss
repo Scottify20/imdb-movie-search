@@ -1,0 +1,139 @@
+:root {
+  --snackbar-width: 250px;
+}
+
+@keyframes SnackBarShown {
+  0% {
+    transform: translateX(150%);
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 100%;
+    transform: translateX(0%);
+  }
+}
+
+@keyframes SnackBarHidden {
+  0% {
+    transform: translateX(0%);
+    opacity: 100%;
+  }
+
+  100% {
+    opacity: 0%;
+    transform: translateX(150%);
+    display: none;
+  }
+}
+
+.snackbars-container {
+  z-index: 1000;
+  margin: 0 auto;
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  background-color: transparent;
+  pointer-events: none;
+}
+
+.snackbars-subcontainer {
+  opacity: 95%;
+  position: absolute;
+  padding: 1em;
+  right: 0;
+  bottom: 0;
+
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 1em;
+}
+
+.snackbar {
+  position: relative;
+  cursor: pointer;
+  pointer-events: all;
+  right: 0;
+  background-color: var(--accent-color);
+  color: var(--body-bg-color);
+  filter: drop-shadow(0px 0px 7px rgba(0, 0, 0, 0.6));
+  padding: 0.75em;
+  border-radius: 1.25em;
+  width: var(--snackbar-width);
+
+  opacity: 0%;
+  transform: translateX(150%);
+
+  display: grid;
+  align-items: center;
+  grid-template-areas:
+    'tt cls'
+    'ds ds';
+  grid-template-columns: 1fr auto;
+
+  h4 {
+    font-size: 1.1rem;
+    grid-area: tt;
+  }
+
+  &:has(p) h4 {
+    padding-bottom: 0.35em;
+  }
+
+  &:has(p) div.snackbar__close-btn {
+    margin-top: -20%;
+  }
+
+  p {
+    font-size: 0.9rem;
+    grid-area: ds;
+  }
+
+  div.snackbar__close-btn {
+    transform: rotate(45deg);
+    grid-area: cls;
+    width: 1.75em;
+    height: 1.75em;
+    border-radius: 5em;
+
+    svg {
+      transform: scale(0.75);
+    }
+
+    &:hover {
+      background-color: var(--body-bg-color);
+      svg path {
+        fill: white;
+      }
+    }
+  }
+
+  &.shown {
+    animation: SnackBarShown 0.5s ease-in-out forwards;
+  }
+
+  &.hidden {
+    animation: SnackBarHidden 0.5s ease-in-out forwards;
+  }
+
+  // &:hover {
+  //   opacity: 30% !important;
+  // }
+}
+
+@media only screen and (max-width: 499.5px) {
+  :root {
+    --snackbar-width: 100%;
+  }
+
+  .snackbars-subcontainer {
+    width: 100%;
+    padding: 0.5em;
+    gap: 0.5em;
+  }
+
+  .snackbar {
+    h4 {
+    }
+  }
+}

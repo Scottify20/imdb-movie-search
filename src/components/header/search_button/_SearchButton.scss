@@ -3,12 +3,9 @@
   border: none;
   background-color: transparent;
 
-  &:hover svg path {
-    fill: var(--nav-items-hover-color);
-  }
-
   svg {
-    fill: var(--nav-items-color);
+    fill: var(--nav-items-color) !important;
+    stroke: var(--nav-items-color) !important;
     padding-top: 4px;
     width: 25px;
   }

@@ -59,13 +59,11 @@
       min-width: 40px;
       aspect-ratio: 1 / 1;
       border: none;
-      background-color: var(--nav-items-color);
+      background-color: var(--nav-items-hover-color);
       border-radius: 0 999px 999px 0;
       // color: transparent;
-
-      &:active,
       &:hover {
-        background-color: var(--nav-items-hover-color);
+        background-color: var(--nav-items-color);
       }
     }
   }

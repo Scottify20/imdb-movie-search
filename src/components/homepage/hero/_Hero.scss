@@ -372,8 +372,10 @@
     opacity: 100%;
     pointer-events: auto;
   }
+}
 
-  .homepage-hero-cards-container {
+@media (hover: hover) {
+  body.not-android .homepage-hero-cards-container {
     overflow-x: hidden;
   }
 }

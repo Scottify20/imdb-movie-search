@@ -116,7 +116,7 @@ span.medium {
 @media only screen and (hover: hover) {
   @supports (not (hanging-punctuation: first)) and (-webkit-font-smoothing: antialiased) and
     (not (-moz-appearance: none)) {
-    .title-details__backdrop.overflowing {
+    body.windows .title-details__backdrop.overflowing {
       width: calc(100% - 17px);
       padding-right: 0;
     }

@@ -309,7 +309,7 @@ export class TitleDetailsRenderer {
     });
   }
 
-  private static hideDialogAndBackdrop() {
+  public static hideDialogAndBackdrop() {
     this._viewingAlreadyActive = false;
     const titleDetailsContainer = document.getElementById('title-details__container');
     const titleDetails = document.getElementById('title-details');
@@ -324,14 +324,11 @@ export class TitleDetailsRenderer {
       titleDetailsContainer?.remove();
       titleDetailsBackdrop?.remove();
 
-      // console.log(SearchResultsContainer.isShown);
-
-      // if (!SearchResultsContainer.isShown) {
       enableBodyScroll(dialog);
-      document.body.style.overflow = 'auto';
-
       document.body.classList.remove('scroll-disabled');
-      // }
+      if (!SearchResultsContainer.isShown) {
+        document.body.style.overflow = 'auto';
+      }
     }, 400);
   }
 
