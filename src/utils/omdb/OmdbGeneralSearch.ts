@@ -6,7 +6,7 @@ export class GeneralTitleSearch extends OmdbFetch {
   public static page = 1; // page number
   public static type: OmdbSearchTitleTypes = ''; // title type (movie, series, etc.)
   public static year: string; // year
-  private static _maxPages = 5;
+  private static _maxPages = 3;
 
   private static _totalResults: number;
   private static previousTitle = ''; // previous search title searched

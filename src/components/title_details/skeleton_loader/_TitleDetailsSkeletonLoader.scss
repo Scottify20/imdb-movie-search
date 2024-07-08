@@ -110,7 +110,7 @@ p {
 @media (hover: hover) {
   /* CSS code for browsers that support hover and have a WebKit/Blink engine */
   @supports (-webkit-font-smoothing: antialiased) {
-    .skeleton__container {
+    body.windows .skeleton__container {
       padding-right: 15px;
     }
   }

@@ -5,6 +5,7 @@ import {
 } from '../../../utils/omdb/OmdbGeneralSearch';
 
 import { ResultCardsRenderer } from '../../search_results_container/result_card_container/ResultCardsRenderer';
+import { Snackbar } from '../../snackbar/SnackBar';
 
 export class SearchBarController {
   constructor(isOn: boolean) {
@@ -68,7 +69,11 @@ export class SearchBarController {
 
   static seeMoreResults() {
     if (GeneralTitleSearch.isMaxPageReached) {
-      console.log('max page reached');
+      // console.log('max page reached');
+      new Snackbar(
+        'Max Page Reached',
+        'Search results are limited to avoid hitting the OMDB API request limit'
+      );
       Observer.unobserve();
       return;
     }
