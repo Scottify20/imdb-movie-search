@@ -3,7 +3,7 @@
 A web app to browse information about Movies, TV Series, and more in the [OMDB API](https://www.omdbapi.com/ "OMDB API's Website") and [TMDB API's](https://developer.themoviedb.org/docs/getting-started 'TMDB API Section') Dataset.
 
 ### Notes:
-- This repo is no longer under development. The project will be rebuilt with Angular through a new repo.
+- This repo is no longer under development. The project will be rebranded and rebuilt with Angular through a new repo.
 
 - Due to the limitations of the OMDB API, I am gradually replacing it with the TMDB API.
 
