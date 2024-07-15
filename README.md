@@ -1,4 +1,4 @@
-# OMDB Titles Browser (deprecated)
+# OMDB Titles Browser
 
 A web app to browse information about Movies, TV Series, and more in the [OMDB API](https://www.omdbapi.com/ "OMDB API's Website") and [TMDB API's](https://developer.themoviedb.org/docs/getting-started 'TMDB API Section') Dataset.
 
