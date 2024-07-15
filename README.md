@@ -1,8 +1,10 @@
-# OMDB Titles Browser (Beta) (rebranding in progress)
+# OMDB Titles Browser (deprecated)
 
 A web app to browse information about Movies, TV Series, and more in the [OMDB API](https://www.omdbapi.com/ "OMDB API's Website") and [TMDB API's](https://developer.themoviedb.org/docs/getting-started 'TMDB API Section') Dataset.
 
 ### Notes:
+- This repo is no longer under development. The project will be rebuilt with Angular through a new repo.
+
 - Due to the limitations of the OMDB API, I am gradually replacing it with the TMDB API.
 
 - As of March 13, 2024, to protect my TMDB API keys and tokens, I implemented an Express.js proxy API server. This server acts as a middleman, fetching data from the APIs and relaying it to this web app.
